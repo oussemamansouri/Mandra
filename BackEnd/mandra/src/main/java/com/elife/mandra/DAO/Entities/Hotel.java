@@ -27,61 +27,61 @@ public class Hotel {
         @GeneratedValue( strategy = GenerationType.IDENTITY)
         private Long id ;
     
-        @Column(name = "name",length = 30,nullable = false )
+        @Column(name = "name",length = 40,nullable = false )
         private String name ;
 
         @Column(name = "description",nullable = false )
         private String description ;
     
-        @Column(name = "email",length = 30,nullable = false)
+        @Column(name = "email",length = 40,nullable = false)
         private String email ;
     
-        @Column(name = "address",length = 30,nullable = false)
+        @Column(name = "address",length = 100,nullable = false)
         private String address ;
     
-        @Column(name = "city",nullable = false)
+        @Column(name = "city",length = 30,nullable = false)
         private String city ;
     
         @Column(name = "phoneNumber",length = 20,nullable = false)
         private int phoneNumber ;
     
-        @Column(name = "website",length = 10,nullable = false)
+        @Column(name = "website",nullable = true)
         private String website ;
 
-        @Column(name = "numberOfRooms",length = 10,nullable = false)
-        private String numberOfRooms ;
+        @Column(name = "numberOfRooms",nullable = false)
+        private int numberOfRooms ;
 
-        @Column(name = "hasParking",length = 10,nullable = false)
-        private String aparking ;
+        @Column(name = "hasParking",nullable = false)
+        private boolean aparking ;
 
-        @Column(name = "hasWifi",length = 10,nullable = false)
-        private String awifi ;
+        @Column(name = "hasWifi",nullable = false)
+        private boolean awifi ;
 
-        @Column(name = "hasGym",length = 10,nullable = false)
-        private String aSalleDeSport ;
+        @Column(name = "hasGym",nullable = false)
+        private boolean aSalleDeSport ;
 
-        @Column(name = "hasPool",length = 10,nullable = false)
-        private String aPiscine ;
+        @Column(name = "hasPool",nullable = false)
+        private boolean aPiscine ;
 
-        @Column(name = "hasRestaurant",length = 10,nullable = false)
-        private String aRestaurant ;
+        @Column(name = "hasRestaurant",nullable = false)
+        private boolean aRestaurant ;
 
-        @Column(name = "allowsPets",length = 10,nullable = false)
-        private String accpteAnimaux ;
+        @Column(name = "allowsPets",nullable = false)
+        private boolean accpteAnimaux ;
 
-        @Column(name = "facebook",length = 10,nullable = false)
+        @Column(name = "facebook",nullable = true)
         private String facebook ;
 
-        @Column(name = "instagram",length = 10,nullable = false)
+        @Column(name = "instagram",nullable = true)
         private String instagram ;
 
-        @Column(name = "nbOfRaters",length = 10,nullable = false)
-        private String nbOfRaters ;
+        @Column(name = "nbOfRaters",nullable = true)
+        private long nbOfRaters ;
 
-        @Column(name = "rateScore",length = 10,nullable = false)
-        private String rateScore ;
+        @Column(name = "rateScore",nullable = true)
+        private long rateScore ;
         
-        @Column( name = "nbOfStars")
+        @Column( name = "nbOfStars" )
         private long nbOfStars;
 
         @Column(name = "image",nullable = true)
