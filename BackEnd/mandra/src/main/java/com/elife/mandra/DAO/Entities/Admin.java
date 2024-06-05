@@ -11,15 +11,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 
 @Entity
-@Table(name = "Client")
-public class Client {
+@Table(name = "Admin")
+public class Admin {
         // @Column(name = "code",length = 255,nullable = true , unique = false, insertable=true,updatable = true  )
 
     @Id
@@ -48,3 +47,4 @@ public class Client {
     private String image ;
 
 }
+
