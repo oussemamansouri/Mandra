@@ -27,27 +27,63 @@ public class Hotel {
         @GeneratedValue( strategy = GenerationType.IDENTITY)
         private Long id ;
     
-        @Column(name = "name",length = 20,nullable = false )
+        @Column(name = "name",length = 30,nullable = false )
         private String name ;
 
-        @Column(name = "description",length = 20,nullable = false )
+        @Column(name = "description",nullable = false )
         private String description ;
     
-        @Column(name = "email",length = 20,nullable = false)
+        @Column(name = "email",length = 30,nullable = false)
         private String email ;
     
-        @Column(name = "adress",length = 30,nullable = false)
-        private String adress ;
+        @Column(name = "address",length = 30,nullable = false)
+        private String address ;
     
-        @Column(name = "ville",nullable = false)
-        private String ville ;
+        @Column(name = "city",nullable = false)
+        private String city ;
     
-        @Column(name = "tel",length = 20,nullable = false)
-        private int tel ;
+        @Column(name = "phoneNumber",length = 20,nullable = false)
+        private int phoneNumber ;
     
         @Column(name = "website",length = 10,nullable = false)
         private String website ;
-    
+
+        @Column(name = "numberOfRooms",length = 10,nullable = false)
+        private String numberOfRooms ;
+
+        @Column(name = "hasParking",length = 10,nullable = false)
+        private String aparking ;
+
+        @Column(name = "hasWifi",length = 10,nullable = false)
+        private String awifi ;
+
+        @Column(name = "hasGym",length = 10,nullable = false)
+        private String aSalleDeSport ;
+
+        @Column(name = "hasPool",length = 10,nullable = false)
+        private String aPiscine ;
+
+        @Column(name = "hasRestaurant",length = 10,nullable = false)
+        private String aRestaurant ;
+
+        @Column(name = "allowsPets",length = 10,nullable = false)
+        private String accpteAnimaux ;
+
+        @Column(name = "facebook",length = 10,nullable = false)
+        private String facebook ;
+
+        @Column(name = "instagram",length = 10,nullable = false)
+        private String instagram ;
+
+        @Column(name = "nbOfRaters",length = 10,nullable = false)
+        private String nbOfRaters ;
+
+        @Column(name = "rateScore",length = 10,nullable = false)
+        private String rateScore ;
+        
+        @Column( name = "nbOfStars")
+        private long nbOfStars;
+
         @Column(name = "image",nullable = true)
         private String image ;
 
