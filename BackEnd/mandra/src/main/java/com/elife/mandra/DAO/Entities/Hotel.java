@@ -1,5 +1,6 @@
 package com.elife.mandra.DAO.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,10 +21,24 @@ import lombok.Setter;
 
 public class Hotel extends Property {
 
-
         @Id
         @GeneratedValue( strategy = GenerationType.IDENTITY)
         private Long id ;
+
+        @Column(name = "numberOfRooms",nullable = false)
+        private int numberOfRooms ;
+
+        @Column(name = "hasGym",nullable = false)
+        private boolean aSalleDeSport ;
+
+        @Column(name = "hasPool",nullable = false)
+        private boolean aPiscine ;
+
+        @Column(name = "hasRestaurant",nullable = false)
+        private boolean aRestaurant ;
+
+        @Column( name = "nbOfStars" )
+        private long nbOfStars;
     
 
 }
