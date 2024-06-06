@@ -86,4 +86,6 @@ public class Property {
     updateDate = new Date();
   }
 
+
+
 }
