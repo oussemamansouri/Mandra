@@ -1,5 +1,8 @@
 package com.elife.mandra.Business.Services;
 
+
+import java.util.List;
+
 import com.elife.mandra.DAO.Entities.Client;
 
 public interface ClientService {
@@ -8,7 +11,7 @@ public interface ClientService {
     public Client addClient(Client client);
 
     //Read operation
-    public Client getClients();
+    public List<Client> getClients();
     public Client getClientById(Long id);
  
     //Update operation

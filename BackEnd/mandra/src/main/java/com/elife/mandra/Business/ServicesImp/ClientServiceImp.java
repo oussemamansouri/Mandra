@@ -1,5 +1,7 @@
 package com.elife.mandra.Business.ServicesImp;
 
+import java.util.List;
+
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,9 +32,13 @@ public class ClientServiceImp implements ClientService {
     }
 
     @Override
-    public Client getClients() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getClients'");
+    public List<Client> getClients() {
+        try {
+            return clientRepository.findAll();
+        } catch (Exception e) {
+            // Log the exception and rethrow it or handle it accordingly
+            throw new RuntimeException("Failed to find clients: " + e.getMessage(), e);
+        }
     }
 
     @Override
