@@ -1,10 +1,16 @@
 package com.elife.mandra.DAO.Entities;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +42,24 @@ public class GastronomicSpecialties {
 
         @Column(name = "image",nullable = true)
         private String image ;
+
+        @Column(name = "createDate",nullable = false,updatable = false)
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date createDate ;
+
+        @Column(name = "updateDate",nullable = false)
+        @Temporal(TemporalType.TIMESTAMP)
+        private Date updateDate ;
+
+        @PrePersist
+        protected void onCreate() {
+            createDate = new Date();
+            updateDate = new Date();
+        }
+
+        @PreUpdate
+        protected void onUpdate() {
+            updateDate = new Date();
+        }
 
 }

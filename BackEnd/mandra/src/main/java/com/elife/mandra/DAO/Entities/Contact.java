@@ -1,10 +1,15 @@
 package com.elife.mandra.DAO.Entities;
 
+import java.util.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,6 +44,18 @@ public class Contact {
 
     @Column(name = "description",nullable = false)
     private String description ;
+
+    @Column(name = "createDate",nullable = false,updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate ;
+
+
+    @PrePersist
+    protected void onCreate() {
+        createDate = new Date();
+    }
+
+ 
 
 
 }
