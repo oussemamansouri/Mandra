@@ -24,5 +24,8 @@ public class Guesthouse extends Property {
 
     @Column(name = "hasPool",nullable = false)
     private boolean aPiscine ;
+    
+    @Column(name = "hasRestaurant",nullable = false)
+    private boolean aRestaurant ;
 
 }
