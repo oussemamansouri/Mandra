@@ -1,6 +1,7 @@
 package com.elife.mandra.DAO.Entities;
 
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +25,9 @@ public class Client extends User {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id ;
+
+    @Column(name = "accountState",nullable = false)
+    private String accountState ;
 
 
 }
