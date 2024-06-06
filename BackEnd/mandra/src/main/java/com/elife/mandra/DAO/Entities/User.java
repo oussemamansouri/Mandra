@@ -25,16 +25,16 @@ public class User {
         // @Column(name = "code",length = 255,nullable = true , unique = false, insertable=true,updatable = true  )
 
     @Column(name = "firstname",length = 20,nullable = false )
-    private String code ;
+    private String firstname ;
 
     @Column(name = "lastname",length = 20,nullable = false)
-    private String name ;
+    private String lastname ;
 
     @Column(name = "email",length = 30,nullable = false)
-    private String price ;
+    private String email ;
 
     @Column(name = "password",nullable = false)
-    private String quantity ;
+    private String password ;
 
     @Column(name = "phoneNumber",length = 20,nullable = false)
     private int phoneNumber ;
