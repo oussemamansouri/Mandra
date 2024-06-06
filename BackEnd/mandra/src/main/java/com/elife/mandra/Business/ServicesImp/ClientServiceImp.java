@@ -43,8 +43,12 @@ public class ClientServiceImp implements ClientService {
 
     @Override
     public Client getClientById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getClientById'");
+        try {
+            return clientRepository.findById(id).get();
+        } catch (Exception e) {
+            // Log the exception and rethrow it or handle it accordingly
+            throw new RuntimeException("Failed to find client with this id "+id+" : " + e.getMessage(), e);
+        }
     }
 
     @Override

@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 
@@ -35,6 +35,10 @@ public class ClientController {
      return new ResponseEntity<>(this.clientService.getClients(),HttpStatus.OK);
  }
  
+ @GetMapping("/clients/{id}")
+ public ResponseEntity<Object> getClients( @PathVariable(value = "id") Long id  ) {
+     return new ResponseEntity<>(this.clientService.getClientById(id),HttpStatus.OK);
+ }
  
 
 
