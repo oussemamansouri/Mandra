@@ -27,7 +27,8 @@ public class Owner extends User {
     @Column(name = "proof",nullable = false)
     private String proof;
 
+    @Column(name = "cinImage",nullable = false)
+    private String cinImage ;
   
-
 }
 
