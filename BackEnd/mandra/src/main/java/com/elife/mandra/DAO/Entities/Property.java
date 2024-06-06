@@ -37,23 +37,11 @@ public class Property {
         @Column(name = "website",nullable = true)
         private String website ;
 
-        @Column(name = "numberOfRooms",nullable = false)
-        private int numberOfRooms ;
-
         @Column(name = "hasParking",nullable = false)
         private boolean aparking ;
 
         @Column(name = "hasWifi",nullable = false)
         private boolean awifi ;
-
-        @Column(name = "hasGym",nullable = false)
-        private boolean aSalleDeSport ;
-
-        @Column(name = "hasPool",nullable = false)
-        private boolean aPiscine ;
-
-        @Column(name = "hasRestaurant",nullable = false)
-        private boolean aRestaurant ;
 
         @Column(name = "allowsPets",nullable = false)
         private boolean accpteAnimaux ;
@@ -69,9 +57,6 @@ public class Property {
 
         @Column(name = "rateScore",nullable = true)
         private long rateScore ;
-        
-        @Column( name = "nbOfStars" )
-        private long nbOfStars;
 
         @Column(name = "image",nullable = true)
         private String image ;
