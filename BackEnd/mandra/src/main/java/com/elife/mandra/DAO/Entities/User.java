@@ -2,6 +2,8 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.Date;
 
+import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
@@ -38,7 +40,7 @@ public class User {
     private int phoneNumber ;
 
     @Column(name = "role",length = 10,nullable = false)
-    private String role ;
+    private RoleOption role ;
 
     @Column(name = "image",nullable = true)
     private String image ;
@@ -51,7 +53,7 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate ;
 
-      @PrePersist
+    @PrePersist
     protected void onCreate() {
         createDate = new Date();
         updateDate = new Date();
