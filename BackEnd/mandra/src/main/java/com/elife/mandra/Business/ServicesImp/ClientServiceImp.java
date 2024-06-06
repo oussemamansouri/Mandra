@@ -70,9 +70,14 @@ public class ClientServiceImp implements ClientService {
     }
 
     @Override
-    public void deleteClient(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteClient'");
+    public String deleteClient(Long id) {
+        try {
+             clientRepository.deleteById(id);
+             return "Client was deleted successfully";
+        } catch (Exception e) {
+            // Log the exception and rethrow it or handle it accordingly
+            throw new RuntimeException("Failed to find client with this id "+id+" : " + e.getMessage(), e);
+        }
     }
 
 }

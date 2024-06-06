@@ -10,7 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 
 
 
@@ -41,6 +43,14 @@ public class ClientController {
  }
  
 
-
-
+ @PatchMapping("/clients/{id}/delete")
+ public ResponseEntity<Object> putMethodName(@PathVariable Long id) {
+    return new ResponseEntity<>(this.clientService.deleteClient(id),HttpStatus.OK);
 }
+
+
+ }
+
+
+
+
