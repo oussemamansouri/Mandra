@@ -1,5 +1,6 @@
 package com.elife.mandra.DAO.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,9 @@ public class Owner extends User {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id ;
+
+    @Column(name = "proof",nullable = false)
+    private String proof;
 
   
 
