@@ -36,7 +36,18 @@ public class Owner extends User {
 
     @Column(name = "accountState",nullable = false)
     private String accountState ;
-  
+
+    @Column(name = "nbOfHotels",nullable = false)
+    private int nbOfHotels ;
+
+    @Column(name = "nbOfRestaurant",nullable = false)
+    private int nbOfRestaurant ;
+
+    @Column(name = "nbOfGuesthouses",nullable = false)
+    private int nbOfGuesthouses ;
+    
+
+    // The rolation between the tables
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
     private List<Hotel> Hotels ;
 
@@ -45,5 +56,7 @@ public class Owner extends User {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
     private List<Restaurant> Restaurants ;
+
+
 }
 
