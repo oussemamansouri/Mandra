@@ -3,6 +3,8 @@ package com.elife.mandra.Business.ServicesImp;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ import com.elife.mandra.DAO.Repositories.ClientRepository;
 @Service
 public class ClientServiceImp implements ClientService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImp.class);
+
     final ClientRepository clientRepository ;
     public ClientServiceImp(ClientRepository clientRepository ){
         this.clientRepository = clientRepository;
@@ -24,22 +28,22 @@ public class ClientServiceImp implements ClientService {
     // @Autowired
     // ClientRepository clientRepository ;
 
-    @Override
-    public Client addClient(Client client) {
-        try {
-            return clientRepository.save(client);
-        } catch (Exception e) {
-            // Log the exception and rethrow it or handle it accordingly
-            throw new RuntimeException("Failed to save client: " + e.getMessage(), e);
-        }
-    }
-
      @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Client registerClient(Client client) {
-        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-        return clientRepository.save(client);
+        try {
+            List<Client> nbClients = clientRepository.findByEmail(client.getEmail());
+            if (nbClients.isEmpty()) {
+                client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+                return clientRepository.save(client);
+            } else {
+                throw new RuntimeException("This email is already in use!");
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error while registering client", e);
+            throw new RuntimeException("Error while registering client: " + e.getMessage(), e);
+        }
     }
 
 
