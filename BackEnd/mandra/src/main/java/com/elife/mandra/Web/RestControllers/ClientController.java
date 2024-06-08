@@ -7,6 +7,8 @@ import com.elife.mandra.DAO.Entities.Client;
 
 import jakarta.validation.Valid;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -43,7 +45,8 @@ public class ClientController {
 
  @GetMapping("")
  public ResponseEntity<Object> getClients() {
-     return new ResponseEntity<>(this.clientService.getClients(),HttpStatus.OK);
+     List<Client> Clients = clientService.getClients();
+    return ResponseEntity.status(HttpStatus.OK).body(Clients);
  }
  
  @GetMapping("/{id}")
