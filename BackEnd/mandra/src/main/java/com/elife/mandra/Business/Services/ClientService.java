@@ -9,7 +9,7 @@ public interface ClientService {
 
     //Create operation
     public Client addClient(Client client);
-    // public Client registerClient(Client client);
+    public Client registerClient(Client client);
 
     //Read operation
     public List<Client> getClients();
