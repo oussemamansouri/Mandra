@@ -8,7 +8,6 @@ import com.elife.mandra.DAO.Entities.Client;
 public interface ClientService {
 
     //Create operation
-    public Client addClient(Client client);
     public Client registerClient(Client client);
 
     //Read operation
