@@ -3,6 +3,8 @@ package com.elife.mandra.Business.ServicesImp;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,14 @@ public class ClientServiceImp implements ClientService {
             // Log the exception and rethrow it or handle it accordingly
             throw new RuntimeException("Failed to save client: " + e.getMessage(), e);
         }
+    }
+
+     @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public Client registerClient(Client client) {
+        client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
+        return clientRepository.save(client);
     }
 
 
