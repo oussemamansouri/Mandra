@@ -29,27 +29,27 @@ public class User {
         // @Column(name = "code",length = 255,nullable = true , unique = false, insertable=true,updatable = true  )
 
     @Column(name = "firstname",length = 20,nullable = false )
-    @NotBlank(message = "First name is mandatory")
-    @Size(max = 20, message = "First name must be less than 20 characters")
+    @NotBlank(message = "Le prénom est obligatoire")
+    @Size(max = 20, message = "Le prénom doit comporter moins de 20 caractères")
     private String firstname ;
 
     @Column(name = "lastname",length = 20,nullable = false)
-    @NotBlank(message = "Last name is mandatory")
-    @Size(max = 20, message = "Last name must be less than 20 characters")
+    @NotBlank(message = "Le nom de famille est obligatoire")
+    @Size(max = 20, message = "Le nom de famille doit comporter moins de 20 caractères.")
     private String lastname ;
 
     @Column(name = "email",length = 30,nullable = false)
-    @NotBlank(message = "Email is mandatory")
-    @Email(message = "Email should be valid")
-    @Size(max = 30, message = "Email must be less than 30 characters")
+    @NotBlank(message = "email est obligatoire")
+    @Email(message = "L'email doit être valide")
+    @Size(max = 30, message = "L'email doit comporter moins de 30 caractères.")
     private String email ;
 
     @Column(name = "password",nullable = false)
-    @NotBlank(message = "Password is mandatory")
+    @NotBlank(message = "Mot de passe obligatoire")
     private String password ;
 
     @Column(name = "phoneNumber",length = 20,nullable = false)
-    @NotNull(message = "Phone number is mandatory")
+    @NotNull(message = "Le numéro de téléphone est obligatoire")
     private int phoneNumber ;
 
     @Column(name = "role",length = 10,nullable = false)
