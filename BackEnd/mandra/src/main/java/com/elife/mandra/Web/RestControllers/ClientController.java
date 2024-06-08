@@ -5,8 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +30,12 @@ public class ClientController {
 
 
 @PostMapping("/register")
-    public ResponseEntity<Client> registerClient(@RequestBody Client client) {
+    public ResponseEntity<?> registerClient(@Valid @RequestBody Client client, BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+            return ResponseEntity.badRequest().body(errors.toString());
+        }
         Client registeredClient = clientService.registerClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredClient);
     }
