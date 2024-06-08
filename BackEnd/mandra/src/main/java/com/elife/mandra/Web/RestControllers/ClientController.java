@@ -24,12 +24,13 @@ public class ClientController {
  public ClientController(ClientService clientService){
     this.clientService = clientService;
  }   
- 
 
- @PostMapping("/register")
- public Client registerClient(@RequestBody Client client) {
-     return clientService.registerClient(client);
- }
+
+@PostMapping("/register")
+    public ResponseEntity<Client> registerClient(@RequestBody Client client) {
+        Client registeredClient = clientService.registerClient(client);
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredClient);
+    }
 
 
  @GetMapping("")
