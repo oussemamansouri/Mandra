@@ -56,7 +56,7 @@ public class ClientServiceImp implements ClientService {
         try {
             return clientRepository.findAll();
         } catch (Exception e) {
-            // Log the exception and rethrow it or handle it accordingly
+            LOGGER.error("Error while finding clients", e);
             throw new RuntimeException("Failed to find clients: " + e.getMessage(), e);
         }
     }
