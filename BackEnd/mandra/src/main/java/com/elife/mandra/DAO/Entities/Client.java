@@ -29,5 +29,10 @@ public class Client extends User {
     @Column(name = "accountState",nullable = false)
     private String accountState ;
 
+    public void setRole(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setRole'");
+    }
+
 
 }
