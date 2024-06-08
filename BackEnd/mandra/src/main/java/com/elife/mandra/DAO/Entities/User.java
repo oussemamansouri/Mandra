@@ -10,6 +10,10 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,18 +29,27 @@ public class User {
         // @Column(name = "code",length = 255,nullable = true , unique = false, insertable=true,updatable = true  )
 
     @Column(name = "firstname",length = 20,nullable = false )
+    @NotBlank(message = "First name is mandatory")
+    @Size(max = 20, message = "First name must be less than 20 characters")
     private String firstname ;
 
     @Column(name = "lastname",length = 20,nullable = false)
+    @NotBlank(message = "Last name is mandatory")
+    @Size(max = 20, message = "Last name must be less than 20 characters")
     private String lastname ;
 
     @Column(name = "email",length = 30,nullable = false)
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
+    @Size(max = 30, message = "Email must be less than 30 characters")
     private String email ;
 
     @Column(name = "password",nullable = false)
+    @NotBlank(message = "Password is mandatory")
     private String password ;
 
     @Column(name = "phoneNumber",length = 20,nullable = false)
+    @NotNull(message = "Phone number is mandatory")
     private int phoneNumber ;
 
     @Column(name = "role",length = 10,nullable = false)
