@@ -14,6 +14,7 @@ import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
+import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
 
 @Service
 public class ClientServiceImp implements ClientService {
@@ -52,6 +53,21 @@ public class ClientServiceImp implements ClientService {
 
 
     @Override
+    public Client updateClient(Long id, UpdateClientForm client) {
+        try {
+            Client cli = clientRepository.getReferenceById(id);
+            cli.setFirstname(client.getFirstname());
+            cli.setLastname(client.getLastname());
+            cli.setPhoneNumber(client.getPhoneNumber());
+            return clientRepository.save(cli);
+        } catch (Exception e) {
+            LOGGER.error("Error while registering client", e);
+            throw new RuntimeException("Error while registering client: " + e.getMessage(), e);
+        }
+    }
+
+
+    @Override
     public List<Client> getClients() {
         try {
             return clientRepository.findAll();
@@ -71,11 +87,7 @@ public class ClientServiceImp implements ClientService {
         }
     }
 
-    @Override
-    public Client updateClient(Client client) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateClient'");
-    }
+
 
     @Override
     public Client updateClientImage() {
