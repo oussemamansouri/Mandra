@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
+import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
+import com.elife.mandra.Web.Requests.ClientForms.RegisterClientForm;
 import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
 
 @Service
@@ -33,15 +35,22 @@ public class ClientServiceImp implements ClientService {
      @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Client registerClient(Client client) {
+    public Client registerClient(RegisterClientForm clientForm) {
         try {
-            List<Client> nbClients = clientRepository.findByEmail(client.getEmail());
+            List<Client> nbClients = clientRepository.findByEmail(clientForm.getEmail());
             if (nbClients.isEmpty()) {
-                client.setPassword(bCryptPasswordEncoder.encode(client.getPassword()));
-                client.setImage(null);
-                client.setRole(RoleOption.Client);
-                client.setAccountState("Disactive");
-                return clientRepository.save(client);
+                clientForm.setPassword(bCryptPasswordEncoder.encode(clientForm.getPassword()));
+                Client newClient = new Client(
+                    clientForm.getFirstname(),
+                    clientForm.getLastname(),
+                    clientForm.getEmail(),
+                    clientForm.getPassword(),
+                    clientForm.getPhoneNumber(),
+                    RoleOption.Client,
+                    null, // image
+                    AccountStateOption.Active
+                );
+                return clientRepository.save(newClient);
             } else {
                 throw new RuntimeException("This email is already in use!");
             }
@@ -50,6 +59,7 @@ public class ClientServiceImp implements ClientService {
             throw new RuntimeException("Error while registering client: " + e.getMessage(), e);
         }
     }
+    
 
 
     @Override
