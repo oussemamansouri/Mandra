@@ -23,6 +23,7 @@ import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
 import com.elife.mandra.Web.Requests.ClientForms.RegisterClientForm;
 import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 
 @Service
 public class ClientServiceImp implements ClientService {
@@ -172,8 +173,8 @@ private String saveImage(MultipartFile image) throws IOException {
 // ----------------------------------      updateClientPassword     -----------------------------------
 
     @Override
-    public Client updateClientPassword() {
-        // TODO Auto-generated method stub
+    public Client updateClientPassword(UpdatePasswordForm form, Long id) {
+        
         throw new UnsupportedOperationException("Unimplemented method 'updateClientPassword'");
     }
 
