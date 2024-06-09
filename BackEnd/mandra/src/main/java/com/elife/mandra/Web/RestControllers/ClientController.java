@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -57,9 +58,16 @@ public class ClientController {
  
 
  @DeleteMapping("/{id}/delete")
- public ResponseEntity<Object> putMethodName(@PathVariable Long id) {
-    return new ResponseEntity<>(this.clientService.deleteClient(id),HttpStatus.OK);
-}
+ public ResponseEntity<Object> deleteClient(@PathVariable Long id) {
+     try {
+         String resMessage = clientService.deleteClientById(id);
+         return ResponseEntity.status(HttpStatus.OK).body(resMessage);
+     } catch (RuntimeException e) {
+         ErrorResponse errorResponse = new ErrorResponse("Error while deleting client", e.getMessage());
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+     }
+ }
+ 
 
 
  }
