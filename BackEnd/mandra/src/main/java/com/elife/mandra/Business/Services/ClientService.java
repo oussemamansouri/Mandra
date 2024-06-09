@@ -4,6 +4,7 @@ package com.elife.mandra.Business.Services;
 import java.util.List;
 
 import com.elife.mandra.DAO.Entities.Client;
+import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
 
 public interface ClientService {
 
@@ -15,7 +16,7 @@ public interface ClientService {
     public Client getClientById(Long id);
  
     //Update operation
-    public Client updateClient(Client client);
+    public Client updateClient(Long id, UpdateClientForm client);
     public Client updateClientImage();
     public Client updateClientPassword();
 
