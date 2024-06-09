@@ -20,6 +20,6 @@ public interface ClientService {
     public Client updateClientPassword();
 
     //Delete operation
-    public String deleteClient(Long id); 
+    public String deleteClientById(Long id); 
 
 }
