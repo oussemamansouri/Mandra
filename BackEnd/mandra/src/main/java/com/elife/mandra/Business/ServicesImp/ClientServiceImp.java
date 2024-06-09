@@ -66,7 +66,7 @@ public class ClientServiceImp implements ClientService {
         try {
             return clientRepository.findById(id).get();
         } catch (Exception e) {
-            // Log the exception and rethrow it or handle it accordingly
+            LOGGER.error("Error while finding client with this id :" +id+" :", e);
             throw new RuntimeException("Failed to find client with this id "+id+" : " + e.getMessage(), e);
         }
     }
@@ -95,8 +95,8 @@ public class ClientServiceImp implements ClientService {
              clientRepository.deleteById(id);
              return "Client was deleted successfully";
         } catch (Exception e) {
-            // Log the exception and rethrow it or handle it accordingly
-            throw new RuntimeException("Failed to find client with this id "+id+" : " + e.getMessage(), e);
+            LOGGER.error("Error while deleting client with this id :" + id +" :", e);
+            throw new RuntimeException("Failed to find client with this id "+ id +" : " + e.getMessage(), e);
         }
     }
 
