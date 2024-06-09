@@ -1,6 +1,7 @@
 package com.elife.mandra.Web.RestControllers;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,6 +49,9 @@ public class ClientController {
     }
 
 
+
+
+
 @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateClientForm client,
     BindingResult result) {
@@ -58,7 +63,25 @@ public class ClientController {
     Client updateClient = clientService.updateClient(id, client);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updateClient);
 }
+
+
+
+
+
+   @PutMapping("/{id}/edit-image")
+    public ResponseEntity<Object> updateClientImage(@PathVariable(value = "id") Long id, 
+                                                    @RequestParam("image") MultipartFile image) {
+        try {
+            Client updatedClient = clientService.updateClientImage(id, image);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedClient);
+        } catch (RuntimeException e) {
+            ErrorResponse errorResponse = new ErrorResponse("Error while updating client image", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
     
+
+
 
 
  @GetMapping("")
@@ -66,12 +89,18 @@ public class ClientController {
      List<Client> Clients = clientService.getClients();
     return ResponseEntity.status(HttpStatus.OK).body(Clients);
  }
+
+
+
  
  @GetMapping("/{id}")
  public ResponseEntity<Object> getClients( @PathVariable(value = "id") Long id  ) {
     Client Client= clientService.getClientById(id);
     return ResponseEntity.status(HttpStatus.OK).body(Client);
  }
+ 
+
+
  
 
  @DeleteMapping("/{id}/delete")
