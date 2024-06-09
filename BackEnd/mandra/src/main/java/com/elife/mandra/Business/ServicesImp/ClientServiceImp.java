@@ -41,7 +41,11 @@ public class ClientServiceImp implements ClientService {
      @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public Client registerClient(RegisterClientForm clientForm) {
+
+
+// ----------------------------------      registerClient     -----------------------------------
+
+public Client registerClient(RegisterClientForm clientForm) {
         try {
             List<Client> nbClients = clientRepository.findByEmail(clientForm.getEmail());
             if (nbClients.isEmpty()) {
@@ -68,9 +72,9 @@ public class ClientServiceImp implements ClientService {
     
 
 
+// ----------------------------------      updateClient     -----------------------------------
 
-
-    @Override
+@Override
     public Client updateClient(Long id, UpdateClientForm client) {
         try {
             Client cli = clientRepository.getReferenceById(id);
@@ -87,7 +91,7 @@ public class ClientServiceImp implements ClientService {
 
 
 
-
+// ----------------------------------      getClients     -----------------------------------
 
     @Override
     public List<Client> getClients() {
@@ -102,7 +106,7 @@ public class ClientServiceImp implements ClientService {
 
 
 
-
+// ----------------------------------      getClientById     -----------------------------------
 
     @Override
     public Client getClientById(Long id) {
@@ -119,6 +123,7 @@ public class ClientServiceImp implements ClientService {
 
 
 
+// ----------------------------------      updateClientImage     -----------------------------------
 
     @Override
     public Client updateClientImage(Long id, MultipartFile image) {
@@ -164,6 +169,7 @@ private String saveImage(MultipartFile image) throws IOException {
 
 
 
+// ----------------------------------      updateClientPassword     -----------------------------------
 
     @Override
     public Client updateClientPassword() {
@@ -175,6 +181,7 @@ private String saveImage(MultipartFile image) throws IOException {
 
 
 
+// ----------------------------------      deleteClientById     -----------------------------------
 
     @Override
     public String deleteClientById(Long id) {
