@@ -90,15 +90,16 @@ public class ClientServiceImp implements ClientService {
     }
 
     @Override
-    public String deleteClient(Long id) {
+    public String deleteClientById(Long id) {
         try {
-             clientRepository.deleteById(id);
-             return "Client was deleted successfully";
+            clientRepository.deleteById(id);
+            return "Client deleted successfully";
         } catch (Exception e) {
-            LOGGER.error("Error while deleting client with this id :" + id +" :", e);
-            throw new RuntimeException("Failed to find client with this id "+ id +" : " + e.getMessage(), e);
+            LOGGER.error("Error while deleting client with id " + id, e);
+            throw new RuntimeException("Error while deleting client with id " + id + ": " + e.getMessage(), e);
         }
     }
+    
 
  
 
