@@ -7,6 +7,7 @@ import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.Web.Requests.ClientForms.RegisterClientForm;
 import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
@@ -64,6 +65,22 @@ public class ClientController {
     }
     Client updateClient = clientService.updateClient(id, client);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updateClient);
+}
+
+
+
+// ----------------------------------      updateClientPassword endpoint     -----------------------------------
+
+@PutMapping("/{id}/edit-password")
+    public ResponseEntity<Object> updateClientPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
+    BindingResult result) {
+    if (result.hasErrors()){
+        StringBuilder errors = new StringBuilder();
+        result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+        return ResponseEntity.badRequest().body(errors.toString());
+    }
+    Client updateClientPassword = clientService.updateClientPassword(form, id);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updateClientPassword);
 }
 
 
