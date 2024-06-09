@@ -34,9 +34,6 @@ public class Owner extends User {
     @Column(name = "cinImage",nullable = false)
     private String cinImage ;
 
-    @Column(name = "accountState",nullable = false)
-    private String accountState ;
-
     @Column(name = "nbOfHotels",nullable = false)
     private int nbOfHotels ;
 
