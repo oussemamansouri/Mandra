@@ -51,7 +51,8 @@ public class ClientController {
  
  @GetMapping("/{id}")
  public ResponseEntity<Object> getClients( @PathVariable(value = "id") Long id  ) {
-     return new ResponseEntity<>(this.clientService.getClientById(id),HttpStatus.OK);
+    Client Client= clientService.getClientById(id);
+    return ResponseEntity.status(HttpStatus.OK).body(Client);
  }
  
 
