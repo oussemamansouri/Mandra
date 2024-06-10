@@ -1,6 +1,10 @@
 package com.elife.mandra.Business.Services;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.elife.mandra.DAO.Entities.Admin;
+import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
 public interface AdminService {
 
@@ -8,11 +12,14 @@ public interface AdminService {
     public Admin addAdmin(Admin admin);
 
     //Read operation
-    public Admin getAdmin();
+    public Admin getAdminById(Long id);
  
-    //update operation
-    public Admin updateAdmin( Admin admin);
-    public Admin updateAdminImage();
+    //Update operation
+    public Admin updateAdmin(Long id, UpdateUserForm client);
+    public Admin updateAdminImage(Long id, MultipartFile image);
+    public Admin updateAdminPassword(UpdatePasswordForm form, Long id);
 
+    //Delete operation
+    // public String deleteAdminById(Long id); 
 
 }
