@@ -5,9 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
-import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
@@ -56,7 +56,7 @@ public class ClientController {
 // ----------------------------------      updateClient endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit")
-    public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateClientForm client,
+    public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm client,
     BindingResult result) {
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
