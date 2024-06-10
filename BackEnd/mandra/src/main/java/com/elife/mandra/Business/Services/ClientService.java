@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.DAO.Entities.Client;
-import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
 public interface ClientService {
 
@@ -20,7 +20,7 @@ public interface ClientService {
     public Client getClientById(Long id);
  
     //Update operation
-    public Client updateClient(Long id, UpdateClientForm client);
+    public Client updateClient(Long id, UpdateUserForm client);
     public Client updateClientImage(Long id, MultipartFile image);
     public Client updateClientPassword(UpdatePasswordForm form, Long id);
 
