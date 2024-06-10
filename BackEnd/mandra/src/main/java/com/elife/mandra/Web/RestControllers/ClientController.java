@@ -37,7 +37,7 @@ public class ClientController {
     this.clientService = clientService;
  }   
 
-// ----------------------------------      registerClient endpoint     -----------------------------------
+// ----------------------------------      register Client endpoint     -----------------------------------
 
 @PostMapping("/register")
     public ResponseEntity<?> registerClient(@Valid @RequestBody AddUserForm client, BindingResult result) {
@@ -53,7 +53,7 @@ public class ClientController {
 
 
 
-// ----------------------------------      updateClient endpoint     -----------------------------------
+// ----------------------------------      update Client endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm client,
@@ -69,7 +69,7 @@ public class ClientController {
 
 
 
-// ----------------------------------      updateClientPassword endpoint     -----------------------------------
+// ----------------------------------      update Client Password endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit-password")
     public ResponseEntity<Object> updateClientPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
@@ -86,7 +86,7 @@ public class ClientController {
 
 
 
-// ----------------------------------      edit-image endpoint     -----------------------------------
+// ----------------------------------      edit image endpoint     -----------------------------------
 
    @PutMapping("/{id}/edit-image")
     public ResponseEntity<Object> updateClientImage(@PathVariable(value = "id") Long id, 
@@ -103,7 +103,7 @@ public class ClientController {
 
 
 
-// ----------------------------------      getClients endpoint     -----------------------------------
+// ----------------------------------      get Clients endpoint     -----------------------------------
 
  @GetMapping("")
  public ResponseEntity<Object> getClients() {
@@ -113,7 +113,7 @@ public class ClientController {
 
 
 
- // ----------------------------------      getClientById endpoint     -----------------------------------
+ // ----------------------------------      get Client By Id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
  public ResponseEntity<Object> getClients( @PathVariable(value = "id") Long id  ) {
@@ -124,7 +124,7 @@ public class ClientController {
 
 
 
-// ----------------------------------      deleteClient endpoint     -----------------------------------
+// ----------------------------------      delete Client endpoint     -----------------------------------
 
  @DeleteMapping("/{id}/delete")
  public ResponseEntity<Object> deleteClient(@PathVariable Long id) {
