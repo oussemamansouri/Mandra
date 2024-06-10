@@ -84,8 +84,8 @@ public Client registerClient(AddUserForm clientForm) {
             cli.setPhoneNumber(client.getPhoneNumber());
             return clientRepository.save(cli);
         } catch (Exception e) {
-            LOGGER.error("Error while registering client", e);
-            throw new RuntimeException("Error while registering client: " + e.getMessage(), e);
+            LOGGER.error("Error while updating client", e);
+            throw new RuntimeException("Error while updating client: " + e.getMessage(), e);
         }
     }
 
