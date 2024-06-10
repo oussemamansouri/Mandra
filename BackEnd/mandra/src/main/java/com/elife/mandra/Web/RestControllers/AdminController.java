@@ -47,7 +47,7 @@ public class AdminController {
 
 
 
-     // ----------------------------------      get admin by id endpoint     -----------------------------------
+// ----------------------------------      get admin by id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
  public ResponseEntity<Object> getAdmin( @PathVariable(value = "id") Long id  ) {
@@ -58,7 +58,7 @@ public class AdminController {
 
 
 
-     // ----------------------------------      update admin endpoint     -----------------------------------
+// ----------------------------------      update admin endpoint     -----------------------------------
 
  @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateAdmin(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm admin,
@@ -93,7 +93,7 @@ public class AdminController {
 
 
 
-    // ----------------------------------      update admin Password endpoint     -----------------------------------
+// ----------------------------------      update admin Password endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit-password")
     public ResponseEntity<Object> updateAdminPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
