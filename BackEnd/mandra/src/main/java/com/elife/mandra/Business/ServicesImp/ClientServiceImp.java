@@ -174,8 +174,19 @@ private String saveImage(MultipartFile image) throws IOException {
 
     @Override
     public Client updateClientPassword(UpdatePasswordForm form, Long id) {
-        
-        throw new UnsupportedOperationException("Unimplemented method 'updateClientPassword'");
+        try {
+            Client client = clientRepository.findById(id).get();
+            Boolean verifyOldPassword = bCryptPasswordEncoder.matches(form.getOldPassword(), client.getPassword()); 
+            if (form.isPasswordMatching() && verifyOldPassword) {
+                client.setPassword(bCryptPasswordEncoder.encode(form.getNewPassword()));
+                return clientRepository.save(client);
+            } else {
+                throw new RuntimeException("This new password doesn't matches the old password !");
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error while updating the password for the client", e);
+            throw new RuntimeException("Error while updating the password for the client: " + e.getMessage(), e);
+        }
     }
 
 
