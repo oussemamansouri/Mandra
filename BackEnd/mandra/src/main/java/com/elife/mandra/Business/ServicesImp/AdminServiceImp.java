@@ -146,11 +146,24 @@ private String saveImage(MultipartFile image) throws IOException {
     return "/images/" + uniqueFilename; // Return the relative path with the unique filename
 }
 
+    // ----------------------------------      update admin password Image     -----------------------------------
 
     @Override
     public Admin updateAdminPassword(UpdatePasswordForm form, Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAdminPassword'");
+       try {
+            Admin admin = adminRepository.findById(id).get();
+            Boolean verifyOldPassword = bCryptPasswordEncoder.matches(form.getOldPassword(), admin.getPassword()); 
+            if (form.isPasswordMatching() && verifyOldPassword) {
+                admin.setPassword(bCryptPasswordEncoder.encode(form.getNewPassword()));
+                return adminRepository.save(admin);
+            } else {
+                throw new RuntimeException("This new password doesn't matches the old password !");
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error while updating the password for the admin", e);
+            throw new RuntimeException("Error while updating the password for the admin: " + e.getMessage(), e);
+        }
+
     }
 
 }
