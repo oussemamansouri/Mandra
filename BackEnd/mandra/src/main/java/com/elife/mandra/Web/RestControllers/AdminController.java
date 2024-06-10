@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.AdminService;
 import com.elife.mandra.DAO.Entities.Admin;
-import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -68,6 +70,27 @@ public class AdminController {
     Admin updatedAdmin = adminService.updateAdmin(id, admin);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAdmin);
 }
+
+
+
+
+
+// ----------------------------------      edit image endpoint     -----------------------------------
+
+   @PutMapping("/{id}/edit-image")
+    public ResponseEntity<Object> updateClientImage(@PathVariable(value = "id") Long id, 
+                                                    @RequestParam("image") MultipartFile image) {
+        try {
+            Admin updatedAdmin = adminService.updateAdminImage(id, image);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAdmin);
+        } catch (RuntimeException e) {
+            ErrorResponse errorResponse = new ErrorResponse("Error while updating admin image", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
+
+
+
 
 
 
