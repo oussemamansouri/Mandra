@@ -3,6 +3,7 @@ package com.elife.mandra.Web.Requests.UserForms;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +30,10 @@ public class AddUserForm {
     @Size(max = 30, message = "L'email doit comporter moins de 30 caractères.")
     private String email ;
 
-    @NotBlank(message = "Mot de passe obligatoire")
+    @NotBlank(message = "Nouveau mot de passe requis")
+    @Size(min = 8, max = 30, message = "Le mot de passe doit comporter entre 8 et 30 caractères")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,30}$",
+             message = "Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial")
     private String password ;
 
     @NotNull(message = "Le numéro de téléphone est obligatoire")
