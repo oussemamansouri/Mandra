@@ -36,7 +36,8 @@ public class AdminServiceImp implements AdminService{
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
- // ----------------------------------      registerClient     -----------------------------------
+
+ // ----------------------------------     addAdmin      -----------------------------------
 
 public Admin addAdmin(AddUserForm adminForm) {
         try {
@@ -62,11 +63,25 @@ public Admin addAdmin(AddUserForm adminForm) {
             throw new RuntimeException("Error while adding admin: " + e.getMessage(), e);
         }
     }
+
+
+
+
+     // ----------------------------------     getAdminById      -----------------------------------
+
     @Override
     public Admin getAdminById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAdminById'");
+        try {
+            return adminRepository.findById(id).get();
+        } catch (Exception e) {
+            LOGGER.error("Error while finding admin with this id :" +id+" :", e);
+            throw new RuntimeException("Failed to find admin with this id "+id+" : " + e.getMessage(), e);
+        }
     }
+
+
+
+    
 
     @Override
     public Admin updateAdmin(Long id, UpdateUserForm client) {
