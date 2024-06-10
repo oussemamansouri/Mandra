@@ -1,7 +1,11 @@
 package com.elife.mandra.Business.ServicesImp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,11 +102,50 @@ public Admin addAdmin(AddUserForm adminForm) {
         }
     }
 
+
+
+    // ----------------------------------      update admin Image     -----------------------------------
+
     @Override
     public Admin updateAdminImage(Long id, MultipartFile image) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAdminImage'");
+       try {
+            // Validate if the file is an image
+            String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+            if (!extension.matches("jpg|jpeg|png|gif")) {
+                throw new RuntimeException("Invalid image file type");
+            }
+    
+            Admin admin = adminRepository.getReferenceById(id);
+            String imagePath = saveImage(image); // Save the image and get the path
+            admin.setImage(imagePath);
+            return adminRepository.save(admin);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating admin image", e);
+            throw new RuntimeException("Error while updating admin image: " + e.getMessage(), e);
+        }
     }
+
+
+    // Method to save the image and return the relative path
+private String saveImage(MultipartFile image) throws IOException {
+    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images";
+    File directory = new File(uploadDir);
+    
+    // Create the directory if it does not exist
+    if (!directory.exists()) {
+        directory.mkdirs();
+    }
+
+    // Generate a unique filename
+    String originalFilename = image.getOriginalFilename();
+    String extension = FilenameUtils.getExtension(originalFilename);
+    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
+
+    File file = new File(directory, uniqueFilename);
+    image.transferTo(file);
+    return "/images/" + uniqueFilename; // Return the relative path with the unique filename
+}
+
 
     @Override
     public Admin updateAdminPassword(UpdatePasswordForm form, Long id) {
