@@ -17,7 +17,7 @@ public class OwnerServiceImp implements OwnerService {
 
 
     @Override
-    public Owner addOwner(Owner owner) {
+    public Owner registerOwner(Owner owner) {
         try{
           return this.ownerRepository.save(owner); 
         }catch(Exception e){
