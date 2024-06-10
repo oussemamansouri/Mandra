@@ -5,7 +5,7 @@ import com.elife.mandra.DAO.Entities.Owner;
 public interface OwnerService {
 
     //Create operation
-    public Owner addOwner(Owner owner);
+    public Owner registerOwner(Owner owner);
 
     //Read operation
     public Owner getOwners();
