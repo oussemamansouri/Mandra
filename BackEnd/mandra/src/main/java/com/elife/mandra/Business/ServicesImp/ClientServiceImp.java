@@ -21,8 +21,8 @@ import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
-import com.elife.mandra.Web.Requests.ClientForms.RegisterClientForm;
 import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
+import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 
 @Service
@@ -46,7 +46,7 @@ public class ClientServiceImp implements ClientService {
 
 // ----------------------------------      registerClient     -----------------------------------
 
-public Client registerClient(RegisterClientForm clientForm) {
+public Client registerClient(AddUserForm clientForm) {
         try {
             List<Client> nbClients = clientRepository.findByEmail(clientForm.getEmail());
             if (nbClients.isEmpty()) {
@@ -188,8 +188,6 @@ private String saveImage(MultipartFile image) throws IOException {
             throw new RuntimeException("Error while updating the password for the client: " + e.getMessage(), e);
         }
     }
-
-
 
 
 
