@@ -21,9 +21,9 @@ import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
-import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
 @Service
 public class ClientServiceImp implements ClientService {
@@ -76,7 +76,7 @@ public Client registerClient(AddUserForm clientForm) {
 // ----------------------------------      updateClient     -----------------------------------
 
 @Override
-    public Client updateClient(Long id, UpdateClientForm client) {
+    public Client updateClient(Long id, UpdateUserForm client) {
         try {
             Client cli = clientRepository.getReferenceById(id);
             cli.setFirstname(client.getFirstname());
