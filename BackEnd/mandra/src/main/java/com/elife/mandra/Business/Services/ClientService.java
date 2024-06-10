@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.DAO.Entities.Client;
-import com.elife.mandra.Web.Requests.ClientForms.RegisterClientForm;
 import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
+import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 
 public interface ClientService {
 
     //Create operation
-    public Client registerClient(RegisterClientForm client);
+    public Client registerClient(AddUserForm client);
 
     //Read operation
     public List<Client> getClients();
