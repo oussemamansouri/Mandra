@@ -44,7 +44,7 @@ public class ClientServiceImp implements ClientService {
 
 
 
-// ----------------------------------      registerClient     -----------------------------------
+// ----------------------------------      register Client     -----------------------------------
 
 public Client registerClient(AddUserForm clientForm) {
         try {
@@ -73,7 +73,7 @@ public Client registerClient(AddUserForm clientForm) {
     
 
 
-// ----------------------------------      updateClient     -----------------------------------
+// ----------------------------------      update Client     -----------------------------------
 
 @Override
     public Client updateClient(Long id, UpdateUserForm client) {
@@ -92,7 +92,7 @@ public Client registerClient(AddUserForm clientForm) {
 
 
 
-// ----------------------------------      getClients     -----------------------------------
+// ----------------------------------      get Clients     -----------------------------------
 
     @Override
     public List<Client> getClients() {
@@ -107,7 +107,7 @@ public Client registerClient(AddUserForm clientForm) {
 
 
 
-// ----------------------------------      getClientById     -----------------------------------
+// ----------------------------------      get Client By Id     -----------------------------------
 
     @Override
     public Client getClientById(Long id) {
@@ -124,7 +124,7 @@ public Client registerClient(AddUserForm clientForm) {
 
 
 
-// ----------------------------------      updateClientImage     -----------------------------------
+// ----------------------------------      update Client Image     -----------------------------------
 
     @Override
     public Client updateClientImage(Long id, MultipartFile image) {
@@ -170,7 +170,7 @@ private String saveImage(MultipartFile image) throws IOException {
 
 
 
-// ----------------------------------      updateClientPassword     -----------------------------------
+// ----------------------------------      update Client Password     -----------------------------------
 
     @Override
     public Client updateClientPassword(UpdatePasswordForm form, Long id) {
@@ -191,7 +191,7 @@ private String saveImage(MultipartFile image) throws IOException {
 
 
 
-// ----------------------------------      deleteClientById     -----------------------------------
+// ----------------------------------      delete Client By Id     -----------------------------------
 
     @Override
     public String deleteClientById(Long id) {
