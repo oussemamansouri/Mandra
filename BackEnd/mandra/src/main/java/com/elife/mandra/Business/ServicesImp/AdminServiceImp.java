@@ -37,7 +37,7 @@ public class AdminServiceImp implements AdminService{
 
 
 
- // ----------------------------------     addAdmin      -----------------------------------
+ // ----------------------------------     add Admin      -----------------------------------
 
 public Admin addAdmin(AddUserForm adminForm) {
         try {
@@ -67,7 +67,7 @@ public Admin addAdmin(AddUserForm adminForm) {
 
 
 
-     // ----------------------------------     getAdminById      -----------------------------------
+     // ----------------------------------     get Admin By Id      -----------------------------------
 
     @Override
     public Admin getAdminById(Long id) {
@@ -81,12 +81,21 @@ public Admin addAdmin(AddUserForm adminForm) {
 
 
 
-    
+
+     // ----------------------------------     update Admin      -----------------------------------
 
     @Override
-    public Admin updateAdmin(Long id, UpdateUserForm client) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateAdmin'");
+    public Admin updateAdmin(Long id, UpdateUserForm admin) {
+         try {
+            Admin adm = adminRepository.getReferenceById(id);
+            adm.setFirstname(admin.getFirstname());
+            adm.setLastname(admin.getLastname());
+            adm.setPhoneNumber(admin.getPhoneNumber());
+            return adminRepository.save(adm);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating admin", e);
+            throw new RuntimeException("Error while updating admin: " + e.getMessage(), e);
+        }
     }
 
     @Override
