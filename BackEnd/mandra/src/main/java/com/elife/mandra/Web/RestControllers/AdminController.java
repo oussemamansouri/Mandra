@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.AdminService;
 import com.elife.mandra.DAO.Entities.Admin;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
@@ -78,7 +79,7 @@ public class AdminController {
 // ----------------------------------      edit image endpoint     -----------------------------------
 
    @PutMapping("/{id}/edit-image")
-    public ResponseEntity<Object> updateClientImage(@PathVariable(value = "id") Long id, 
+    public ResponseEntity<Object> updateAdminImage(@PathVariable(value = "id") Long id, 
                                                     @RequestParam("image") MultipartFile image) {
         try {
             Admin updatedAdmin = adminService.updateAdminImage(id, image);
@@ -88,6 +89,23 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+
+
+
+    // ----------------------------------      update admin Password endpoint     -----------------------------------
+
+@PutMapping("/{id}/edit-password")
+    public ResponseEntity<Object> updateAdminPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
+    BindingResult result) {
+    if (result.hasErrors()){
+        StringBuilder errors = new StringBuilder();
+        result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+        return ResponseEntity.badRequest().body(errors.toString());
+    }
+    Admin updatedAdminPassword = adminService.updateAdminPassword(form, id);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAdminPassword);
+}
 
 
 
