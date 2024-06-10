@@ -5,8 +5,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
-import com.elife.mandra.Web.Requests.ClientForms.RegisterClientForm;
 import com.elife.mandra.Web.Requests.ClientForms.UpdateClientForm;
+import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
@@ -40,7 +40,7 @@ public class ClientController {
 // ----------------------------------      registerClient endpoint     -----------------------------------
 
 @PostMapping("/register")
-    public ResponseEntity<?> registerClient(@Valid @RequestBody RegisterClientForm client, BindingResult result) {
+    public ResponseEntity<?> registerClient(@Valid @RequestBody AddUserForm client, BindingResult result) {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
