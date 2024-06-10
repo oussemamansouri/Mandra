@@ -3,13 +3,14 @@ package com.elife.mandra.Business.Services;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.DAO.Entities.Admin;
+import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
 public interface AdminService {
 
     //Create operation
-    public Admin addAdmin(Admin admin);
+    public Admin addAdmin(AddUserForm adminForm);
 
     //Read operation
     public Admin getAdminById(Long id);
