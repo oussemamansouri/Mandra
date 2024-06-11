@@ -10,6 +10,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 // import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,9 +97,9 @@ public Client registerClient(AddUserForm clientForm) {
 // ----------------------------------      get Clients     -----------------------------------
 
     @Override
-    public List<Client> getClients() {
+    public Page<Client> getClients(Pageable pageable) {
         try {
-            return clientRepository.findAll();
+            return clientRepository.findAll(pageable);
         } catch (Exception e) {
             LOGGER.error("Error while finding clients", e);
             throw new RuntimeException("Failed to find clients: " + e.getMessage(), e);
