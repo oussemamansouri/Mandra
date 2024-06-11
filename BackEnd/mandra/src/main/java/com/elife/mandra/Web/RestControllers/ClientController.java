@@ -12,8 +12,9 @@ import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -106,8 +107,8 @@ public class ClientController {
 // ----------------------------------      get Clients endpoint     -----------------------------------
 
  @GetMapping("")
- public ResponseEntity<Object> getClients() {
-     List<Client> Clients = clientService.getClients();
+ public ResponseEntity<Object> getClients(@PageableDefault(size = 10) Pageable pageable) {
+     Page<Client> Clients = clientService.getClients(pageable);
     return ResponseEntity.status(HttpStatus.OK).body(Clients);
  }
 
