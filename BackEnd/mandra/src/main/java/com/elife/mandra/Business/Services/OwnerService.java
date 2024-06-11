@@ -1,11 +1,12 @@
 package com.elife.mandra.Business.Services;
 
 import com.elife.mandra.DAO.Entities.Owner;
+import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
 
 public interface OwnerService {
 
     //Create operation
-    public Owner registerOwner(Owner owner);
+    public Owner registerOwner(AddOwnerForm ownerForm);
 
     //Read operation
     public Owner getOwners();
