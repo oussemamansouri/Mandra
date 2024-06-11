@@ -34,6 +34,7 @@ public class OwnerServiceImp implements OwnerService {
     @Override
     public Owner registerOwner(AddOwnerForm ownerForm) {
          try {
+          
             List<Owner> nbOwners = ownerRepository.findByEmail(ownerForm.getEmail());
             if (nbOwners.isEmpty()) {
                 ownerForm.setPassword(bCryptPasswordEncoder.encode(ownerForm.getPassword()));
@@ -43,8 +44,8 @@ public class OwnerServiceImp implements OwnerService {
                     ownerForm.getEmail(),
                     ownerForm.getPassword(),
                     ownerForm.getPhoneNumber(),
-                    ownerForm.getProof(),
-                    ownerForm.getCinImage(),
+                    null,
+                    null,
                     ownerForm.getNbOfHotels(),
                     ownerForm.getNbOfRestaurant(),
                     ownerForm.getNbOfGuesthouses(),
@@ -63,9 +64,12 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
-
-
     
+
+
+
+
+
     @Override
     public Owner getOwners() {
         // TODO Auto-generated method stub
