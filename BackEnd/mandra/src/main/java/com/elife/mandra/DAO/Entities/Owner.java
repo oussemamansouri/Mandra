@@ -31,10 +31,10 @@ public class Owner extends User {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    @Column(name = "proof",nullable = false)
+    @Column(name = "proof",nullable = true)
     private String proof;
 
-    @Column(name = "cinImage",nullable = false)
+    @Column(name = "cinImage",nullable = true)
     private String cinImage ;
 
     @Column(name = "nbOfHotels",nullable = false)
