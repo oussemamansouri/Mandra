@@ -2,6 +2,9 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.List;
 
+import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
+import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -53,6 +56,24 @@ public class Owner extends User {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
     private List<Restaurant> Restaurants ;
+
+    public Owner(String firstname, String lastname, String email, String password,
+    int phoneNumber,String proof, String cinImage, int nbOfHotels, int nbOfRestaurant, 
+    int nbOfGuesthouses, RoleOption role, String image, AccountStateOption accountState) {
+        this.setFirstname(firstname);
+        this.setLastname(lastname);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setPhoneNumber(phoneNumber);
+        this.proof = proof;
+        this.cinImage = cinImage;
+        this.nbOfGuesthouses = nbOfGuesthouses;
+        this.nbOfHotels = nbOfHotels;
+        this.nbOfRestaurant = nbOfRestaurant;
+        this.setRole(role);
+        this.setImage(image);
+        this.setAccountState(accountState);
+    }
 
 
 }
