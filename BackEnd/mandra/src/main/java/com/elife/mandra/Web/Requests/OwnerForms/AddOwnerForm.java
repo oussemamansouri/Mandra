@@ -41,12 +41,6 @@ public class AddOwnerForm {
     @NotNull(message = "Le numéro de téléphone est obligatoire")
     private int phoneNumber ;
 
-    @NotBlank(message = "Le preuve est obligatoire")
-    private String proof;
-
-    @NotBlank(message = "L'image de cin est obligatoire")
-    private String cinImage ;
-
     @NotNull(message = "Le nombre des hôtels est obligatoire")
     @Min(value = 0, message = "Le nombre des hôtels doit être au moins 0")
     @Max(value = 10, message = "Le nombre des hôtels doit être au plus 10")
