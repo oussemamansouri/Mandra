@@ -1,8 +1,9 @@
 package com.elife.mandra.Business.Services;
 
 
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.DAO.Entities.Client;
@@ -16,7 +17,7 @@ public interface ClientService {
     public Client registerClient(AddUserForm client);
 
     //Read operation
-    public List<Client> getClients();
+    public Page<Client> getClients(Pageable pageable);
     public Client getClientById(Long id);
  
     //Update operation
