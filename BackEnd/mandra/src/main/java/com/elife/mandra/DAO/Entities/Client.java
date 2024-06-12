@@ -31,7 +31,7 @@ public class Client extends User {
 
 
     public Client(String firstname, String lastname, String email, String password,
-    int phoneNumber, RoleOption role, String image, AccountStateOption accountState) {
+    String phoneNumber, RoleOption role, String image, AccountStateOption accountState) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setEmail(email);
