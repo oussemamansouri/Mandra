@@ -58,7 +58,7 @@ public class Owner extends User {
     private List<Restaurant> Restaurants ;
 
     public Owner(String firstname, String lastname, String email, String password,
-    int phoneNumber,String proof, String cinImage, int nbOfHotels, int nbOfRestaurant, 
+    String phoneNumber,String proof, String cinImage, int nbOfHotels, int nbOfRestaurant, 
     int nbOfGuesthouses, RoleOption role, String image, AccountStateOption accountState) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
