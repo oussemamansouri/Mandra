@@ -5,8 +5,11 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.OwnerService;
 import com.elife.mandra.DAO.Entities.Owner;
@@ -14,6 +17,7 @@ import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.OwnerRepository;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 
 @Service
 public class OwnerServiceImp implements OwnerService {
@@ -64,17 +68,21 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
-    
 
 
 
-
+    // ----------------------------------      get Owners     -----------------------------------
 
     @Override
-    public Owner getOwners() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOwners'");
+    public Page<Owner> getOwners(Pageable pageable) {
+        try {
+            return ownerRepository.findAll(pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding owners", e);
+            throw new RuntimeException("Failed to find owners: " + e.getMessage(), e);
+        }
     }
+
 
     @Override
     public Owner getOwnerById(Long id) {
@@ -82,23 +90,41 @@ public class OwnerServiceImp implements OwnerService {
         throw new UnsupportedOperationException("Unimplemented method 'getOwnerById'");
     }
 
+
+    @Override
+    public Owner uploadCinImage(Long id, MultipartFile cinImage) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'uploadCinImage'");
+    }
+
+
+    @Override
+    public Owner uploadProofFile(Long id, MultipartFile proofFile) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'uploadProofFile'");
+    }
+
+
     @Override
     public Owner updateOwner(Owner owner) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateOwner'");
     }
 
+
     @Override
-    public Owner updateOwnerImage() {
+    public Owner updateOwnerImage(Long id, MultipartFile image) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateOwnerImage'");
     }
 
+
     @Override
-    public Owner updateOwnerPassword() {
+    public Owner updateOwnerPassword(UpdatePasswordForm form, Long id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updateOwnerPassword'");
     }
+
 
     @Override
     public void deleteOwner(Long id) {
@@ -106,4 +132,13 @@ public class OwnerServiceImp implements OwnerService {
         throw new UnsupportedOperationException("Unimplemented method 'deleteOwner'");
     }
 
+
+
+
+
+
+
+
+
+  
 }
