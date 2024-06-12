@@ -84,10 +84,18 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
+
+
+    // ----------------------------------      get Client By Id     -----------------------------------
+
     @Override
     public Owner getOwnerById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getOwnerById'");
+        try {
+            return ownerRepository.findById(id).get();
+        } catch (Exception e) {
+            LOGGER.error("Error while finding owner with this id :" +id+" :", e);
+            throw new RuntimeException("Failed to find owner with this id "+id+" : " + e.getMessage(), e);
+        }
     }
 
 
