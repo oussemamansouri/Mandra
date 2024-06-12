@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.OwnerService;
-import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
