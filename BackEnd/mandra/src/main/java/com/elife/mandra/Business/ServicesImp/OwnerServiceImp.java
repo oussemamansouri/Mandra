@@ -1,7 +1,11 @@
 package com.elife.mandra.Business.ServicesImp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,9 +105,49 @@ public class OwnerServiceImp implements OwnerService {
 
     @Override
     public Owner uploadCinImage(Long id, MultipartFile cinImage) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'uploadCinImage'");
+       try {
+            // Validate if the file is an image
+            String extension = FilenameUtils.getExtension(cinImage.getOriginalFilename());
+            if (!extension.matches("jpg|jpeg|png|gif")) {
+                throw new RuntimeException("Invalid image type");
+            }
+    
+            Owner owner = ownerRepository.getReferenceById(id);
+            String imagePath = saveImage(cinImage); // Save the file and get the path
+            owner.setImage(imagePath);
+            return ownerRepository.save(owner);
+        } catch (Exception e) {
+            LOGGER.error("Error while uploading owner cin image", e);
+            throw new RuntimeException("Error while uploading owner cin image : " + e.getMessage(), e);
+        }
     }
+
+
+
+    // Method to save the image and return the relative path
+private String saveImage(MultipartFile image) throws IOException {
+    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images";
+    File directory = new File(uploadDir);
+    
+    // Create the directory if it does not exist
+    if (!directory.exists()) {
+        directory.mkdirs();
+    }
+
+    // Generate a unique filename
+    String originalFilename = image.getOriginalFilename();
+    String extension = FilenameUtils.getExtension(originalFilename);
+    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
+
+    File file = new File(directory, uniqueFilename);
+    image.transferTo(file);
+    return "/images/" + uniqueFilename; // Return the relative path with the unique filename
+}
+
+
+
+
+
 
 
     @Override
