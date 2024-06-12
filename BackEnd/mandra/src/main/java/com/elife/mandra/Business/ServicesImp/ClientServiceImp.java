@@ -130,13 +130,19 @@ public Client registerClient(AddUserForm clientForm) {
     @Override
     public Client updateClientImage(Long id, MultipartFile image) {
         try {
+
+            // Fetch the client first
+            Client client = clientRepository.findById(id).orElse(null);
+            if (client == null) {
+                throw new RuntimeException("Failed to find client with this id: " + id);
+            }
+
             // Validate if the file is an image
             String extension = FilenameUtils.getExtension(image.getOriginalFilename());
             if (!extension.matches("jpg|jpeg|png|gif")) {
                 throw new RuntimeException("Invalid image file type");
             }
     
-            Client client = clientRepository.getReferenceById(id);
             String imagePath = fileService.saveImage(image);// Save the image and get the path
             client.setImage(imagePath);
             return clientRepository.save(client);
