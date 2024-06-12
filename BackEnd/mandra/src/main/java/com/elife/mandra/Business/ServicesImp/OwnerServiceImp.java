@@ -1,9 +1,6 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -15,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.elife.mandra.Business.FileService;
 import com.elife.mandra.Business.Services.OwnerService;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
@@ -33,8 +31,12 @@ public class OwnerServiceImp implements OwnerService {
         this.ownerRepository = ownerRepository;
     }
 
-       @Autowired
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private FileService fileService ;
+
 
 
 // ----------------------------------      register Owner     -----------------------------------
@@ -117,7 +119,7 @@ public class OwnerServiceImp implements OwnerService {
             }
     
             Owner owner = ownerRepository.getReferenceById(id);
-            String imagePath = saveImage(cinImage); // Save the file and get the path
+            String imagePath = fileService.saveImage(cinImage); // Save the file and get the path
             owner.setCinImage(imagePath);
             return ownerRepository.save(owner);
         } catch (Exception e) {
@@ -125,30 +127,6 @@ public class OwnerServiceImp implements OwnerService {
             throw new RuntimeException("Error while uploading owner cin image : " + e.getMessage(), e);
         }
     }
-
-
-
-    // Method to save the image and return the relative path
-private String saveImage(MultipartFile image) throws IOException {
-    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images";
-    File directory = new File(uploadDir);
-    
-    // Create the directory if it does not exist
-    if (!directory.exists()) {
-        directory.mkdirs();
-    }
-
-    // Generate a unique filename
-    String originalFilename = image.getOriginalFilename();
-    String extension = FilenameUtils.getExtension(originalFilename);
-    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
-
-    File file = new File(directory, uniqueFilename);
-    image.transferTo(file);
-    return "/images/" + uniqueFilename; // Return the relative path with the unique filename
-}
-
-
 
 
 
@@ -164,7 +142,7 @@ private String saveImage(MultipartFile image) throws IOException {
             }
     
             Owner owner = ownerRepository.getReferenceById(id);
-            String imagePath = saveFile(proofFile); // Save the file and get the path
+            String imagePath = fileService.saveFile(proofFile); // Save the file and get the path
             owner.setProof(imagePath);
             return ownerRepository.save(owner);
         } catch (Exception e) {
@@ -173,25 +151,7 @@ private String saveImage(MultipartFile image) throws IOException {
         }
     }
 
-        // Method to save the image and return the relative path
-private String saveFile(MultipartFile image) throws IOException {
-    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/files";
-    File directory = new File(uploadDir);
-    
-    // Create the directory if it does not exist
-    if (!directory.exists()) {
-        directory.mkdirs();
-    }
-
-    // Generate a unique filename
-    String originalFilename = image.getOriginalFilename();
-    String extension = FilenameUtils.getExtension(originalFilename);
-    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
-
-    File file = new File(directory, uniqueFilename);
-    image.transferTo(file);
-    return "/files/" + uniqueFilename; // Return the relative path with the unique filename
-}
+       
 
 
 
