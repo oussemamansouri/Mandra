@@ -25,10 +25,10 @@ public class Guesthouse extends Property {
     private Long id;
 
     @Column(name = "hasPool",nullable = false)
-    private boolean aPiscine ;
+    private boolean hasPool ;
     
     @Column(name = "hasRestaurant",nullable = false)
-    private boolean aRestaurant ;
+    private boolean hasRestaurant ;
 
     @ManyToOne()
     @JoinColumn(name = "OwnerId")
