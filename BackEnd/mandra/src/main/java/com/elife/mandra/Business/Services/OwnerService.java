@@ -27,6 +27,6 @@ public interface OwnerService {
     public Owner updateOwnerPassword(UpdatePasswordForm form, Long id);
 
     //Delete operation
-    public void deleteOwner(Long id); 
+    public String deleteOwner(Long id); 
 
 }
