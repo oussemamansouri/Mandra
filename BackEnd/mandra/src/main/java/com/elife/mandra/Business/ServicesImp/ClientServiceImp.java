@@ -1,10 +1,7 @@
 package com.elife.mandra.Business.ServicesImp;
 
-
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -13,11 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import com.elife.mandra.Business.FileService;
 import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
@@ -41,8 +37,11 @@ public class ClientServiceImp implements ClientService {
     // @Autowired
     // ClientRepository clientRepository ;
 
-     @Autowired
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private FileService fileService;
 
 
 
@@ -138,7 +137,7 @@ public Client registerClient(AddUserForm clientForm) {
             }
     
             Client client = clientRepository.getReferenceById(id);
-            String imagePath = saveImage(image); // Save the image and get the path
+            String imagePath = fileService.saveImage(image);// Save the image and get the path
             client.setImage(imagePath);
             return clientRepository.save(client);
         } catch (Exception e) {
@@ -146,27 +145,6 @@ public Client registerClient(AddUserForm clientForm) {
             throw new RuntimeException("Error while updating client image: " + e.getMessage(), e);
         }
     }
-    
-
-// Method to save the image and return the relative path
-private String saveImage(MultipartFile image) throws IOException {
-    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images";
-    File directory = new File(uploadDir);
-    
-    // Create the directory if it does not exist
-    if (!directory.exists()) {
-        directory.mkdirs();
-    }
-
-    // Generate a unique filename
-    String originalFilename = image.getOriginalFilename();
-    String extension = FilenameUtils.getExtension(originalFilename);
-    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
-
-    File file = new File(directory, uniqueFilename);
-    image.transferTo(file);
-    return "/images/" + uniqueFilename; // Return the relative path with the unique filename
-}
 
 
 
