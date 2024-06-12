@@ -103,6 +103,10 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
+
+
+    // ----------------------------------      upload Owner Cin Image     -----------------------------------
+
     @Override
     public Owner uploadCinImage(Long id, MultipartFile cinImage) {
        try {
@@ -114,7 +118,7 @@ public class OwnerServiceImp implements OwnerService {
     
             Owner owner = ownerRepository.getReferenceById(id);
             String imagePath = saveImage(cinImage); // Save the file and get the path
-            owner.setImage(imagePath);
+            owner.setCinImage(imagePath);
             return ownerRepository.save(owner);
         } catch (Exception e) {
             LOGGER.error("Error while uploading owner cin image", e);
@@ -148,13 +152,47 @@ private String saveImage(MultipartFile image) throws IOException {
 
 
 
-
+    // ----------------------------------      upload Owner proof file     -----------------------------------
 
     @Override
     public Owner uploadProofFile(Long id, MultipartFile proofFile) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'uploadProofFile'");
+        try {
+            // Validate if the file is an pdf
+            String extension = FilenameUtils.getExtension(proofFile.getOriginalFilename());
+            if (!extension.matches("pdf")) {
+                throw new RuntimeException("Invalid file type");
+            }
+    
+            Owner owner = ownerRepository.getReferenceById(id);
+            String imagePath = saveFile(proofFile); // Save the file and get the path
+            owner.setProof(imagePath);
+            return ownerRepository.save(owner);
+        } catch (Exception e) {
+            LOGGER.error("Error while uploading owner proof file", e);
+            throw new RuntimeException("Error while uploading owner proof file : " + e.getMessage(), e);
+        }
     }
+
+        // Method to save the image and return the relative path
+private String saveFile(MultipartFile image) throws IOException {
+    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/files";
+    File directory = new File(uploadDir);
+    
+    // Create the directory if it does not exist
+    if (!directory.exists()) {
+        directory.mkdirs();
+    }
+
+    // Generate a unique filename
+    String originalFilename = image.getOriginalFilename();
+    String extension = FilenameUtils.getExtension(originalFilename);
+    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
+
+    File file = new File(directory, uniqueFilename);
+    image.transferTo(file);
+    return "/files/" + uniqueFilename; // Return the relative path with the unique filename
+}
+
 
 
     @Override
