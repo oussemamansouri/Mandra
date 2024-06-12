@@ -1,9 +1,7 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
+
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -13,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.elife.mandra.Business.FileService;
 import com.elife.mandra.Business.Services.AdminService;
 import com.elife.mandra.DAO.Entities.Admin;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
@@ -38,6 +37,9 @@ public class AdminServiceImp implements AdminService{
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    private FileService fileService ;
 
 
 
@@ -116,7 +118,7 @@ public Admin addAdmin(AddUserForm adminForm) {
             }
     
             Admin admin = adminRepository.getReferenceById(id);
-            String imagePath = saveImage(image); // Save the image and get the path
+            String imagePath = fileService.saveImage(image); // Save the image and get the path
             admin.setImage(imagePath);
             return adminRepository.save(admin);
         } catch (Exception e) {
@@ -126,25 +128,7 @@ public Admin addAdmin(AddUserForm adminForm) {
     }
 
 
-    // Method to save the image and return the relative path
-private String saveImage(MultipartFile image) throws IOException {
-    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images";
-    File directory = new File(uploadDir);
-    
-    // Create the directory if it does not exist
-    if (!directory.exists()) {
-        directory.mkdirs();
-    }
 
-    // Generate a unique filename
-    String originalFilename = image.getOriginalFilename();
-    String extension = FilenameUtils.getExtension(originalFilename);
-    String uniqueFilename = UUID.randomUUID().toString() + "." + extension;
-
-    File file = new File(directory, uniqueFilename);
-    image.transferTo(file);
-    return "/images/" + uniqueFilename; // Return the relative path with the unique filename
-}
 
     // ----------------------------------      update admin password Image     -----------------------------------
 
