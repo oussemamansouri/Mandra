@@ -22,13 +22,14 @@ import jakarta.persistence.TemporalType;
 @MappedSuperclass // Use @MappedSuperclass for a base class without its own table
 public class Property {
 
+
   @Column(name = "name", length = 40, nullable = false)
   private String name;
 
   @Column(name = "description", nullable = false)
   private String description;
 
-  @Column(name = "email", length = 40, nullable = false)
+  @Column(name = "email", length = 40, nullable = true)
   private String email;
 
   @Column(name = "address", length = 100, nullable = false)
@@ -37,20 +38,20 @@ public class Property {
   @Column(name = "city", length = 30, nullable = false)
   private String city;
 
-  @Column(name = "phoneNumber", length = 20, nullable = false)
-  private int phoneNumber;
+  @Column(name = "phoneNumber", length = 15, nullable = false)
+  private String phoneNumber; 
 
   @Column(name = "website", nullable = true)
   private String website;
 
   @Column(name = "hasParking", nullable = false)
-  private boolean aparking;
+  private boolean hasParking;
 
   @Column(name = "hasWifi", nullable = false)
-  private boolean awifi;
+  private boolean hasWifi;
 
   @Column(name = "allowsPets", nullable = false)
-  private boolean accpteAnimaux;
+  private boolean allowsPets;
 
   @Column(name = "facebook", nullable = true)
   private String facebook;
@@ -85,7 +86,5 @@ public class Property {
   protected void onUpdate() {
     updateDate = new Date();
   }
-
-
 
 }
