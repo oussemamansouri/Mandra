@@ -2,6 +2,7 @@ package com.elife.mandra.Web.Requests.UserForms;
 
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class UpdateUserForm {
 
     @NotBlank(message = "Le numéro de téléphone est obligatoire")
     @Size(min = 8, max = 15, message = "Le numéro de téléphone doit comporter entre 8 et 15 caractères")
+    @Pattern(regexp = "\\d{8,15}", message = "Le numéro de téléphone doit comporter entre 8 et 15 chiffres")
     private String phoneNumber ;
 
 }
