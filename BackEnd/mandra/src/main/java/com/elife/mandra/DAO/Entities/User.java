@@ -38,7 +38,7 @@ public class User {
     private String password ;
 
     @Column(name = "phoneNumber",length = 20,nullable = false)
-    private int phoneNumber ;
+    private String phoneNumber ;
 
     @Column(name = "role",length = 10,nullable = false)
     private RoleOption role ;
