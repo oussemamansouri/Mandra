@@ -40,6 +40,7 @@ public class AddOwnerForm {
 
     @NotBlank(message = "Le numéro de téléphone est obligatoire")
     @Size(min = 8, max = 15, message = "Le numéro de téléphone doit comporter entre 8 et 15 caractères")
+    @Pattern(regexp = "\\d{8,15}", message = "Le numéro de téléphone doit comporter entre 8 et 15 chiffres")
     private String phoneNumber ;
 
     @NotNull(message = "Le nombre des hôtels est obligatoire")
