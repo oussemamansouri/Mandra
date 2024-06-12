@@ -118,7 +118,7 @@ public class OwnerServiceImp implements OwnerService {
              if (owner == null) {
                  throw new RuntimeException("Failed to find owner with this id: " + id);
              }
-             
+
             // Validate if the file is an image
             String extension = FilenameUtils.getExtension(cinImage.getOriginalFilename());
             if (!extension.matches("jpg|jpeg|png|gif")) {
@@ -183,6 +183,8 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
+    // ----------------------------------      update Owner image     -----------------------------------
+
     @Override
     public Owner updateOwnerImage(Long id, MultipartFile image) {
         try {
@@ -213,8 +215,19 @@ public class OwnerServiceImp implements OwnerService {
 
     @Override
     public Owner updateOwnerPassword(UpdatePasswordForm form, Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateOwnerPassword'");
+        try {
+            Owner owner = ownerRepository.findById(id).get();
+            Boolean verifyOldPassword = bCryptPasswordEncoder.matches(form.getOldPassword(), owner.getPassword()); 
+            if (form.isPasswordMatching() && verifyOldPassword) {
+                owner.setPassword(bCryptPasswordEncoder.encode(form.getNewPassword()));
+                return ownerRepository.save(owner);
+            } else {
+                throw new RuntimeException("This new password doesn't matches the old password !");
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error while updating the password for the owner", e);
+            throw new RuntimeException("Error while updating the password for the owner: " + e.getMessage(), e);
+        }
     }
 
 
