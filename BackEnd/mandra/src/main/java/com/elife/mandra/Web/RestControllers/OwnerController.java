@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.OwnerService;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
@@ -101,6 +102,22 @@ public class OwnerController {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
        }
    }
+
+
+
+   // ----------------------------------      update Client endpoint     -----------------------------------
+
+@PutMapping("/{id}/edit")
+    public ResponseEntity<Object> updateOwner(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm ownerForm,
+    BindingResult result) {
+    if (result.hasErrors()){
+        StringBuilder errors = new StringBuilder();
+        result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+        return ResponseEntity.badRequest().body(errors.toString());
+    }
+    Owner updatedOwner = ownerService.updateOwner(id, ownerForm);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+}
  
 
 }
