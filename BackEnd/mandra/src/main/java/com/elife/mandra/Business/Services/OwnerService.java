@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
 public interface OwnerService {
 
@@ -21,7 +22,7 @@ public interface OwnerService {
     //Update operation
     public Owner uploadCinImage(Long id, MultipartFile cinImage);
     public Owner uploadProofFile(Long id, MultipartFile proofFile);
-    public Owner updateOwner(Owner owner);
+    public Owner updateOwner(Long id, UpdateUserForm ownerForm);
     public Owner updateOwnerImage(Long id, MultipartFile image);
     public Owner updateOwnerPassword(UpdatePasswordForm form, Long id);
 
