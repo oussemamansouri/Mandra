@@ -9,14 +9,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.OwnerService;
+import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -66,6 +70,22 @@ public class OwnerController {
     Owner owner= ownerService.getOwnerById(id);
     return ResponseEntity.status(HttpStatus.OK).body(owner);
  }
+
+
+
+ // ----------------------------------      upload owner cin image endpoint     -----------------------------------
+
+   @PutMapping("/{id}/upload-cin-image")
+    public ResponseEntity<Object> updateOwnerCinImage(@PathVariable(value = "id") Long id, 
+                                                    @RequestParam("cinImage") MultipartFile image) {
+        try {
+            Owner updatedOwner = ownerService.uploadCinImage(id, image);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+        } catch (RuntimeException e) {
+            ErrorResponse errorResponse = new ErrorResponse("Error while uploading owner cin image", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
  
 
 }
