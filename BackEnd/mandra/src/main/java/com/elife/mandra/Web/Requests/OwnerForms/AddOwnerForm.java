@@ -38,8 +38,9 @@ public class AddOwnerForm {
              message = "Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial")
     private String password ;
 
-    @NotNull(message = "Le numéro de téléphone est obligatoire")
-    private int phoneNumber ;
+    @NotBlank(message = "Le numéro de téléphone est obligatoire")
+    @Size(min = 8, max = 15, message = "Le numéro de téléphone doit comporter entre 8 et 15 caractères")
+    private String phoneNumber ;
 
     @NotNull(message = "Le nombre des hôtels est obligatoire")
     @Min(value = 0, message = "Le nombre des hôtels doit être au moins 0")
