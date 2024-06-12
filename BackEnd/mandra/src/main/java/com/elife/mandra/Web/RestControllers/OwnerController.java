@@ -86,6 +86,22 @@ public class OwnerController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+
+
+     // ----------------------------------      upload owner proof file endpoint     -----------------------------------
+
+   @PutMapping("/{id}/upload-proof")
+   public ResponseEntity<Object> updateOwnerProof(@PathVariable(value = "id") Long id, 
+                                                   @RequestParam("proof") MultipartFile file) {
+       try {
+           Owner updatedOwner = ownerService.uploadProofFile(id, file);
+           return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+       } catch (RuntimeException e) {
+           ErrorResponse errorResponse = new ErrorResponse("Error while uploading owner proof", e.getMessage());
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+       }
+   }
  
 
 }
