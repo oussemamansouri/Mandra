@@ -117,7 +117,7 @@ public class ClientController {
  // ----------------------------------      get Client By Id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
- public ResponseEntity<Object> getClients( @PathVariable(value = "id") Long id  ) {
+ public ResponseEntity<Object> getClientById( @PathVariable(value = "id") Long id  ) {
     Client Client= clientService.getClientById(id);
     return ResponseEntity.status(HttpStatus.OK).body(Client);
  }
