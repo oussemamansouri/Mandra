@@ -20,6 +20,7 @@ import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.OwnerRepository;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
 @Service
 public class OwnerServiceImp implements OwnerService {
@@ -153,12 +154,20 @@ public class OwnerServiceImp implements OwnerService {
 
        
 
-
+    // ----------------------------------      update Owner     -----------------------------------
 
     @Override
-    public Owner updateOwner(Owner owner) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateOwner'");
+    public Owner updateOwner(Long id, UpdateUserForm ownerForm) {
+             try {
+            Owner own = ownerRepository.getReferenceById(id);
+            own.setFirstname(ownerForm.getFirstname());
+            own.setLastname(ownerForm.getLastname());
+            own.setPhoneNumber(ownerForm.getPhoneNumber());
+            return ownerRepository.save(own);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating owner", e);
+            throw new RuntimeException("Error while updating owner: " + e.getMessage(), e);
+        }
     }
 
 
