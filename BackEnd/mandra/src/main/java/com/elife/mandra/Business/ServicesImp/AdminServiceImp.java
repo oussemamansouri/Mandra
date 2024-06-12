@@ -111,13 +111,18 @@ public Admin addAdmin(AddUserForm adminForm) {
     @Override
     public Admin updateAdminImage(Long id, MultipartFile image) {
        try {
+
+            // Fetch the admin first
+            Admin admin = adminRepository.findById(id).orElse(null);
+            if (admin == null) {
+                throw new RuntimeException("Failed to find admin with this id: " + id);
+            }
             // Validate if the file is an image
             String extension = FilenameUtils.getExtension(image.getOriginalFilename());
             if (!extension.matches("jpg|jpeg|png|gif")) {
                 throw new RuntimeException("Invalid image file type");
             }
     
-            Admin admin = adminRepository.getReferenceById(id);
             String imagePath = fileService.saveImage(image); // Save the image and get the path
             admin.setImage(imagePath);
             return adminRepository.save(admin);
