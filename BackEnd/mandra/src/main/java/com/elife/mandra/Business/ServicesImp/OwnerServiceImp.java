@@ -113,13 +113,18 @@ public class OwnerServiceImp implements OwnerService {
     @Override
     public Owner uploadCinImage(Long id, MultipartFile cinImage) {
        try {
+             // Fetch the owner first
+             Owner owner = ownerRepository.findById(id).orElse(null);
+             if (owner == null) {
+                 throw new RuntimeException("Failed to find owner with this id: " + id);
+             }
+             
             // Validate if the file is an image
             String extension = FilenameUtils.getExtension(cinImage.getOriginalFilename());
             if (!extension.matches("jpg|jpeg|png|gif")) {
                 throw new RuntimeException("Invalid image type");
             }
     
-            Owner owner = ownerRepository.getReferenceById(id);
             String imagePath = fileService.saveImage(cinImage); // Save the file and get the path
             owner.setCinImage(imagePath);
             return ownerRepository.save(owner);
@@ -136,15 +141,22 @@ public class OwnerServiceImp implements OwnerService {
     @Override
     public Owner uploadProofFile(Long id, MultipartFile proofFile) {
         try {
+
+            // Fetch the owner first
+            Owner owner = ownerRepository.findById(id).orElse(null);
+            if (owner == null) {
+                throw new RuntimeException("Failed to find owner with this id: " + id);
+            }
+
             // Validate if the file is an pdf
             String extension = FilenameUtils.getExtension(proofFile.getOriginalFilename());
             if (!extension.matches("pdf")) {
                 throw new RuntimeException("Invalid file type");
             }
     
-            Owner owner = ownerRepository.getReferenceById(id);
             String imagePath = fileService.saveFile(proofFile); // Save the file and get the path
             owner.setProof(imagePath);
+
             return ownerRepository.save(owner);
         } catch (Exception e) {
             LOGGER.error("Error while uploading owner proof file", e);
@@ -173,9 +185,30 @@ public class OwnerServiceImp implements OwnerService {
 
     @Override
     public Owner updateOwnerImage(Long id, MultipartFile image) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateOwnerImage'");
+        try {
+            // Fetch the owner first
+            Owner owner = ownerRepository.findById(id).orElse(null);
+            if (owner == null) {
+                throw new RuntimeException("Failed to find owner with this id: " + id);
+            }
+    
+            // Validate if the file is an image
+            String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+            if (!extension.matches("jpg|jpeg|png|gif")) {
+                throw new RuntimeException("Invalid image type");
+            }
+    
+            // Save the image file
+            String imagePath = fileService.saveImage(image); // Save the file and get the path
+            owner.setImage(imagePath);
+    
+            return ownerRepository.save(owner);
+        } catch (Exception e) {
+            LOGGER.error("Error while uploading owner image", e);
+            throw new RuntimeException("Error while uploading owner image: " + e.getMessage(), e);
+        }
     }
+    
 
 
     @Override
