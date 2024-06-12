@@ -118,6 +118,25 @@ public class OwnerController {
     Owner updatedOwner = ownerService.updateOwner(id, ownerForm);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
 }
+
+
+
+
+ // ----------------------------------      upload owner image endpoint     -----------------------------------
+
+ @PutMapping("/{id}/edit-image")
+ public ResponseEntity<Object> updateOwnerImage(@PathVariable(value = "id") Long id, 
+                                                 @RequestParam("image") MultipartFile image) {
+     try {
+         Owner updatedOwner = ownerService.updateOwnerImage(id, image);
+         return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+     } catch (RuntimeException e) {
+         ErrorResponse errorResponse = new ErrorResponse("Error while uploading owner image", e.getMessage());
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+     }
+ }
+
+
  
 
 }
