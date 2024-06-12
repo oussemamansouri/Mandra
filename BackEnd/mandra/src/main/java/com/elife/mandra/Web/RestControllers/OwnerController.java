@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.OwnerService;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
+import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
@@ -135,6 +136,22 @@ public class OwnerController {
          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
      }
  }
+
+
+
+ // ----------------------------------      update Owner Password endpoint     -----------------------------------
+
+@PutMapping("/{id}/edit-password")
+    public ResponseEntity<Object> updateOwnerPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
+    BindingResult result) {
+    if (result.hasErrors()){
+        StringBuilder errors = new StringBuilder();
+        result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+        return ResponseEntity.badRequest().body(errors.toString());
+    }
+    Owner updatedOwnerPassword = ownerService.updateOwnerPassword(form, id);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwnerPassword);
+}
 
 
  
