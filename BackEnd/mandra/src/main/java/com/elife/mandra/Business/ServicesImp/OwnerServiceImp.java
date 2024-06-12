@@ -232,9 +232,14 @@ public class OwnerServiceImp implements OwnerService {
 
 
     @Override
-    public void deleteOwner(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteOwner'");
+    public String deleteOwner(Long id) {
+        try {
+            ownerRepository.deleteById(id);
+            return "Owner deleted successfully";
+        } catch (Exception e) {
+            LOGGER.error("Error while deleting owner with id " + id, e);
+            throw new RuntimeException("Error while deleting owner with id " + id + ": " + e.getMessage(), e);
+        }
     }
 
 
