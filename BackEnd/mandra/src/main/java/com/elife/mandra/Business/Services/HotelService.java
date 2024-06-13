@@ -6,7 +6,7 @@ import com.elife.mandra.Web.Requests.PropertyForms.HotelForm;
 public interface HotelService {
 
     //Create operation
-    public Hotel addHotel(Long id, HotelForm hotel);
+    public Hotel addHotel(Long ownerId, HotelForm hotel);
 
 
 }
