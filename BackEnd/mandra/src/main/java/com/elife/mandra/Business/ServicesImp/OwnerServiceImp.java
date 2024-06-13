@@ -213,6 +213,8 @@ public class OwnerServiceImp implements OwnerService {
     
 
 
+    // ----------------------------------     update Owner Password    -----------------------------------
+
     @Override
     public Owner updateOwnerPassword(UpdatePasswordForm form, Long id) {
         try {
@@ -230,6 +232,8 @@ public class OwnerServiceImp implements OwnerService {
         }
     }
 
+
+    // ----------------------------------     delete Owner    -----------------------------------
 
     @Override
     public String deleteOwner(Long id) {
