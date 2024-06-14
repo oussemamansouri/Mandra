@@ -12,19 +12,20 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Table(name = "HotelImages")
 public class HotelImage {
-    
+
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "Le chemin de l'image est obligatoire")
     @Column(name = "imagePath", nullable = false)
@@ -33,5 +34,4 @@ public class HotelImage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
-
 }
