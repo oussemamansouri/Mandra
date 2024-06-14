@@ -1,5 +1,8 @@
 package com.elife.mandra.DAO.Entities;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,27 +50,30 @@ public class Hotel extends Property {
         @JoinColumn(name = "OwnerId")
         private Owner owner;
 
+        @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+        private List<HotelImage> hotelImage;
+
         public Hotel(String name, String description, String email, String address, String city,
                         String phoneNumber, String website, boolean hasParking, boolean hasWifi, boolean allowsPets,
                         String facebook, String instagram, int numberOfRooms, boolean hasGym, boolean hasPool,
                         boolean hasRestaurant, long nbOfStars) {
-                                this.setName(name);
-                                this.setDescription(description);
-                                this.setEmail(email);
-                                this.setAddress(address);
-                                this.setCity(city);
-                                this.setPhoneNumber(phoneNumber);
-                                this.setWebsite(website);
-                                this.setHasParking(hasParking);
-                                this.setHasWifi(hasWifi);
-                                this.setAllowsPets(allowsPets);
-                                this.setFacebook(facebook);
-                                this.setInstagram(instagram);
-                                this.numberOfRooms = numberOfRooms;
-                                this.hasGym = hasGym;
-                                this.hasPool = hasPool;
-                                this.hasRestaurant = hasRestaurant;
-                                this.nbOfStars = nbOfStars;
+                this.setName(name);
+                this.setDescription(description);
+                this.setEmail(email);
+                this.setAddress(address);
+                this.setCity(city);
+                this.setPhoneNumber(phoneNumber);
+                this.setWebsite(website);
+                this.setHasParking(hasParking);
+                this.setHasWifi(hasWifi);
+                this.setAllowsPets(allowsPets);
+                this.setFacebook(facebook);
+                this.setInstagram(instagram);
+                this.numberOfRooms = numberOfRooms;
+                this.hasGym = hasGym;
+                this.hasPool = hasPool;
+                this.hasRestaurant = hasRestaurant;
+                this.nbOfStars = nbOfStars;
         }
 
 }
