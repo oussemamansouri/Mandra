@@ -50,7 +50,7 @@ public class Owner extends User {
 
     // The rolation between the tables
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true )
-    @JsonIgnore
+    // @JsonIgnore
     private List<Hotel> Hotels ;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true )
