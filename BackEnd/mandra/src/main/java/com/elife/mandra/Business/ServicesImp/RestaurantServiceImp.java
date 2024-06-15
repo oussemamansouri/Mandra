@@ -98,4 +98,37 @@ public class RestaurantServiceImp implements RestaurantService{
         }
     }
 
+
+
+
+    // ---------------------------------- update Restaurant -----------------------------------
+
+    @Override
+    public Restaurant updateRestaurant(Long restaurantId, RestaurantForm restaurantForm) {
+       try {
+            Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                    .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + restaurantId));
+
+            restaurant.setName(restaurantForm.getName());
+            restaurant.setDescription(restaurantForm.getDescription());
+            restaurant.setAddress(restaurantForm.getAddress());
+            restaurant.setCity(restaurantForm.getCity());
+            restaurant.setEmail(restaurantForm.getEmail());
+            restaurant.setFacebook(restaurantForm.getFacebook());
+            restaurant.setInstagram(restaurantForm.getInstagram());
+            restaurant.setHasParking(restaurantForm.isHasParking());
+            restaurant.setHasWifi(restaurantForm.isHasWifi());
+            restaurant.setAllowsPets(restaurantForm.isAllowsPets());
+            restaurant.setPhoneNumber(restaurantForm.getPhoneNumber());
+            restaurant.setWebsite(restaurantForm.getWebsite());
+            restaurant.setAcceptsReservation(restaurantForm.isAcceptsReservation());
+            restaurant.setWithTerrace(restaurantForm.isWithTerrace());
+
+            return restaurantRepository.save(restaurant);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating restaurant", e);
+            throw new RuntimeException("Error while updating restaurant: " + e.getMessage(), e);
+        }
+    }
+
 }
