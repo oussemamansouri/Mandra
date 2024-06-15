@@ -131,4 +131,35 @@ public class RestaurantServiceImp implements RestaurantService{
         }
     }
 
+
+
+
+    // ---------------------------------- update Restaurant images  -----------------------------------
+
+    @Override
+    public Restaurant updateRestaurantImage(Long restaurantId, List<MultipartFile> images) {
+        try{
+
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+        .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + restaurantId));
+
+        // Save images and associate with the restaurant
+        List<RestaurantImage> restaurantImages = new ArrayList<>();
+        for (MultipartFile image : images) {
+            String imagePath = fileService.saveImage(image);
+            RestaurantImage restaurantImage = new RestaurantImage();
+            restaurantImage.setImagePath(imagePath);
+            restaurantImage.setRestaurant(restaurant);
+            restaurantImages.add(restaurantImage);
+        }
+
+        restaurantImageRepository.saveAll(restaurantImages);
+        
+        return restaurantRepository.save(restaurant);
+        }catch(Exception e){
+            LOGGER.error("Error while updating restaurant images", e);
+            throw new RuntimeException("Error while updating restaurant images: " + e.getMessage(), e);
+        }
+    }
+
 }
