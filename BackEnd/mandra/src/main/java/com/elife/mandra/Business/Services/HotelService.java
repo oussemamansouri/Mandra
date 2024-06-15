@@ -23,5 +23,7 @@ public interface HotelService {
     public Page<Hotel> getHotels(Pageable pageable);
     public Hotel getHotelById(Long hotelId);
 
+    //Delete operation
+    public String deleteHotel(Long hotelId);
 
 }
