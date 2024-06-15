@@ -195,4 +195,19 @@ public class HotelServiceImp implements HotelService {
         }
     }
 
+
+
+    // ----------------------------------      delete hotel by id    -----------------------------------
+
+    @Override
+    public String deleteHotel(Long hotelId) {
+        try {
+            hotelRepository.deleteById(hotelId);
+            return "Hotel deleted successfully";
+        } catch (Exception e) {
+            LOGGER.error("Error while deleting hotel with id " + hotelId, e);
+            throw new RuntimeException("Error while deleting hotel with id " + hotelId + ": " + e.getMessage(), e);
+        }
+    }
+
 }
