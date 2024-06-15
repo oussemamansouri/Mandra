@@ -13,5 +13,8 @@ public interface HotelService {
     //Create operation
     public Hotel addHotel(Long ownerId, HotelForm hotel, List<MultipartFile> images);
 
+    //update operation
+    public Hotel updateHotel(Long hotelId, HotelForm hotelForm);
+
 
 }
