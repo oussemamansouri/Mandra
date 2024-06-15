@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 
@@ -28,6 +30,10 @@ public class HotelController {
     public HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }
+
+
+
+ // ----------------------------------      add Hotel by owner endpoint     -----------------------------------   
 
     @PostMapping("/{ownerId}/add")
     public ResponseEntity<?> addHotel(@PathVariable Long ownerId,
@@ -46,5 +52,31 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+
+
+
+
+ // ----------------------------------      update hotel endpoint     -----------------------------------
+
+@PutMapping("/{hotelId}/edit")
+    public ResponseEntity<Object> updateHotel(@PathVariable(value = "hotelId") Long hotelId,@Valid @RequestBody HotelForm hotelForm,
+    BindingResult result) {
+    if (result.hasErrors()){
+        StringBuilder errors = new StringBuilder();
+        result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+        return ResponseEntity.badRequest().body(errors.toString());
+    }
+    try{
+    Hotel updatedHotel = hotelService.updateHotel(hotelId, hotelForm);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedHotel);
+    }catch(Exception e){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+    }
+}
+
+
+
+
 
 }
