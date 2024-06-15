@@ -2,6 +2,8 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,21 +27,41 @@ import lombok.Setter;
 @Entity
 @Table(name = "Restaurant")
 public class Restaurant extends Property {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id ;
+    private long id;
 
-    @Column(name = "withTerrace",nullable = false)
-    private boolean withTerrace ;
+    @Column(name = "withTerrace", nullable = false)
+    private boolean withTerrace;
 
-    @Column(name = "acceptsReservation",nullable = false)
-    private boolean acceptsReservation ;
+    @Column(name = "acceptsReservation", nullable = false)
+    private boolean acceptsReservation;
 
     @ManyToOne()
     @JoinColumn(name = "OwnerId")
-    private Owner owner ;
+    @JsonIgnore
+    private Owner owner;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RestaurantImage> restaurantImage;
+
+    public Restaurant(String name, String description, String email, String address, String city,
+            String phoneNumber, String website, boolean hasParking, boolean hasWifi, boolean allowsPets,
+            String facebook, String instagram, boolean withTerrace, boolean acceptsReservation) {
+        this.setName(name);
+        this.setDescription(description);
+        this.setEmail(email);
+        this.setAddress(address);
+        this.setCity(city);
+        this.setPhoneNumber(phoneNumber);
+        this.setWebsite(website);
+        this.setHasParking(hasParking);
+        this.setHasWifi(hasWifi);
+        this.setAllowsPets(allowsPets);
+        this.setFacebook(facebook);
+        this.setInstagram(instagram);
+        this.withTerrace = withTerrace;
+        this.acceptsReservation = acceptsReservation;
+    }
 }
