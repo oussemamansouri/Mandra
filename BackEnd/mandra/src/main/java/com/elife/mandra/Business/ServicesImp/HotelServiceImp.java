@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -161,6 +163,20 @@ public class HotelServiceImp implements HotelService {
         }catch(Exception e){
             LOGGER.error("Error while updating hotel images", e);
             throw new RuntimeException("Error while updating hotel images: " + e.getMessage(), e);
+        }
+    }
+
+
+
+    // ----------------------------------      get hotels     -----------------------------------
+
+    @Override
+    public Page<Hotel> getHotels(Pageable pageable) {
+           try {
+            return hotelRepository.findAll(pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding hotels", e);
+            throw new RuntimeException("Failed to find hotels: " + e.getMessage(), e);
         }
     }
 
