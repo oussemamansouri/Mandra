@@ -98,7 +98,9 @@ public class HotelServiceImp implements HotelService {
         }
     }
 
-    // ---------------------------------- update Hotel endpoint  -----------------------------------
+
+
+    // ---------------------------------- update Hotel  -----------------------------------
 
     @Override
     public Hotel updateHotel(Long hotelId, HotelForm hotelForm) {
@@ -128,6 +130,37 @@ public class HotelServiceImp implements HotelService {
         } catch (Exception e) {
             LOGGER.error("Error while updating hotel", e);
             throw new RuntimeException("Error while updating hotel: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- update Hotel images  -----------------------------------
+
+    @Override
+    public Hotel updateHotelImages(Long hotelId, List<MultipartFile> images) {
+        try{
+
+        Hotel hotel = hotelRepository.findById(hotelId)
+        .orElseThrow(() -> new RuntimeException("Hotel not found with id: " + hotelId));
+
+        // Save images and associate with the hotel
+        List<HotelImage> hotelImages = new ArrayList<>();
+        for (MultipartFile image : images) {
+            String imagePath = fileService.saveImage(image);
+            HotelImage hotelImage = new HotelImage();
+            hotelImage.setImagePath(imagePath);
+            hotelImage.setHotel(hotel);
+            hotelImages.add(hotelImage);
+        }
+
+        hotelImageRepository.saveAll(hotelImages);
+        
+        return hotelRepository.save(hotel);
+        }catch(Exception e){
+            LOGGER.error("Error while updating hotel images", e);
+            throw new RuntimeException("Error while updating hotel images: " + e.getMessage(), e);
         }
     }
 
