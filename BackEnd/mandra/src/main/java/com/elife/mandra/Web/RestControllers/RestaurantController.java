@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.RestaurantService;
 import com.elife.mandra.DAO.Entities.Restaurant;
 import com.elife.mandra.Web.Requests.PropertyForms.RestaurantForm;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -50,6 +52,9 @@ public class RestaurantController {
         }
     }
 
+
+
+
     // ---------------------------------- update restaurant endpoint -----------------------------------
 
     @PutMapping("/{restaurantId}/edit")
@@ -68,4 +73,21 @@ public class RestaurantController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+
+
+    
+ // ----------------------------------      update Reastaurant images endpoint     -----------------------------------   
+
+ @PutMapping("/{restaurantId}/edit-images")
+ public ResponseEntity<Object> updateRestaurantImages(@PathVariable(value = "restaurantId") Long restaurantId, 
+                                                 @RequestParam("images") List<MultipartFile> images) {
+     try {
+         Restaurant updatedRestaurant = restaurantService.updateRestaurantImage(restaurantId, images);
+         return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedRestaurant);
+     } catch (RuntimeException e) {
+         ErrorResponse errorResponse = new ErrorResponse("Error while uploading restaurant images", e.getMessage());
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+     }
+ }
 }
