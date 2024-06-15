@@ -15,6 +15,7 @@ public interface HotelService {
 
     //update operation
     public Hotel updateHotel(Long hotelId, HotelForm hotelForm);
+    public Hotel updateHotelImages(Long hotelId, List<MultipartFile> images);
 
 
 }
