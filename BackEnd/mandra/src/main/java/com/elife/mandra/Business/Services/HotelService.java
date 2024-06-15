@@ -21,6 +21,7 @@ public interface HotelService {
 
     //Read operation
     public Page<Hotel> getHotels(Pageable pageable);
+    public Hotel getHotelById(Long hotelId);
 
 
 }
