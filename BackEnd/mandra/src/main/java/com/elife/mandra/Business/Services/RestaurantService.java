@@ -14,4 +14,5 @@ public interface RestaurantService {
 
     //Update operation
     public Restaurant updateRestaurant(Long restaurantId, RestaurantForm restaurantForm);
+    public Restaurant updateRestaurantImage(Long restaurantId, List<MultipartFile> images);
 }
