@@ -180,4 +180,19 @@ public class HotelServiceImp implements HotelService {
         }
     }
 
+
+
+
+    // ----------------------------------      get hotel by id    -----------------------------------
+
+    @Override
+    public Hotel getHotelById(Long hotelId) {
+        try {
+            return hotelRepository.findById(hotelId).get();
+        } catch (Exception e) {
+            LOGGER.error("Error while finding hotel with this id :" + hotelId +" :", e);
+            throw new RuntimeException("Failed to find hotel with this id "+ hotelId +" : " + e.getMessage(), e);
+        }
+    }
+
 }
