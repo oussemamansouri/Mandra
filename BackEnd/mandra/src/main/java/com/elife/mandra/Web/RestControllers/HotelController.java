@@ -18,6 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -126,6 +127,21 @@ public class HotelController {
         ErrorResponse errorResponse = new ErrorResponse("Error while getting hotel with this id :"+hotelId, e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
+ }
+
+
+ 
+// ----------------------------------      delete hotel endpoint     -----------------------------------
+
+ @DeleteMapping("/{hotelIdid}/delete")
+ public ResponseEntity<Object> deleteHotel(@PathVariable Long hotelIdid) {
+     try {
+         String resMessage = hotelService.deleteHotel(hotelIdid);
+         return ResponseEntity.status(HttpStatus.OK).body(resMessage);
+     } catch (RuntimeException e) {
+         ErrorResponse errorResponse = new ErrorResponse("Error while deleting hotel", e.getMessage());
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+     }
  }
 
 
