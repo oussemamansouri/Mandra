@@ -2,6 +2,8 @@ package com.elife.mandra.Business.Services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.DAO.Entities.Restaurant;
@@ -15,4 +17,7 @@ public interface RestaurantService {
     //Update operation
     public Restaurant updateRestaurant(Long restaurantId, RestaurantForm restaurantForm);
     public Restaurant updateRestaurantImage(Long restaurantId, List<MultipartFile> images);
+
+    //Read operation
+    public Page<Restaurant> getRestaurants(Pageable pageable);
 }
