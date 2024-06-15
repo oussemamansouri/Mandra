@@ -25,7 +25,7 @@ import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 @Service
 public class OwnerServiceImp implements OwnerService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImp.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImp.class);
 
     final OwnerRepository ownerRepository;
     public OwnerServiceImp(OwnerRepository ownerRepository){
