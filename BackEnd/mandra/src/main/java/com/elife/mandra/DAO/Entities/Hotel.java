@@ -53,7 +53,7 @@ public class Hotel extends Property {
     private Owner owner;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
+    // @JsonIgnore
     private List<HotelImage> hotelImage;
 
     public Hotel(String name, String description, String email, String address, String city,
