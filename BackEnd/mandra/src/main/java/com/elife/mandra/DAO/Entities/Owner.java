@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -48,13 +49,16 @@ public class Owner extends User {
     
 
     // The rolation between the tables
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true )
+    @JsonIgnore
     private List<Hotel> Hotels ;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true )
+    @JsonIgnore
     private List<Guesthouse> Guesthouses ;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true )
+    @JsonIgnore
     private List<Restaurant> Restaurants ;
 
     public Owner(String firstname, String lastname, String email, String password,
