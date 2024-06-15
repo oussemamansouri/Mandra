@@ -38,6 +38,8 @@ public class HotelServiceImp implements HotelService {
         this.hotelImageRepository = hotelImageRepository;
         this.fileService = fileService;
     }
+    
+
 
     // ---------------------------------- add Hotel by owner -----------------------------------
 
@@ -100,6 +102,10 @@ public class HotelServiceImp implements HotelService {
         }
     }
 
+
+
+
+
     // ---------------------------------- update Hotel -----------------------------------
 
     @Override
@@ -132,6 +138,9 @@ public class HotelServiceImp implements HotelService {
             throw new RuntimeException("Error while updating hotel: " + e.getMessage(), e);
         }
     }
+
+
+
 
     // ---------------------------------- update Hotel images -----------------------------------
 
@@ -174,6 +183,7 @@ public class HotelServiceImp implements HotelService {
     }
     
 
+
     // ---------------------------------- get hotels -----------------------------------
 
     @Override
@@ -185,6 +195,9 @@ public class HotelServiceImp implements HotelService {
             throw new RuntimeException("Failed to find hotels: " + e.getMessage(), e);
         }
     }
+
+
+
 
     // ---------------------------------- get hotel by id -----------------------------------
 
@@ -198,6 +211,9 @@ public class HotelServiceImp implements HotelService {
         }
     }
 
+
+
+    
     // ---------------------------------- delete hotel by id ----------------------------------
 
     @Override
