@@ -37,65 +37,98 @@ public class HotelServiceImp implements HotelService {
         this.fileService = fileService;
     }
 
+    // ---------------------------------- add Hotel by owner -----------------------------------
+
     @Override
     public Hotel addHotel(Long ownerId, HotelForm hotelForm, List<MultipartFile> images) {
         try {
             Owner owner = ownerRepository.findById(ownerId)
                     .orElseThrow(() -> new RuntimeException("Owner not found with id: " + ownerId));
-    
+
             int nbOfHotelsAllows = owner.getNbOfHotels();
             int nbOfHotelsPosted = owner.getHotels().size();
-    
+
             if (nbOfHotelsPosted >= nbOfHotelsAllows) {
                 throw new RuntimeException("You have exceeded the number of hotels you can post!");
             }
-    
+
             Hotel newHotel = new Hotel(
-                hotelForm.getName(),
-                hotelForm.getDescription(),
-                hotelForm.getEmail(),
-                hotelForm.getAddress(),
-                hotelForm.getCity(),
-                hotelForm.getPhoneNumber(),
-                hotelForm.getWebsite(),
-                hotelForm.isHasParking(),
-                hotelForm.isHasWifi(),
-                hotelForm.isAllowsPets(),
-                hotelForm.getFacebook(),
-                hotelForm.getInstagram(),
-                hotelForm.getNumberOfRooms(),
-                hotelForm.isHasGym(),
-                hotelForm.isHasPool(),
-                hotelForm.isHasRestaurant(),
-                hotelForm.getNbOfStars()
-        );
+                    hotelForm.getName(),
+                    hotelForm.getDescription(),
+                    hotelForm.getEmail(),
+                    hotelForm.getAddress(),
+                    hotelForm.getCity(),
+                    hotelForm.getPhoneNumber(),
+                    hotelForm.getWebsite(),
+                    hotelForm.isHasParking(),
+                    hotelForm.isHasWifi(),
+                    hotelForm.isAllowsPets(),
+                    hotelForm.getFacebook(),
+                    hotelForm.getInstagram(),
+                    hotelForm.getNumberOfRooms(),
+                    hotelForm.isHasGym(),
+                    hotelForm.isHasPool(),
+                    hotelForm.isHasRestaurant(),
+                    hotelForm.getNbOfStars());
 
-        newHotel.setOwner(owner);
+            newHotel.setOwner(owner);
 
-        // Save hotel to get the ID
-        Hotel savedHotel = hotelRepository.save(newHotel);
+            // Save hotel to get the ID
+            Hotel savedHotel = hotelRepository.save(newHotel);
 
-        // Save images and associate with the hotel
-        List<HotelImage> hotelImages = new ArrayList<>();
-        for (MultipartFile image : images) {
-            String imagePath = fileService.saveImage(image);
-            HotelImage hotelImage = new HotelImage();
-            hotelImage.setImagePath(imagePath);
-            hotelImage.setHotel(savedHotel);
-            hotelImages.add(hotelImage);
+            // Save images and associate with the hotel
+            List<HotelImage> hotelImages = new ArrayList<>();
+            for (MultipartFile image : images) {
+                String imagePath = fileService.saveImage(image);
+                HotelImage hotelImage = new HotelImage();
+                hotelImage.setImagePath(imagePath);
+                hotelImage.setHotel(savedHotel);
+                hotelImages.add(hotelImage);
+            }
+
+            hotelImageRepository.saveAll(hotelImages);
+
+            // Associate images with the hotel
+            savedHotel.setHotelImage(hotelImages);
+
+            return hotelRepository.save(savedHotel);
+        } catch (Exception e) {
+            LOGGER.error("Error while adding hotel", e);
+            throw new RuntimeException("Error while adding hotel: " + e.getMessage(), e);
         }
-
-        hotelImageRepository.saveAll(hotelImages);
-
-        // Associate images with the hotel
-        savedHotel.setHotelImage(hotelImages);
-
-        return hotelRepository.save(savedHotel);
-    } catch (Exception e) {
-        LOGGER.error("Error while adding hotel", e);
-        throw new RuntimeException("Error while adding hotel: " + e.getMessage(), e);
     }
-}
-    
+
+    // ---------------------------------- update Hotel endpoint  -----------------------------------
+
+    @Override
+    public Hotel updateHotel(Long hotelId, HotelForm hotelForm) {
+        try {
+            Hotel hotel = hotelRepository.findById(hotelId)
+                    .orElseThrow(() -> new RuntimeException("Hotel not found with id: " + hotelId));
+
+            hotel.setName(hotelForm.getName());
+            hotel.setDescription(hotelForm.getDescription());
+            hotel.setAddress(hotelForm.getAddress());
+            hotel.setCity(hotelForm.getCity());
+            hotel.setEmail(hotelForm.getEmail());
+            hotel.setFacebook(hotelForm.getFacebook());
+            hotel.setInstagram(hotelForm.getInstagram());
+            hotel.setHasGym(hotelForm.isHasGym());
+            hotel.setHasParking(hotelForm.isHasParking());
+            hotel.setHasPool(hotelForm.isHasPool());
+            hotel.setHasRestaurant(hotelForm.isHasRestaurant());
+            hotel.setHasWifi(hotelForm.isHasWifi());
+            hotel.setAllowsPets(hotelForm.isAllowsPets());
+            hotel.setNbOfStars(hotelForm.getNbOfStars());
+            hotel.setNumberOfRooms(hotelForm.getNumberOfRooms());
+            hotel.setPhoneNumber(hotelForm.getPhoneNumber());
+            hotel.setWebsite(hotelForm.getWebsite());
+
+            return hotelRepository.save(hotel);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating hotel", e);
+            throw new RuntimeException("Error while updating hotel: " + e.getMessage(), e);
+        }
+    }
 
 }
