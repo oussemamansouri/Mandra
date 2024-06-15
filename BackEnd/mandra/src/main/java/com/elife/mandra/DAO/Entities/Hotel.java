@@ -2,9 +2,12 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,11 +47,13 @@ public class Hotel extends Property {
     @Column(name = "nbOfStars")
     private long nbOfStars;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OwnerId")
+    @JsonIgnore
     private Owner owner;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<HotelImage> hotelImage;
 
     public Hotel(String name, String description, String email, String address, String city,
