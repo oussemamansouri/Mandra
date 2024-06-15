@@ -21,7 +21,7 @@ import com.elife.mandra.Web.Requests.PropertyForms.HotelForm;
 @Service
 public class HotelServiceImp implements HotelService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImp.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HotelServiceImp.class);
 
     final HotelRepository hotelRepository;
     final OwnerRepository ownerRepository;
