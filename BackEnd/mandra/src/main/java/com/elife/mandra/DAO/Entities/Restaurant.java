@@ -44,7 +44,7 @@ public class Restaurant extends Property {
     private Owner owner;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RestaurantImage> restaurantImage;
+    private List<RestaurantImage> restaurantImage ;
 
     public Restaurant(String name, String description, String email, String address, String city,
             String phoneNumber, String website, boolean hasParking, boolean hasWifi, boolean allowsPets,

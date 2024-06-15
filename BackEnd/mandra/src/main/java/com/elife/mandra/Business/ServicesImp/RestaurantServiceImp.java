@@ -138,28 +138,39 @@ public class RestaurantServiceImp implements RestaurantService{
 
     @Override
     public Restaurant updateRestaurantImage(Long restaurantId, List<MultipartFile> images) {
-        try{
-
-        Restaurant restaurant = restaurantRepository.findById(restaurantId)
-        .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + restaurantId));
-
-        // Save images and associate with the restaurant
-        List<RestaurantImage> restaurantImages = new ArrayList<>();
-        for (MultipartFile image : images) {
-            String imagePath = fileService.saveImage(image);
-            RestaurantImage restaurantImage = new RestaurantImage();
-            restaurantImage.setImagePath(imagePath);
-            restaurantImage.setRestaurant(restaurant);
-            restaurantImages.add(restaurantImage);
-        }
-
-        restaurantImageRepository.saveAll(restaurantImages);
-        
-        return restaurantRepository.save(restaurant);
-        }catch(Exception e){
+        try {
+            Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                    .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + restaurantId));
+    
+            // Delete existing images
+            List<RestaurantImage> existingImages = restaurant.getRestaurantImage();
+            restaurantImageRepository.deleteAll(existingImages);
+            
+            // Remove the existing images from the restaurant entity
+            existingImages.clear();
+    
+            // Save new images and associate with the restaurant
+            List<RestaurantImage> newRestaurantImages = new ArrayList<>();
+            for (MultipartFile image : images) {
+                String imagePath = fileService.saveImage(image);
+                RestaurantImage restaurantImage = new RestaurantImage();
+                restaurantImage.setImagePath(imagePath);
+                restaurantImage.setRestaurant(restaurant);
+                newRestaurantImages.add(restaurantImage);
+            }
+    
+            // Add new images to the restaurant entity
+            existingImages.addAll(newRestaurantImages);
+    
+            // Save new images
+            restaurantImageRepository.saveAll(newRestaurantImages);
+    
+            return restaurantRepository.save(restaurant);
+        } catch (Exception e) {
             LOGGER.error("Error while updating restaurant images", e);
             throw new RuntimeException("Error while updating restaurant images: " + e.getMessage(), e);
         }
     }
+    
 
 }
