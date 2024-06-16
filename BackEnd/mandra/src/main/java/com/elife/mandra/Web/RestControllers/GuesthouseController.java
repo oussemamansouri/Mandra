@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.GuesthouseService;
 import com.elife.mandra.DAO.Entities.Guesthouse;
 import com.elife.mandra.Web.Requests.PropertyForms.GuesthouseForm;
-
 
 import jakarta.validation.Valid;
 
@@ -31,7 +32,7 @@ public class GuesthouseController {
 
 
 
-      // ---------------------------------- add Guest House by owner endpoint -----------------------------------
+    // ---------------------------------- add Guest House by owner endpoint -----------------------------------
 
     @PostMapping("/{ownerId}/add")
     public ResponseEntity<?> addGuestHouse(@PathVariable Long ownerId,
@@ -50,6 +51,30 @@ public class GuesthouseController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+
+
+
+     // ---------------------------------- update restaurant endpoint -----------------------------------
+
+    @PutMapping("/{guesthouseId}/edit")
+    public ResponseEntity<Object> updateRestaurant(@PathVariable(value = "guesthouseId") Long guesthouseId,
+            @Valid @RequestBody GuesthouseForm guesthouseForm,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+            return ResponseEntity.badRequest().body(errors.toString());
+        }
+        try {
+            Guesthouse updatedGuesthouse = guesthouseService.updateGuestHouse(guesthouseId, guesthouseForm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedGuesthouse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+
 
 
 
