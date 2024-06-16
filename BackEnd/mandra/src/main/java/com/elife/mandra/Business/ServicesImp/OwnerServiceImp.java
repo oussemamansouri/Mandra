@@ -238,6 +238,9 @@ public class OwnerServiceImp implements OwnerService {
     @Override
     public String deleteOwner(Long id) {
         try {
+            if (!ownerRepository.existsById(id)) {
+                throw new RuntimeException("Owner not found with id: " + id);
+            }
             ownerRepository.deleteById(id);
             return "Owner deleted successfully";
         } catch (Exception e) {

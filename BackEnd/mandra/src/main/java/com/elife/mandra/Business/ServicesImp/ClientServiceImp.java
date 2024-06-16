@@ -182,6 +182,9 @@ public Client registerClient(AddUserForm clientForm) {
     @Override
     public String deleteClientById(Long id) {
         try {
+            if (!clientRepository.existsById(id)) {
+                throw new RuntimeException("Client not found with id: " + id);
+            }
             clientRepository.deleteById(id);
             return "Client deleted successfully";
         } catch (Exception e) {
