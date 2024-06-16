@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -120,13 +121,29 @@ public class GuesthouseController {
     // ----------------------------------      get Guest House By Id endpoint     -----------------------------------
 
  @GetMapping("/{guesthouseId}")
- public ResponseEntity<Object> getHotelById( @PathVariable(value = "guesthouseId") Long guesthouseId  ) {
+ public ResponseEntity<Object> getGuestHouseById( @PathVariable(value = "guesthouseId") Long guesthouseId  ) {
     try{
     Guesthouse guesthouse= guesthouseService.getGuestHousesById(guesthouseId);
     return ResponseEntity.status(HttpStatus.OK).body(guesthouse);
     }catch(Exception e){
         ErrorResponse errorResponse = new ErrorResponse("Error while getting guest house with this id :"+ guesthouseId, e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
+
+
+
+
+ // ----------------------------------      delete guest house endpoint     -----------------------------------
+
+ @DeleteMapping("/{guesthouseId}/delete")
+ public ResponseEntity<Object> deleteGuestHouse(@PathVariable(value = "guesthouseId") Long guesthouseId){
+    try{
+     String resMessege = guesthouseService.deleteGuestHouse(guesthouseId);
+     return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while deleting restaurant with this id :"+ guesthouseId, e.getMessage());
+     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
 
