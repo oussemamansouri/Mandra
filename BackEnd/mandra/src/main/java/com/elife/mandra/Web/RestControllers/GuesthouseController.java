@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.GuesthouseService;
 import com.elife.mandra.DAO.Entities.Guesthouse;
 import com.elife.mandra.Web.Requests.PropertyForms.GuesthouseForm;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -58,7 +60,7 @@ public class GuesthouseController {
      // ---------------------------------- update restaurant endpoint -----------------------------------
 
     @PutMapping("/{guesthouseId}/edit")
-    public ResponseEntity<Object> updateRestaurant(@PathVariable(value = "guesthouseId") Long guesthouseId,
+    public ResponseEntity<Object> updateGuestHouse(@PathVariable(value = "guesthouseId") Long guesthouseId,
             @Valid @RequestBody GuesthouseForm guesthouseForm,
             BindingResult result) {
         if (result.hasErrors()) {
@@ -75,6 +77,21 @@ public class GuesthouseController {
     }
 
 
+
+
+    // ----------------------------------      update Guest House images endpoint     -----------------------------------   
+
+ @PutMapping("/{guesthouseId}/edit-images")
+ public ResponseEntity<Object> updateGuestHouseImages(@PathVariable(value = "guesthouseId") Long guesthouseId, 
+                                                 @RequestParam("images") List<MultipartFile> images) {
+     try {
+         Guesthouse updatedGuesthouse = guesthouseService.updateGuestHouseImage(guesthouseId, images);
+         return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedGuesthouse);
+     } catch (RuntimeException e) {
+         ErrorResponse errorResponse = new ErrorResponse("Error while uploading guest house images", e.getMessage());
+         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+     }
+ }
 
 
 
