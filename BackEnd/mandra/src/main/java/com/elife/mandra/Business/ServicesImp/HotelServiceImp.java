@@ -150,6 +150,13 @@ public class HotelServiceImp implements HotelService {
             Hotel hotel = hotelRepository.findById(hotelId)
                     .orElseThrow(() -> new RuntimeException("Hotel not found with id: " + hotelId));
     
+            // Check if the number of images is between 1 and 5
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
             // Get existing images
             List<HotelImage> existingImages = hotel.getHotelImage();
             
@@ -162,11 +169,19 @@ public class HotelServiceImp implements HotelService {
             // Save new images and associate with the hotel
             List<HotelImage> newHotelImages = new ArrayList<>();
             for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
                 String imagePath = fileService.saveImage(image);
                 HotelImage hotelImage = new HotelImage();
                 hotelImage.setImagePath(imagePath);
                 hotelImage.setHotel(hotel);
                 newHotelImages.add(hotelImage);
+            }
+    
+            if (newHotelImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
             }
     
             // Add new images to the hotel's image list
