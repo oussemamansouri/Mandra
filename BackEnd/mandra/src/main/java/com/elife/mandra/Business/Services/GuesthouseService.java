@@ -14,13 +14,15 @@ public interface GuesthouseService {
     // Create operation
     public Guesthouse addGuestHouse(Long ownerId, GuesthouseForm guesthouseForm, List<MultipartFile> images);
 
-    //Update operation
+    // Update operation
     public Guesthouse updateGuestHouse(Long guestHouseId, GuesthouseForm guesthouseForm);
     public Guesthouse updateGuestHouseImage(Long guestHouseId, List<MultipartFile> images);
 
-     //Read operation
+    // Read operation
     public Page<Guesthouse> getGuestHouses(Pageable pageable);
     public Guesthouse getGuestHousesById(Long guestHouseId);
 
+    // Delete operation
+    public String deleteGuestHouse(Long guestHouseId);
 
 }
