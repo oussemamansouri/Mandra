@@ -38,22 +38,29 @@ public class HotelServiceImp implements HotelService {
         this.hotelImageRepository = hotelImageRepository;
         this.fileService = fileService;
     }
+    
+
 
     // ---------------------------------- add Hotel by owner -----------------------------------
-
     @Override
     public Hotel addHotel(Long ownerId, HotelForm hotelForm, List<MultipartFile> images) {
         try {
             Owner owner = ownerRepository.findById(ownerId)
                     .orElseThrow(() -> new RuntimeException("Owner not found with id: " + ownerId));
-
+    
             int nbOfHotelsAllows = owner.getNbOfHotels();
             int nbOfHotelsPosted = owner.getHotels().size();
-
+    
             if (nbOfHotelsPosted >= nbOfHotelsAllows) {
                 throw new RuntimeException("You have exceeded the number of hotels you can post!");
             }
-
+    
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
             Hotel newHotel = new Hotel(
                     hotelForm.getName(),
                     hotelForm.getDescription(),
@@ -71,38 +78,49 @@ public class HotelServiceImp implements HotelService {
                     hotelForm.isHasGym(),
                     hotelForm.isHasPool(),
                     hotelForm.isHasRestaurant(),
-                    hotelForm.getNbOfStars());
-
+                    hotelForm.getNbOfStars()
+            );
+    
             newHotel.setOwner(owner);
-
+    
             // Save hotel to get the ID
             Hotel savedHotel = hotelRepository.save(newHotel);
-
+    
             // Save images and associate with the hotel
             List<HotelImage> hotelImages = new ArrayList<>();
             for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
                 String imagePath = fileService.saveImage(image);
                 HotelImage hotelImage = new HotelImage();
                 hotelImage.setImagePath(imagePath);
                 hotelImage.setHotel(savedHotel);
                 hotelImages.add(hotelImage);
             }
-
+    
+            if (hotelImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
+            }
+    
             hotelImageRepository.saveAll(hotelImages);
-
+    
             // Associate images with the hotel
             savedHotel.setHotelImage(hotelImages);
-
+    
             return hotelRepository.save(savedHotel);
         } catch (Exception e) {
             LOGGER.error("Error while adding hotel", e);
             throw new RuntimeException("Error while adding hotel: " + e.getMessage(), e);
         }
     }
+    
 
 
 
-    // ---------------------------------- update Hotel  -----------------------------------
+
+    // ---------------------------------- update Hotel -----------------------------------
 
     @Override
     public Hotel updateHotel(Long hotelId, HotelForm hotelForm) {
@@ -138,41 +156,68 @@ public class HotelServiceImp implements HotelService {
 
 
 
-    // ---------------------------------- update Hotel images  -----------------------------------
+    // ---------------------------------- update Hotel images -----------------------------------
 
     @Override
     public Hotel updateHotelImages(Long hotelId, List<MultipartFile> images) {
-        try{
-
-        Hotel hotel = hotelRepository.findById(hotelId)
-        .orElseThrow(() -> new RuntimeException("Hotel not found with id: " + hotelId));
-
-        // Save images and associate with the hotel
-        List<HotelImage> hotelImages = new ArrayList<>();
-        for (MultipartFile image : images) {
-            String imagePath = fileService.saveImage(image);
-            HotelImage hotelImage = new HotelImage();
-            hotelImage.setImagePath(imagePath);
-            hotelImage.setHotel(hotel);
-            hotelImages.add(hotelImage);
-        }
-
-        hotelImageRepository.saveAll(hotelImages);
-        
-        return hotelRepository.save(hotel);
-        }catch(Exception e){
+        try {
+            Hotel hotel = hotelRepository.findById(hotelId)
+                    .orElseThrow(() -> new RuntimeException("Hotel not found with id: " + hotelId));
+    
+            // Check if the number of images is between 1 and 5
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
+            // Get existing images
+            List<HotelImage> existingImages = hotel.getHotelImage();
+            
+            // Delete existing images from the repository
+            hotelImageRepository.deleteAll(existingImages);
+            
+            // Clear the existing images list
+            existingImages.clear();
+    
+            // Save new images and associate with the hotel
+            List<HotelImage> newHotelImages = new ArrayList<>();
+            for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
+                String imagePath = fileService.saveImage(image);
+                HotelImage hotelImage = new HotelImage();
+                hotelImage.setImagePath(imagePath);
+                hotelImage.setHotel(hotel);
+                newHotelImages.add(hotelImage);
+            }
+    
+            if (newHotelImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
+            }
+    
+            // Add new images to the hotel's image list
+            existingImages.addAll(newHotelImages);
+    
+            // Save new images
+            hotelImageRepository.saveAll(newHotelImages);
+    
+            return hotelRepository.save(hotel);
+        } catch (Exception e) {
             LOGGER.error("Error while updating hotel images", e);
             throw new RuntimeException("Error while updating hotel images: " + e.getMessage(), e);
         }
     }
+    
 
 
-
-    // ----------------------------------      get hotels     -----------------------------------
+    // ---------------------------------- get hotels -----------------------------------
 
     @Override
     public Page<Hotel> getHotels(Pageable pageable) {
-           try {
+        try {
             return hotelRepository.findAll(pageable);
         } catch (Exception e) {
             LOGGER.error("Error while finding hotels", e);
@@ -183,25 +228,29 @@ public class HotelServiceImp implements HotelService {
 
 
 
-    // ----------------------------------      get hotel by id    -----------------------------------
+    // ---------------------------------- get hotel by id -----------------------------------
 
     @Override
     public Hotel getHotelById(Long hotelId) {
         try {
             return hotelRepository.findById(hotelId).get();
         } catch (Exception e) {
-            LOGGER.error("Error while finding hotel with this id :" + hotelId +" :", e);
-            throw new RuntimeException("Failed to find hotel with this id "+ hotelId +" : " + e.getMessage(), e);
+            LOGGER.error("Error while finding hotel with this id :" + hotelId + " :", e);
+            throw new RuntimeException("Failed to find hotel with this id " + hotelId + " : " + e.getMessage(), e);
         }
     }
 
 
 
-    // ----------------------------------      delete hotel by id    -----------------------------------
+    
+    // ---------------------------------- delete hotel by id ----------------------------------
 
     @Override
     public String deleteHotel(Long hotelId) {
         try {
+            if (!hotelRepository.existsById(hotelId)) {
+                throw new RuntimeException("Hotel not found with id: " + hotelId);
+            }
             hotelRepository.deleteById(hotelId);
             return "Hotel deleted successfully";
         } catch (Exception e) {
