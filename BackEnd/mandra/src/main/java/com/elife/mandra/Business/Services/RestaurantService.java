@@ -21,4 +21,7 @@ public interface RestaurantService {
     //Read operation
     public Page<Restaurant> getRestaurants(Pageable pageable);
     public Restaurant getRestaurantById(Long restaurantId);
+
+    //Delete operation
+    public String deleteRestaurant(Long restaurantId);
 }
