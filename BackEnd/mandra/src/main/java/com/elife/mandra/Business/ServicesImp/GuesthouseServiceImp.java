@@ -113,4 +113,37 @@ public class GuesthouseServiceImp implements GuesthouseService{
         }
     }
 
+
+
+
+    // ---------------------------------- update Guest House -----------------------------------
+
+    @Override
+    public Guesthouse updateGuestHouse(Long guestHouseId, GuesthouseForm guesthouseForm) {
+       try {
+            Guesthouse guesthouse = guestHouseRepository.findById(guestHouseId)
+                    .orElseThrow(() -> new RuntimeException("Guest House not found with id: " + guestHouseId));
+
+            guesthouse.setName(guesthouseForm.getName());
+            guesthouse.setDescription(guesthouseForm.getDescription());
+            guesthouse.setAddress(guesthouseForm.getAddress());
+            guesthouse.setCity(guesthouseForm.getCity());
+            guesthouse.setEmail(guesthouseForm.getEmail());
+            guesthouse.setFacebook(guesthouseForm.getFacebook());
+            guesthouse.setInstagram(guesthouseForm.getInstagram());
+            guesthouse.setHasParking(guesthouseForm.isHasParking());
+            guesthouse.setHasWifi(guesthouseForm.isHasWifi());
+            guesthouse.setAllowsPets(guesthouseForm.isAllowsPets());
+            guesthouse.setPhoneNumber(guesthouseForm.getPhoneNumber());
+            guesthouse.setWebsite(guesthouseForm.getWebsite());
+            guesthouse.setHasPool(guesthouseForm.isHasPool());
+            guesthouse.setHasRestaurant(guesthouseForm.isHasRestaurant());
+
+            return guestHouseRepository.save(guesthouse);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating guest house", e);
+            throw new RuntimeException("Error while updating guest house: " + e.getMessage(), e);
+        }
+    }
+
 }
