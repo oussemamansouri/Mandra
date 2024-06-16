@@ -20,4 +20,5 @@ public interface RestaurantService {
 
     //Read operation
     public Page<Restaurant> getRestaurants(Pageable pageable);
+    public Restaurant getRestaurantById(Long restaurantId);
 }
