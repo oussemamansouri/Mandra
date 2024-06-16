@@ -45,18 +45,24 @@ public class RestaurantServiceImp implements RestaurantService{
 
     @Override
     public Restaurant addReataurant(Long ownerId, RestaurantForm restaurantForm, List<MultipartFile> images) {
-      try {
+        try {
             Owner owner = ownerRepository.findById(ownerId)
                     .orElseThrow(() -> new RuntimeException("Owner not found with id: " + ownerId));
-
+    
             int nbOfRestaurantsAllows = owner.getNbOfRestaurant();
             int nbOfRestaurantsPosted = owner.getRestaurants().size();
-
+    
             if (nbOfRestaurantsPosted >= nbOfRestaurantsAllows) {
                 throw new RuntimeException("You have exceeded the number of restaurants you can post!");
             }
-
-            Restaurant newRestaurabt = new Restaurant(
+    
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
+            Restaurant newRestaurant = new Restaurant(
                 restaurantForm.getName(),
                 restaurantForm.getDescription(),
                 restaurantForm.getEmail(),
@@ -71,34 +77,43 @@ public class RestaurantServiceImp implements RestaurantService{
                 restaurantForm.getInstagram(),
                 restaurantForm.isWithTerrace(),
                 restaurantForm.isAcceptsReservation()
-                );
-
-                newRestaurabt.setOwner(owner);
-
+            );
+    
+            newRestaurant.setOwner(owner);
+    
             // Save restaurant to get the ID
-            Restaurant savedRestaurant = restaurantRepository.save(newRestaurabt);
-
+            Restaurant savedRestaurant = restaurantRepository.save(newRestaurant);
+    
             // Save images and associate with the restaurant
             List<RestaurantImage> restaurantImages = new ArrayList<>();
             for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
                 String imagePath = fileService.saveImage(image);
                 RestaurantImage restaurantImage = new RestaurantImage();
                 restaurantImage.setImagePath(imagePath);
                 restaurantImage.setRestaurant(savedRestaurant);
                 restaurantImages.add(restaurantImage);
             }
-
+    
+            if (restaurantImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
+            }
+    
             restaurantImageRepository.saveAll(restaurantImages);
-
+    
             // Associate images with the restaurant
-            savedRestaurant.setRestaurantImage(restaurantImages);;
-
+            savedRestaurant.setRestaurantImage(restaurantImages);
+    
             return restaurantRepository.save(savedRestaurant);
         } catch (Exception e) {
             LOGGER.error("Error while adding restaurant", e);
             throw new RuntimeException("Error while adding restaurant: " + e.getMessage(), e);
         }
     }
+    
 
 
 
@@ -205,6 +220,8 @@ public class RestaurantServiceImp implements RestaurantService{
             throw new RuntimeException("Failed to find restaurants: " + e.getMessage(), e);
         }
     }
+
+
     
 
 }
