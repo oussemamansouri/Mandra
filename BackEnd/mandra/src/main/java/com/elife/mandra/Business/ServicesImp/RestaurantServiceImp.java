@@ -237,6 +237,25 @@ public class RestaurantServiceImp implements RestaurantService{
     }
 
 
+
+
+    // ---------------------------------- delete restaurant by id ----------------------------------
+
+    @Override
+    public String deleteRestaurant(Long restaurantId) {
+        try{
+            if (!restaurantRepository.existsById(restaurantId)) {
+                throw new RuntimeException("Restaurant not found with id: " + restaurantId);
+            }
+            restaurantRepository.deleteById(restaurantId);
+            return "Restaurant deleted successfully";
+        }catch(Exception e){
+            LOGGER.error("Error while deleting restaurant with id " + restaurantId, e);
+            throw new RuntimeException("Error while deleting restaurant with id " + restaurantId + ": " + e.getMessage(), e);
+        }
+    }
+
+
     
 
 }
