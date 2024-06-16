@@ -146,4 +146,65 @@ public class GuesthouseServiceImp implements GuesthouseService{
         }
     }
 
+
+
+
+    // ---------------------------------- update Guest House images  -----------------------------------
+
+    @Override
+    public Guesthouse updateGuestHouseImage(Long guestHouseId, List<MultipartFile> images) {
+       try {
+        Guesthouse guesthouse = guestHouseRepository.findById(guestHouseId)
+                    .orElseThrow(() -> new RuntimeException("Guest House not found with id: " + guestHouseId));
+    
+            // Check if the number of images is between 1 and 5
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
+            // Delete existing images
+            List<GuesthouseImage> existingImages = guesthouse.getGuestHouseImage();
+            guesthouseImageRepository.deleteAll(existingImages);
+    
+            // Remove the existing images from the guest house entity
+            existingImages.clear();
+    
+            // Save new images and associate with the guest house
+            List<GuesthouseImage> newGuestHouseImages = new ArrayList<>();
+            for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
+                String imagePath = fileService.saveImage(image);
+                GuesthouseImage guesthouseImage = new GuesthouseImage();
+                guesthouseImage.setImagePath(imagePath);
+                guesthouseImage.setGuesthouse(guesthouse);
+                newGuestHouseImages.add(guesthouseImage);
+            }
+    
+            if (newGuestHouseImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
+            }
+    
+            // Add new images to the guest house entity
+            existingImages.addAll(newGuestHouseImages);
+    
+            // Save new images
+            guesthouseImageRepository.saveAll(newGuestHouseImages);
+    
+            return guestHouseRepository.save(guesthouse);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating guest house images", e);
+            throw new RuntimeException("Error while updating guest house images: " + e.getMessage(), e);
+        }
+
+    }
+
+
+
+   
+
 }
