@@ -14,4 +14,6 @@ public interface GuesthouseService {
 
     //Update operation
     public Guesthouse updateGuestHouse(Long guestHouseId, GuesthouseForm guesthouseForm);
+    public Guesthouse updateGuestHouseImage(Long guestHouseId, List<MultipartFile> images);
+
 }
