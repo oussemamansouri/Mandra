@@ -144,21 +144,36 @@ public class RestaurantServiceImp implements RestaurantService{
             Restaurant restaurant = restaurantRepository.findById(restaurantId)
                     .orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + restaurantId));
     
+            // Check if the number of images is between 1 and 5
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
             // Delete existing images
             List<RestaurantImage> existingImages = restaurant.getRestaurantImage();
             restaurantImageRepository.deleteAll(existingImages);
-            
+    
             // Remove the existing images from the restaurant entity
             existingImages.clear();
     
             // Save new images and associate with the restaurant
             List<RestaurantImage> newRestaurantImages = new ArrayList<>();
             for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
                 String imagePath = fileService.saveImage(image);
                 RestaurantImage restaurantImage = new RestaurantImage();
                 restaurantImage.setImagePath(imagePath);
                 restaurantImage.setRestaurant(restaurant);
                 newRestaurantImages.add(restaurantImage);
+            }
+    
+            if (newRestaurantImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
             }
     
             // Add new images to the restaurant entity
@@ -173,6 +188,8 @@ public class RestaurantServiceImp implements RestaurantService{
             throw new RuntimeException("Error while updating restaurant images: " + e.getMessage(), e);
         }
     }
+    
+    
 
 
 
