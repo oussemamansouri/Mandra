@@ -1,5 +1,7 @@
 package com.elife.mandra.DAO.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,9 +14,11 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 
@@ -32,6 +36,7 @@ public class GuesthouseImage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "guestHouse_id", nullable = false)
+    @JsonIgnore
     private Guesthouse guesthouse;
 
 
