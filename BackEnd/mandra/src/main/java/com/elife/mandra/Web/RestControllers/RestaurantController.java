@@ -113,4 +113,20 @@ public class RestaurantController {
 
 
 
+    // ----------------------------------      get Hotel By Id endpoint     -----------------------------------
+
+ @GetMapping("/{restaurantId}")
+ public ResponseEntity<Object> getHotelById( @PathVariable(value = "restaurantId") Long restaurantId  ) {
+    try{
+    Restaurant restaurant= restaurantService.getRestaurantById(restaurantId);
+    return ResponseEntity.status(HttpStatus.OK).body(restaurant);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting hotel with this id :"+ restaurantId, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
+
+
+
+
 }
