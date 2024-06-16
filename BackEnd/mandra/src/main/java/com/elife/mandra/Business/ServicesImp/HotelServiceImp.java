@@ -42,20 +42,25 @@ public class HotelServiceImp implements HotelService {
 
 
     // ---------------------------------- add Hotel by owner -----------------------------------
-
     @Override
     public Hotel addHotel(Long ownerId, HotelForm hotelForm, List<MultipartFile> images) {
         try {
             Owner owner = ownerRepository.findById(ownerId)
                     .orElseThrow(() -> new RuntimeException("Owner not found with id: " + ownerId));
-
+    
             int nbOfHotelsAllows = owner.getNbOfHotels();
             int nbOfHotelsPosted = owner.getHotels().size();
-
+    
             if (nbOfHotelsPosted >= nbOfHotelsAllows) {
                 throw new RuntimeException("You have exceeded the number of hotels you can post!");
             }
-
+    
+            if (images == null || images.isEmpty()) {
+                throw new RuntimeException("Please select at least one image to upload.");
+            } else if (images.size() > 5) {
+                throw new RuntimeException("You have exceeded the maximum number of images allowed!");
+            }
+    
             Hotel newHotel = new Hotel(
                     hotelForm.getName(),
                     hotelForm.getDescription(),
@@ -73,35 +78,44 @@ public class HotelServiceImp implements HotelService {
                     hotelForm.isHasGym(),
                     hotelForm.isHasPool(),
                     hotelForm.isHasRestaurant(),
-                    hotelForm.getNbOfStars());
-
+                    hotelForm.getNbOfStars()
+            );
+    
             newHotel.setOwner(owner);
-
+    
             // Save hotel to get the ID
             Hotel savedHotel = hotelRepository.save(newHotel);
-
+    
             // Save images and associate with the hotel
             List<HotelImage> hotelImages = new ArrayList<>();
             for (MultipartFile image : images) {
+                if (image.isEmpty()) {
+                    continue; // Skip empty files
+                }
+    
                 String imagePath = fileService.saveImage(image);
                 HotelImage hotelImage = new HotelImage();
                 hotelImage.setImagePath(imagePath);
                 hotelImage.setHotel(savedHotel);
                 hotelImages.add(hotelImage);
             }
-
+    
+            if (hotelImages.isEmpty()) {
+                throw new RuntimeException("No valid images to upload.");
+            }
+    
             hotelImageRepository.saveAll(hotelImages);
-
+    
             // Associate images with the hotel
             savedHotel.setHotelImage(hotelImages);
-
+    
             return hotelRepository.save(savedHotel);
         } catch (Exception e) {
             LOGGER.error("Error while adding hotel", e);
             throw new RuntimeException("Error while adding hotel: " + e.getMessage(), e);
         }
     }
-
+    
 
 
 
