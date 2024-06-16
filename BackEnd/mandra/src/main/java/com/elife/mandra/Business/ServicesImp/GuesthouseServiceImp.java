@@ -223,6 +223,21 @@ public class GuesthouseServiceImp implements GuesthouseService{
 
 
 
+
+    // ---------------------------------- get guest house by id -----------------------------------
+
+    @Override
+    public Guesthouse getGuestHousesById(Long guestHouseId) {
+        try{
+            return guestHouseRepository.findById(guestHouseId).get();
+          }catch(Exception e){
+            LOGGER.error("Error while Getting guest house with this id : "+ guestHouseId+" :", e);
+            throw new RuntimeException("Failed to find guest house with this id " + guestHouseId + " : " + e.getMessage(), e);
+          }
+    }
+
+
+
    
 
 }
