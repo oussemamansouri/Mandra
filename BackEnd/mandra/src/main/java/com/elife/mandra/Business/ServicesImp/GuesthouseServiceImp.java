@@ -238,6 +238,25 @@ public class GuesthouseServiceImp implements GuesthouseService{
 
 
 
+
+    // ---------------------------------- delete guest house by id ----------------------------------
+
+    @Override
+    public String deleteGuestHouse(Long guestHouseId) {
+        try{
+            if (!guestHouseRepository.existsById(guestHouseId)) {
+                throw new RuntimeException("Guest House not found with id: " + guestHouseId);
+            }
+            guestHouseRepository.deleteById(guestHouseId);
+            return "Guest House deleted successfully";
+        }catch(Exception e){
+            LOGGER.error("Error while deleting guest house with id " + guestHouseId, e);
+            throw new RuntimeException("Error while deleting Guest house with id " + guestHouseId + ": " + e.getMessage(), e);
+        }
+    }
+
+
+
    
 
 }
