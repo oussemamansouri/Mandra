@@ -20,5 +20,7 @@ public interface GuesthouseService {
 
      //Read operation
     public Page<Guesthouse> getGuestHouses(Pageable pageable);
+    public Guesthouse getGuestHousesById(Long guestHouseId);
+
 
 }
