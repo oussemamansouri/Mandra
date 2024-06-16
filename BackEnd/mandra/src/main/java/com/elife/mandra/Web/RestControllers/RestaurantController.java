@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -126,6 +127,20 @@ public class RestaurantController {
     }
  }
 
+
+ 
+// ----------------------------------      delete restaurant endpoint     -----------------------------------
+
+ @DeleteMapping("/{restaurantId}/delete")
+ public ResponseEntity<Object> deleteRestaurant(@PathVariable(value = "restaurantId") Long restaurantId){
+    try{
+     String resMessege = restaurantService.deleteRestaurant(restaurantId);
+     return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while deleting restaurant with this id :"+ restaurantId, e.getMessage());
+     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+ }
 
 
 
