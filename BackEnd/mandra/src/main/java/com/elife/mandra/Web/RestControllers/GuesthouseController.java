@@ -113,4 +113,21 @@ public class GuesthouseController {
         }
     }
 
+
+
+
+
+    // ----------------------------------      get Guest House By Id endpoint     -----------------------------------
+
+ @GetMapping("/{guesthouseId}")
+ public ResponseEntity<Object> getHotelById( @PathVariable(value = "guesthouseId") Long guesthouseId  ) {
+    try{
+    Guesthouse guesthouse= guesthouseService.getGuestHousesById(guesthouseId);
+    return ResponseEntity.status(HttpStatus.OK).body(guesthouse);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting guest house with this id :"+ guesthouseId, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
+
 }
