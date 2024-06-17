@@ -69,6 +69,16 @@ public class GastronomicSpecialties {
         @ManyToOne()
         @JoinColumn(name = "AdminId")
         @JsonIgnore
-        private Admin AdminId ;
+        private Admin Admin ;
+
+
+        public GastronomicSpecialties(String name, String description, String address, String city, String image ){
+            this.name = name;
+            this.description = description;
+            this.address = address;
+            this.city = city;
+            this.image = image;
+
+        }
 
 }
