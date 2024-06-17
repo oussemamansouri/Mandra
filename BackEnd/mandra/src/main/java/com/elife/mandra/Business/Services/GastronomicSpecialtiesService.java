@@ -1,6 +1,5 @@
 package com.elife.mandra.Business.Services;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,7 +20,8 @@ public interface GastronomicSpecialtiesService {
 
     public GastronomicSpecialties updateGastronomicSpecialtieImage(Long GastronomicSpecialtieId, MultipartFile image);
 
-    //Read operatoin
-     public Page<GastronomicSpecialties> getGastronomicSpecialties(Pageable pageable);
+    // Read operatoin
+    public Page<GastronomicSpecialties> getGastronomicSpecialties(Pageable pageable);
+    public GastronomicSpecialties getGastronomicSpecialtieById(Long GastronomicSpecialtieId);
 
 }
