@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.GastronomicSpecialtiesService;
 import com.elife.mandra.DAO.Entities.GastronomicSpecialties;
 import com.elife.mandra.Web.Requests.GastronomicSpecialtiesForm;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 
@@ -75,6 +77,25 @@ public class GastronomicSpecialtiesController {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedgGastronomicSpecialtie);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
+
+
+
+    // ----------------------------------      edit Gastronomic Specialties image endpoint     -----------------------------------
+
+   @PutMapping("/{gastronomicspecialtieId}/edit-image")
+    public ResponseEntity<Object> updatedGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId, 
+                                                    @RequestParam("image") MultipartFile image) {
+        try {
+            GastronomicSpecialties updatedgGastronomicSpecialtie = gastronomicSpecialtiesService
+            .updateGastronomicSpecialtieImage(gastronomicspecialtieId, image);
+
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedgGastronomicSpecialtie);
+        } catch (RuntimeException e) {
+            ErrorResponse errorResponse = new ErrorResponse("Error while updating gastronomic specialtie image", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
