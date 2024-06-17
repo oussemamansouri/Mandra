@@ -162,4 +162,24 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
           }
     }
 
+
+
+
+
+    // ---------------------------------- delete Gastronomic Specialtie  -----------------------------------
+
+    @Override
+    public String deleteGastronomicSpecialtie(Long GastronomicSpecialtieId) {
+        try{
+            if (!gastronomicRepository.existsById(GastronomicSpecialtieId)) {
+                throw new RuntimeException("Gastronomic Specialtie not found with id: " + GastronomicSpecialtieId);
+            }
+            gastronomicRepository.deleteById(GastronomicSpecialtieId);
+            return "Gastronomic Specialtie deleted successfully";
+        }catch(Exception e){
+            LOGGER.error("Error while deleting Gastronomic Specialtie with id " + GastronomicSpecialtieId, e);
+            throw new RuntimeException("Error while deleting Gastronomic Specialtie with id " + GastronomicSpecialtieId + ": " + e.getMessage(), e);
+        }
+    }
+
 }
