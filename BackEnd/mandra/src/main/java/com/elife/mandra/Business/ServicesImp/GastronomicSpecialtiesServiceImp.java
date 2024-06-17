@@ -100,4 +100,35 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
         }
     }
 
+
+
+
+
+    // ---------------------------------- update Gastronomic Specialtie Image -----------------------------------
+
+    @Override
+    public GastronomicSpecialties updateGastronomicSpecialtieImage(Long GastronomicSpecialtieId, MultipartFile image) {
+        try {
+
+            // Fetch the Gastronomic Specialtie first
+            GastronomicSpecialties gastronomicSpecialtie = gastronomicRepository.findById(GastronomicSpecialtieId).orElse(null);
+            if (gastronomicSpecialtie == null) {
+                throw new RuntimeException("Failed to find gastronomic specialtie with this id: " + GastronomicSpecialtieId);
+            }
+
+            // Validate if the file is an image
+            String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+            if (!extension.matches("jpg|jpeg|png|gif")) {
+                throw new RuntimeException("Invalid image file type");
+            }
+    
+            String imagePath = fileService.saveFile(image); // Save the image and get the path
+            gastronomicSpecialtie.setImage(imagePath);
+            return gastronomicRepository.save(gastronomicSpecialtie);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating gastronomic specialtie image", e);
+            throw new RuntimeException("Error while updating gastronomic specialtie image: " + e.getMessage(), e);
+        }
+    }
+
 }
