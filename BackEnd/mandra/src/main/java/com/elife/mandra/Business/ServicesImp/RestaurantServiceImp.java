@@ -245,7 +245,7 @@ public class RestaurantServiceImp implements RestaurantService{
         return restaurantRepository.findById(restaurantId).get();
       }catch(Exception e){
         LOGGER.error("Error while Getting restaurant with this id : "+ restaurantId+" :", e);
-        throw new RuntimeException("Failed to find hotel with this id " + restaurantId + " : " + e.getMessage(), e);
+        throw new RuntimeException("Failed to find restaurant with this id " + restaurantId + " : " + e.getMessage(), e);
       }
     }
 

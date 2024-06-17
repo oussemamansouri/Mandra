@@ -2,6 +2,8 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -66,6 +68,17 @@ public class GastronomicSpecialties {
 
         @ManyToOne()
         @JoinColumn(name = "AdminId")
-        private Admin AdminId ;
+        @JsonIgnore
+        private Admin Admin ;
+
+
+        public GastronomicSpecialties(String name, String description, String address, String city, String image ){
+            this.name = name;
+            this.description = description;
+            this.address = address;
+            this.city = city;
+            this.image = image;
+
+        }
 
 }
