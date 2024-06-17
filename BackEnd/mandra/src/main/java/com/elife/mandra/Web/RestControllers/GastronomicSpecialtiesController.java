@@ -16,6 +16,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -123,13 +124,30 @@ public class GastronomicSpecialtiesController {
      // ---------------------------------- get Gastronomic Specialtie By Id endpoint -----------------------------------
 
  @GetMapping("/{gastronomicspecialtieId}")
- public ResponseEntity<Object> getHotelById( @PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId  ) {
+ public ResponseEntity<Object> getGastronomicSpecialtieById( @PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId  ) {
     try{
         GastronomicSpecialties gastronomicSpecialtie = gastronomicSpecialtiesService.getGastronomicSpecialtieById(gastronomicspecialtieId);
     return ResponseEntity.status(HttpStatus.OK).body(gastronomicSpecialtie);
     }catch(Exception e){
         ErrorResponse errorResponse = new ErrorResponse("Error while getting gastronomic specialties with this id :"+ gastronomicspecialtieId, e.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
+
+
+
+
+
+ // ---------------------------------- delete Gastronomic Specialtie endpoint -----------------------------------
+
+ @DeleteMapping("/{gastronomicspecialtieId}/delete")
+ public ResponseEntity<Object> deleteGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId){
+    try{
+     String resMessege = gastronomicSpecialtiesService.deleteGastronomicSpecialtie(gastronomicspecialtieId);
+     return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while deleting gastronomic specialtie with this id :"+ gastronomicspecialtieId, e.getMessage());
+     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
 }
