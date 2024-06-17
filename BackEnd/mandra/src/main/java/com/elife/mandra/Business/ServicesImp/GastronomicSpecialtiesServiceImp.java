@@ -4,6 +4,8 @@ package com.elife.mandra.Business.ServicesImp;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -128,6 +130,20 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
         } catch (Exception e) {
             LOGGER.error("Error while updating gastronomic specialtie image", e);
             throw new RuntimeException("Error while updating gastronomic specialtie image: " + e.getMessage(), e);
+        }
+    }
+
+
+
+    // ---------------------------------- get Gastronomic Specialtie -----------------------------------
+
+    @Override
+    public Page<GastronomicSpecialties> getGastronomicSpecialties(Pageable pageable) {
+        try {
+            return gastronomicRepository.findAll(pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding gastronomic specialties", e);
+            throw new RuntimeException("Failed to find gastronomic specialties: " + e.getMessage(), e);
         }
     }
 
