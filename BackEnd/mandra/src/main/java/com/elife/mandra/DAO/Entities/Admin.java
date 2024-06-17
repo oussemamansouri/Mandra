@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -30,10 +31,12 @@ public class Admin extends User {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private Long id ;
 
-    @OneToMany(mappedBy = "AdminId", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "Admin", cascade = CascadeType.ALL )
+    @JsonIgnore
     private List<GastronomicSpecialties> GastronomicSpecialties ;
 
-    @OneToMany(mappedBy = "AdminId", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "Admin", cascade = CascadeType.ALL )
+    @JsonIgnore
     private List<SpecialtyWomen> SpecialtyWomens ;
 
         public Admin(String firstname, String lastname, String email, String password,
