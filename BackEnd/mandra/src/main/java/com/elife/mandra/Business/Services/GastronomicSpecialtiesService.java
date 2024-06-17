@@ -8,7 +8,12 @@ import com.elife.mandra.Web.Requests.GastronomicSpecialtiesForm;
 public interface GastronomicSpecialtiesService {
 
     // Create operation
-    public GastronomicSpecialties addGastronomicSpecialties(Long adminId, GastronomicSpecialtiesForm gastronomicSpecialtiesForm,
+    public GastronomicSpecialties addGastronomicSpecialtie(Long adminId, GastronomicSpecialtiesForm gastronomicSpecialtiesForm,
     MultipartFile image );
+
+     //Update operation
+    public GastronomicSpecialties updateGastronomicSpecialtie(Long GastronomicSpecialtieId, 
+    GastronomicSpecialtiesForm gastronomicSpecialtiesForm);
+    
 
 }
