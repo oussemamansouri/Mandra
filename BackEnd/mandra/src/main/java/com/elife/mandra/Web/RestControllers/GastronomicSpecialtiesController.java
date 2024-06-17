@@ -103,7 +103,7 @@ public class GastronomicSpecialtiesController {
     }
 
 
-    
+
 
     // ---------------------------------- get Gastronomic Specialties endpoint -----------------------------------
 
@@ -118,4 +118,18 @@ public class GastronomicSpecialtiesController {
         }
     }
 
+
+
+     // ---------------------------------- get Gastronomic Specialtie By Id endpoint -----------------------------------
+
+ @GetMapping("/{gastronomicspecialtieId}")
+ public ResponseEntity<Object> getHotelById( @PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId  ) {
+    try{
+        GastronomicSpecialties gastronomicSpecialtie = gastronomicSpecialtiesService.getGastronomicSpecialtieById(gastronomicspecialtieId);
+    return ResponseEntity.status(HttpStatus.OK).body(gastronomicSpecialtie);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting gastronomic specialties with this id :"+ gastronomicspecialtieId, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
 }
