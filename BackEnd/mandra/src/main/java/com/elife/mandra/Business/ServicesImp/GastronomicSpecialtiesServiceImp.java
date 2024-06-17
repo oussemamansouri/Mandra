@@ -147,4 +147,19 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
         }
     }
 
+
+
+
+    // ---------------------------------- get Gastronomic Specialtie by id -----------------------------------
+
+    @Override
+    public GastronomicSpecialties getGastronomicSpecialtieById(Long GastronomicSpecialtieId) {
+        try{
+            return gastronomicRepository.findById(GastronomicSpecialtieId).get();
+          }catch(Exception e){
+            LOGGER.error("Error while Getting gastronomic specialtie with this id : "+ GastronomicSpecialtieId+" :", e);
+            throw new RuntimeException("Failed to find gastronomic specialtie with this id " + GastronomicSpecialtieId + " : " + e.getMessage(), e);
+          }
+    }
+
 }
