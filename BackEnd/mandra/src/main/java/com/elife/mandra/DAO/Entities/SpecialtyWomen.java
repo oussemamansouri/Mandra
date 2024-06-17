@@ -74,6 +74,6 @@ public class SpecialtyWomen {
         @ManyToOne()
         @JoinColumn(name = "AdminId")
         @JsonIgnore
-        private Admin AdminId ;
+        private Admin Admin ;
 
 }
