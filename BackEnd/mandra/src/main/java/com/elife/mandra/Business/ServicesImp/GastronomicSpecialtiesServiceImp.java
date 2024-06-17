@@ -39,7 +39,7 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
     // ---------------------------------- add Gastronomic Specialties by admin -----------------------------------
 
     @Override
-    public GastronomicSpecialties addGastronomicSpecialties(Long adminId,
+    public GastronomicSpecialties addGastronomicSpecialtie(Long adminId,
             GastronomicSpecialtiesForm gastronomicSpecialtiesForm , MultipartFile image) {
 
         try {
@@ -58,7 +58,7 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
 
             String imagePath = fileService.saveFile(image);
     
-            GastronomicSpecialties newgastronomicSpecialties = new GastronomicSpecialties(
+            GastronomicSpecialties newgastronomicSpecialtie = new GastronomicSpecialties(
                 gastronomicSpecialtiesForm.getName(),
                 gastronomicSpecialtiesForm.getDescription(),
                 gastronomicSpecialtiesForm.getAddress(),
@@ -66,13 +66,37 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
                 imagePath
             );
     
-            newgastronomicSpecialties.setAdmin(admin);
+            newgastronomicSpecialtie.setAdmin(admin);
 
-            return gastronomicRepository.save(newgastronomicSpecialties);
+            return gastronomicRepository.save(newgastronomicSpecialtie);
 
         } catch (Exception e) {
             LOGGER.error("Error while adding gastronomic specialties", e);
             throw new RuntimeException("Error while adding gastronomic specialties: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- update Gastronomic Specialties -----------------------------------
+
+    @Override
+    public GastronomicSpecialties updateGastronomicSpecialtie(Long GastronomicSpecialtieId,
+            GastronomicSpecialtiesForm gastronomicSpecialtiesForm) {
+        try {
+            GastronomicSpecialties gastronomicSpecialtie = gastronomicRepository.findById(GastronomicSpecialtieId)
+                    .orElseThrow(() -> new RuntimeException("gastronomic specialtie not found with id: " + GastronomicSpecialtieId));
+
+                    gastronomicSpecialtie.setName(gastronomicSpecialtiesForm.getName());
+                    gastronomicSpecialtie.setDescription(gastronomicSpecialtiesForm.getDescription());
+                    gastronomicSpecialtie.setAddress(gastronomicSpecialtiesForm.getAddress());
+                    gastronomicSpecialtie.setCity(gastronomicSpecialtiesForm.getCity());
+
+            return gastronomicRepository.save(gastronomicSpecialtie);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating gastronomic specialtie", e);
+            throw new RuntimeException("Error while updating gastronomic specialtie: " + e.getMessage(), e);
         }
     }
 
