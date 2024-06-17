@@ -24,4 +24,7 @@ public interface GastronomicSpecialtiesService {
     public Page<GastronomicSpecialties> getGastronomicSpecialties(Pageable pageable);
     public GastronomicSpecialties getGastronomicSpecialtieById(Long GastronomicSpecialtieId);
 
+    //delete operation
+    public String deleteGastronomicSpecialtie(Long GastronomicSpecialtieId);
+
 }
