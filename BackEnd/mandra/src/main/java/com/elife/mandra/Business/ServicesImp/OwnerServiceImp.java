@@ -125,7 +125,7 @@ public class OwnerServiceImp implements OwnerService {
                 throw new RuntimeException("Invalid image type");
             }
     
-            String imagePath = fileService.saveImage(cinImage); // Save the file and get the path
+            String imagePath = fileService.saveFile(cinImage); // Save the file and get the path
             owner.setCinImage(imagePath);
             return ownerRepository.save(owner);
         } catch (Exception e) {
@@ -201,7 +201,7 @@ public class OwnerServiceImp implements OwnerService {
             }
     
             // Save the image file
-            String imagePath = fileService.saveImage(image); // Save the file and get the path
+            String imagePath = fileService.saveFile(image); // Save the file and get the path
             owner.setImage(imagePath);
     
             return ownerRepository.save(owner);

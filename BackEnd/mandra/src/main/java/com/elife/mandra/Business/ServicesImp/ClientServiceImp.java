@@ -143,7 +143,7 @@ public Client registerClient(AddUserForm clientForm) {
                 throw new RuntimeException("Invalid image file type");
             }
     
-            String imagePath = fileService.saveImage(image);// Save the image and get the path
+            String imagePath = fileService.saveFile(image);// Save the image and get the path
             client.setImage(imagePath);
             return clientRepository.save(client);
         } catch (Exception e) {

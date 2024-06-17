@@ -3,6 +3,7 @@ package com.elife.mandra.Business.ServicesImp;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -92,8 +93,14 @@ public class HotelServiceImp implements HotelService {
                 if (image.isEmpty()) {
                     continue; // Skip empty files
                 }
+
+                // Validate if the file is an image
+                String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+                if (!extension.matches("jpg|jpeg|png|gif")) {
+                    throw new RuntimeException("Invalid image file type");
+                }
     
-                String imagePath = fileService.saveImage(image);
+                String imagePath = fileService.saveFile(image);
                 HotelImage hotelImage = new HotelImage();
                 hotelImage.setImagePath(imagePath);
                 hotelImage.setHotel(savedHotel);
@@ -186,8 +193,14 @@ public class HotelServiceImp implements HotelService {
                 if (image.isEmpty()) {
                     continue; // Skip empty files
                 }
+
+                // Validate if the file is an image
+                String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+                if (!extension.matches("jpg|jpeg|png|gif")) {
+                    throw new RuntimeException("Invalid image file type");
+                }
     
-                String imagePath = fileService.saveImage(image);
+                String imagePath = fileService.saveFile(image);
                 HotelImage hotelImage = new HotelImage();
                 hotelImage.setImagePath(imagePath);
                 hotelImage.setHotel(hotel);
