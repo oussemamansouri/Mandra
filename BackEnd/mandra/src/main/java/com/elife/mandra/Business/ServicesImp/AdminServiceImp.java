@@ -123,7 +123,7 @@ public Admin addAdmin(AddUserForm adminForm) {
                 throw new RuntimeException("Invalid image file type");
             }
     
-            String imagePath = fileService.saveImage(image); // Save the image and get the path
+            String imagePath = fileService.saveFile(image); // Save the image and get the path
             admin.setImage(imagePath);
             return adminRepository.save(admin);
         } catch (Exception e) {
