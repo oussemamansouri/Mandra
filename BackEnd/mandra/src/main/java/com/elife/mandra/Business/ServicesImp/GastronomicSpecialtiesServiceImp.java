@@ -21,7 +21,7 @@ import com.elife.mandra.Web.Requests.GastromnmicSpecialtiesForms.GastronomicSpec
 public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesService {
 
 
-     private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantServiceImp.class);
+     private static final Logger LOGGER = LoggerFactory.getLogger(GastronomicSpecialtiesServiceImp.class);
 
     final GastronomicRepository gastronomicRepository;
     final AdminRepository adminRepository;
