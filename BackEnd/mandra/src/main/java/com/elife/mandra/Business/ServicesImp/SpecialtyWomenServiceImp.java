@@ -149,4 +149,19 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
         }
     }
 
+
+
+
+    // ---------------------------------- get Specialty Women By Id  -----------------------------------
+
+    @Override
+    public SpecialtyWomen getSpecialtyWomenById(Long specialtyWomenId) {
+        try{
+            return specialtyWomenRepository.findById(specialtyWomenId).get();
+          }catch(Exception e){
+            LOGGER.error("Error while Getting specialty women with this id : "+ specialtyWomenId+" :", e);
+            throw new RuntimeException("Failed to find specialty women with this id " + specialtyWomenId + " : " + e.getMessage(), e);
+          }
+    }
+
 }
