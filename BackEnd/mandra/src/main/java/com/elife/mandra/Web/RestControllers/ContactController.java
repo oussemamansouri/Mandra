@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,5 +70,23 @@ public class ContactController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+
+
+        // ---------------------------------- get Contact By Id endpoint -----------------------------------
+
+ @GetMapping("/{contactId}")
+ public ResponseEntity<Object> getSpecialtyWomenById( @PathVariable(value = "contactId") Long contactId ) {
+    try{
+        Contact contact = contactService.getContactyById(contactId);
+    return ResponseEntity.status(HttpStatus.OK).body(contact);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting contact with this id :"+ contactId, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
+
+
+
 
 }
