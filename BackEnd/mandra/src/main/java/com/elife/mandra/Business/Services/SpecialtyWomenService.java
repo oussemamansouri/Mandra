@@ -22,5 +22,7 @@ public interface SpecialtyWomenService {
 
      // Read operatoin
     public Page<SpecialtyWomen> getSpecialtyWomens(Pageable pageable);
+    public SpecialtyWomen getSpecialtyWomenById(Long specialtyWomenId);
+
 
 }
