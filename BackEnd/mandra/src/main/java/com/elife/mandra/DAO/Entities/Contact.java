@@ -28,13 +28,13 @@ public class Contact {
     private Long id ;
 
     @Column(name = "firstname",length = 20,nullable = false )
-    private String code ;
+    private String firstname ;
 
     @Column(name = "lastname",length = 20,nullable = false)
-    private String name ;
+    private String lastname ;
 
     @Column(name = "email",length = 30,nullable = false)
-    private String price ;
+    private String email ;
 
     @Column(name = "phoneNumber",length = 20,nullable = false)
     private int phoneNumber ;
