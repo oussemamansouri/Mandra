@@ -15,13 +15,13 @@ import com.elife.mandra.DAO.Entities.Admin;
 import com.elife.mandra.DAO.Entities.GastronomicSpecialties;
 import com.elife.mandra.DAO.Repositories.AdminRepository;
 import com.elife.mandra.DAO.Repositories.GastronomicRepository;
-import com.elife.mandra.Web.Requests.GastronomicSpecialtiesForm;
+import com.elife.mandra.Web.Requests.GastromnmicSpecialtiesForms.GastronomicSpecialtiesForm;
 
 @Service
 public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesService {
 
 
-     private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantServiceImp.class);
+     private static final Logger LOGGER = LoggerFactory.getLogger(GastronomicSpecialtiesServiceImp.class);
 
     final GastronomicRepository gastronomicRepository;
     final AdminRepository adminRepository;

@@ -58,8 +58,8 @@ public class OwnerController {
 
  @GetMapping("")
     public ResponseEntity<Object> getOwners(@PageableDefault(size = 10) Pageable pageable) {
-       Page<Owner> owner = ownerService.getOwners(pageable);
-      return ResponseEntity.status(HttpStatus.OK).body(owner);
+       Page<Owner> ownerPage = ownerService.getOwners(pageable);
+      return ResponseEntity.status(HttpStatus.OK).body(ownerPage);
     }
 
 

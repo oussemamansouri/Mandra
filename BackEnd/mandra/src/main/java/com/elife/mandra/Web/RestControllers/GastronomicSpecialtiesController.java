@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.GastronomicSpecialtiesService;
 import com.elife.mandra.DAO.Entities.GastronomicSpecialties;
-import com.elife.mandra.Web.Requests.GastronomicSpecialtiesForm;
+import com.elife.mandra.Web.Requests.GastromnmicSpecialtiesForms.GastronomicSpecialtiesForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
@@ -77,8 +77,8 @@ public class GastronomicSpecialtiesController {
             return ResponseEntity.badRequest().body(errors.toString());
         }
         try {
-            GastronomicSpecialties updatedgGastronomicSpecialtie = gastronomicSpecialtiesService.updateGastronomicSpecialtie(gastronomicspecialtieId, gastronomicSpecialtiesForm);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedgGastronomicSpecialtie);
+            GastronomicSpecialties updatedGastronomicSpecialtie = gastronomicSpecialtiesService.updateGastronomicSpecialtie(gastronomicspecialtieId, gastronomicSpecialtiesForm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedGastronomicSpecialtie);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
@@ -90,7 +90,7 @@ public class GastronomicSpecialtiesController {
     // ----------------------------------      edit Gastronomic Specialties image endpoint     -----------------------------------
 
    @PutMapping("/{gastronomicspecialtieId}/edit-image")
-    public ResponseEntity<Object> updatedGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId, 
+    public ResponseEntity<Object> updateGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId, 
                                                     @RequestParam("image") MultipartFile image) {
         try {
             GastronomicSpecialties updatedgGastronomicSpecialtie = gastronomicSpecialtiesService
@@ -111,8 +111,8 @@ public class GastronomicSpecialtiesController {
  @GetMapping("")
     public ResponseEntity<Object> getGastronomicSpecialties(@PageableDefault(size = 10) Pageable pageable) {
         try{
-       Page<GastronomicSpecialties> gastronomicSpecialties = gastronomicSpecialtiesService.getGastronomicSpecialties(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(gastronomicSpecialties);
+       Page<GastronomicSpecialties> gastronomicSpecialtiesPage = gastronomicSpecialtiesService.getGastronomicSpecialties(pageable);
+       return ResponseEntity.status(HttpStatus.OK).body(gastronomicSpecialtiesPage);
         }catch(Exception e){
             ErrorResponse errorResponse = new ErrorResponse("Error while getting gastronomic specialties ", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
@@ -150,4 +150,6 @@ public class GastronomicSpecialtiesController {
      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
+
+ 
 }
