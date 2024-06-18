@@ -35,7 +35,7 @@ public class SpecialtyWomen {
         private Long id ;
 
         @Column(name = "Specialty",length = 40,nullable = false )
-        private String Specialty ;
+        private String specialty ;
 
         @Column(name = "description",nullable = false )
         private String description ;
@@ -83,8 +83,8 @@ public class SpecialtyWomen {
         private Admin Admin ;
 
 
-        public SpecialtyWomen(String Specialty, String description, String address, String city,String phoneNumber, String image ){
-            this.Specialty = Specialty;
+        public SpecialtyWomen(String specialty, String description, String address, String city,String phoneNumber, String image ){
+            this.specialty = specialty;
             this.description = description;
             this.address = address;
             this.city = city;
