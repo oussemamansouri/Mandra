@@ -119,4 +119,21 @@ public class SpecialtyWomenController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+
+
+
+
+    // ---------------------------------- get Specialty Women By Id endpoint -----------------------------------
+
+ @GetMapping("/{specialtyWomenId}")
+ public ResponseEntity<Object> getSpecialtyWomenById( @PathVariable(value = "specialtyWomenId") Long specialtyWomenId  ) {
+    try{
+        SpecialtyWomen specialtyWomen = specialtyWomenService.getSpecialtyWomenById(specialtyWomenId);
+    return ResponseEntity.status(HttpStatus.OK).body(specialtyWomen);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting specialty women with this id :"+ specialtyWomenId, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+ }
 }
