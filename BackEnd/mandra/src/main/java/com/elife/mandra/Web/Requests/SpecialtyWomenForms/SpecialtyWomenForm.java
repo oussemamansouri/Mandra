@@ -15,9 +15,9 @@ import lombok.Setter;
 
 public class SpecialtyWomenForm {
 
-    @NotBlank(message = "Le nom est obligatoire")
-    @Size(max = 40, message = "Le nom doit comporter moins de 40 caractères")
-    private String name;
+    @NotBlank(message = "Le spécialité est obligatoire")
+    @Size(max = 40, message = "Le spécialité doit comporter moins de 40 caractères")
+    private String specialty;
 
     @NotBlank(message = "La description est obligatoire")
     private String description;
