@@ -67,6 +67,21 @@ public class ContactServiceImp implements ContactService{
 
 
 
+    // ---------------------------------- get Contact By Id  -----------------------------------
+
+    @Override
+    public Contact getContactyById(Long contactId) {
+        try{
+            return contactRepository.findById(contactId).get();
+          }catch(Exception e){
+            LOGGER.error("Error while Getting contact with this id : "+ contactId+" :", e);
+            throw new RuntimeException("Failed to find contact with this id " + contactId + " : " + e.getMessage(), e);
+          }
+    }
+
+
+
+
 
    
 
