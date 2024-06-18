@@ -15,14 +15,16 @@ public interface SpecialtyWomenService {
 
     // Update operation
     public SpecialtyWomen updateSpecialtyWomen(Long specialtyWomenId,
-    SpecialtyWomenForm specialtyWomenForm);
+            SpecialtyWomenForm specialtyWomenForm);
 
     public SpecialtyWomen updateSpecialtyWomenImage(Long specialtyWomenId,
-    MultipartFile image);
+            MultipartFile image);
 
-     // Read operatoin
+    // Read operatoin
     public Page<SpecialtyWomen> getSpecialtyWomens(Pageable pageable);
     public SpecialtyWomen getSpecialtyWomenById(Long specialtyWomenId);
 
+    // delete operation
+    public String deleteSpecialtyWomen(Long specialtyWomenId);
 
 }
