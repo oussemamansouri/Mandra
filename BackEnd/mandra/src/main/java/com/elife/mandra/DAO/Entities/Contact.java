@@ -37,7 +37,7 @@ public class Contact {
     private String email ;
 
     @Column(name = "phoneNumber",length = 20,nullable = false)
-    private int phoneNumber ;
+    private String phoneNumber ;
 
     @Column(name = "subject",length = 30,nullable = false )
     private String subject ;
@@ -55,7 +55,14 @@ public class Contact {
     }
 
 
-    
+    public Contact(String firstname, String lastname, String email, String phoneNumber, String subject, String description){
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.email =  email;
+        this.phoneNumber = phoneNumber;
+        this.subject = subject;
+        this.description = description;
+    }
 
  
 
