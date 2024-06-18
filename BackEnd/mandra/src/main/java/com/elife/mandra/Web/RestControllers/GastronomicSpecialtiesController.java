@@ -77,8 +77,8 @@ public class GastronomicSpecialtiesController {
             return ResponseEntity.badRequest().body(errors.toString());
         }
         try {
-            GastronomicSpecialties updatedgGastronomicSpecialtie = gastronomicSpecialtiesService.updateGastronomicSpecialtie(gastronomicspecialtieId, gastronomicSpecialtiesForm);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedgGastronomicSpecialtie);
+            GastronomicSpecialties updatedGastronomicSpecialtie = gastronomicSpecialtiesService.updateGastronomicSpecialtie(gastronomicspecialtieId, gastronomicSpecialtiesForm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedGastronomicSpecialtie);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
