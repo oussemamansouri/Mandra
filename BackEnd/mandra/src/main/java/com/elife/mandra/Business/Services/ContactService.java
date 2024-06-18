@@ -13,5 +13,6 @@ public interface ContactService {
 
     //Read Operation
     public Page<Contact> getContacts(Pageable pageable);
+    public Contact getContactyById(Long contactId);
 
 }
