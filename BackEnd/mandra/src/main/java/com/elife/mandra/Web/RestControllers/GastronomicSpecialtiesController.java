@@ -90,7 +90,7 @@ public class GastronomicSpecialtiesController {
     // ----------------------------------      edit Gastronomic Specialties image endpoint     -----------------------------------
 
    @PutMapping("/{gastronomicspecialtieId}/edit-image")
-    public ResponseEntity<Object> updatedGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId, 
+    public ResponseEntity<Object> updateGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId, 
                                                     @RequestParam("image") MultipartFile image) {
         try {
             GastronomicSpecialties updatedgGastronomicSpecialtie = gastronomicSpecialtiesService
