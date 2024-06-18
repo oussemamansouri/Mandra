@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.Services.SpecialtyWomenService;
 import com.elife.mandra.DAO.Entities.SpecialtyWomen;
 import com.elife.mandra.Web.Requests.SpecialtyWomenForms.SpecialtyWomenForm;
+import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
 
@@ -59,7 +61,7 @@ public class SpecialtyWomenController {
 
 
 
-        // ---------------------------------- update Specialty Women endpoint -----------------------------------
+    // ---------------------------------- update Specialty Women endpoint -----------------------------------
 
     @PutMapping("/{specialtyWomenId}/edit")
     public ResponseEntity<Object> updateSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId,
@@ -79,4 +81,22 @@ public class SpecialtyWomenController {
     }
 
 
+
+
+
+      // ---------------------------------- edit Specialty Women image endpoint -----------------------------------
+
+   @PutMapping("/{specialtyWomenId}/edit-image")
+   public ResponseEntity<Object> updateSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId, 
+                                                   @RequestParam("image") MultipartFile image) {
+       try {
+        SpecialtyWomen updatedspecialtyWomen = specialtyWomenService
+           .updateSpecialtyWomenImage(specialtyWomenId, image);
+
+           return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedspecialtyWomen);
+       } catch (RuntimeException e) {
+           ErrorResponse errorResponse = new ErrorResponse("Error while updating specialty women image", e.getMessage());
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+       }
+   }
 }
