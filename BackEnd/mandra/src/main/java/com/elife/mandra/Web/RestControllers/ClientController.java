@@ -108,8 +108,8 @@ public class ClientController {
 
  @GetMapping("")
  public ResponseEntity<Object> getClients(@PageableDefault(size = 10) Pageable pageable) {
-     Page<Client> Clients = clientService.getClients(pageable);
-    return ResponseEntity.status(HttpStatus.OK).body(Clients);
+     Page<Client> ClientsPage = clientService.getClients(pageable);
+    return ResponseEntity.status(HttpStatus.OK).body(ClientsPage);
  }
 
 

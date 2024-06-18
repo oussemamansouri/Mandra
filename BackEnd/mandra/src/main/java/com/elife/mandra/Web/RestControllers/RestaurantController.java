@@ -103,8 +103,8 @@ public class RestaurantController {
  @GetMapping("")
     public ResponseEntity<Object> getRestaurants(@PageableDefault(size = 10) Pageable pageable) {
         try{
-       Page<Restaurant> restaurant = restaurantService.getRestaurants(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(restaurant);
+       Page<Restaurant> restaurantPage = restaurantService.getRestaurants(pageable);
+       return ResponseEntity.status(HttpStatus.OK).body(restaurantPage);
         }catch(Exception e){
             ErrorResponse errorResponse = new ErrorResponse("Error while getting restaurants ", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
