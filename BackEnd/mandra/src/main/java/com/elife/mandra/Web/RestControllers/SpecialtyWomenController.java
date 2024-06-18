@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +33,7 @@ public class SpecialtyWomenController {
 
 
 
-      // ---------------------------------- add Specialty Women by admin endpoint -----------------------------------
+    // ---------------------------------- add Specialty Women by admin endpoint -----------------------------------
 
     @PostMapping("/{adminId}/add")
     public ResponseEntity<?> addGastronomicSpecialtie(@PathVariable Long adminId,
@@ -52,5 +54,29 @@ public class SpecialtyWomenController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
+
+
+
+
+
+        // ---------------------------------- update Specialty Women endpoint -----------------------------------
+
+    @PutMapping("/{specialtyWomenId}/edit")
+    public ResponseEntity<Object> updateSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId,
+            @Valid @RequestBody SpecialtyWomenForm specialtyWomenForm,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            StringBuilder errors = new StringBuilder();
+            result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
+            return ResponseEntity.badRequest().body(errors.toString());
+        }
+        try {
+            SpecialtyWomen updatedSpecialtyWomen = specialtyWomenService.updateSpecialtyWomen(specialtyWomenId, specialtyWomenForm);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedSpecialtyWomen);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
 
 }
