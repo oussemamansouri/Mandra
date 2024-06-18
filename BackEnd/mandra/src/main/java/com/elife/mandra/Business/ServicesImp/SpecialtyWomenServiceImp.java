@@ -58,7 +58,7 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
             String imagePath = fileService.saveFile(image);
     
             SpecialtyWomen newSpecialtyWomen = new SpecialtyWomen(
-                specialtyWomenForm.getName(),
+                specialtyWomenForm.getSpecialty(),
                 specialtyWomenForm.getDescription(),
                 specialtyWomenForm.getAddress(),
                 specialtyWomenForm.getCity(),
@@ -73,6 +73,32 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
         } catch (Exception e) {
             LOGGER.error("Error while adding specialty women", e);
             throw new RuntimeException("Error while adding specialty women: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+
+
+    // ---------------------------------- update Specialty Women -----------------------------------
+
+    @Override
+    public SpecialtyWomen updateSpecialtyWomen(Long specialtyWomenId, SpecialtyWomenForm specialtyWomenForm) {
+       try {
+        SpecialtyWomen specialtyWomen = specialtyWomenRepository.findById(specialtyWomenId)
+                    .orElseThrow(() -> new RuntimeException("specialty women not found with id: " + specialtyWomenId));
+
+                    specialtyWomen.setSpecialty(specialtyWomenForm.getSpecialty());
+                    specialtyWomen.setDescription(specialtyWomenForm.getDescription());
+                    specialtyWomen.setAddress(specialtyWomenForm.getAddress());
+                    specialtyWomen.setCity(specialtyWomenForm.getCity());
+                    specialtyWomen.setPhoneNumber(specialtyWomenForm.getPhoneNumber());
+
+            return specialtyWomenRepository.save(specialtyWomen);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating specialty women", e);
+            throw new RuntimeException("Error while updating specialty women: " + e.getMessage(), e);
         }
     }
 
