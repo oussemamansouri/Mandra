@@ -52,6 +52,12 @@ public class SpecialtyWomen {
         @Column(name = "image",nullable = true)
         private String image ;
 
+        @Column(name = "nbOfRaters", nullable = true)
+        private long nbOfRaters;
+      
+        @Column(name = "rateScore", nullable = true)
+        private long rateScore;
+
         @Column(name = "createDate",nullable = false,updatable = false)
         @Temporal(TemporalType.TIMESTAMP)
         private Date createDate ;
@@ -75,5 +81,16 @@ public class SpecialtyWomen {
         @JoinColumn(name = "AdminId")
         @JsonIgnore
         private Admin Admin ;
+
+
+        public SpecialtyWomen(String Specialty, String description, String address, String city,String phoneNumber, String image ){
+            this.Specialty = Specialty;
+            this.description = description;
+            this.address = address;
+            this.city = city;
+            this.phoneNumber = phoneNumber;
+            this.image = image;
+
+        }
 
 }
