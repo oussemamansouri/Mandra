@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.Business.Services.GastronomicSpecialtiesService;
 import com.elife.mandra.DAO.Entities.GastronomicSpecialties;
-import com.elife.mandra.Web.Requests.GastronomicSpecialtiesForm;
+import com.elife.mandra.Web.Requests.GastromnmicSpecialtiesForms.GastronomicSpecialtiesForm;
 import com.elife.mandra.Web.Responses.ErrorResponse;
 
 import jakarta.validation.Valid;
