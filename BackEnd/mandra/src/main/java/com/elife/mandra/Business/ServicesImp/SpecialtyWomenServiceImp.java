@@ -3,6 +3,8 @@ package com.elife.mandra.Business.ServicesImp;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -129,6 +131,21 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
         } catch (Exception e) {
             LOGGER.error("Error while updating specialty women image", e);
             throw new RuntimeException("Error while updating specialty women image: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- get Specialty Womens  -----------------------------------
+
+    @Override
+    public Page<SpecialtyWomen> getSpecialtyWomens(Pageable pageable) {
+        try {
+            return specialtyWomenRepository.findAll(pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding specialty womens", e);
+            throw new RuntimeException("Failed to find specialty womens: " + e.getMessage(), e);
         }
     }
 
