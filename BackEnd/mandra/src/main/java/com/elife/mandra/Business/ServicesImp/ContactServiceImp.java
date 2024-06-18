@@ -2,6 +2,8 @@ package com.elife.mandra.Business.ServicesImp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.elife.mandra.Business.Services.ContactService;
@@ -46,5 +48,26 @@ public class ContactServiceImp implements ContactService{
             throw new RuntimeException("Error while adding contact: " + e.getMessage(), e);
         }
     }
+
+
+
+
+    // ---------------------------------- get Contacts  -----------------------------------
+
+    @Override
+    public Page<Contact> getContacts(Pageable pageable) {
+        try {
+            return contactRepository.findAll(pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding contacts", e);
+            throw new RuntimeException("Failed to find contacts: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+
+   
 
 }
