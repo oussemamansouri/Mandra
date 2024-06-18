@@ -164,4 +164,24 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
           }
     }
 
+
+
+
+
+    // ---------------------------------- delete Specialty Women By Id  -----------------------------------
+
+    @Override
+    public String deleteSpecialtyWomen(Long specialtyWomenId) {
+        try{
+            if (!specialtyWomenRepository.existsById(specialtyWomenId)) {
+                throw new RuntimeException("Specialty women not found with id: " + specialtyWomenId);
+            }
+            specialtyWomenRepository.deleteById(specialtyWomenId);
+            return "Specialty women deleted successfully";
+        }catch(Exception e){
+            LOGGER.error("Error while deleting specialty women with id " + specialtyWomenId, e);
+            throw new RuntimeException("Error while deleting specialty women with id " + specialtyWomenId + ": " + e.getMessage(), e);
+        }
+    }
+
 }
