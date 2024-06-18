@@ -15,4 +15,7 @@ public interface SpecialtyWomenService {
     public SpecialtyWomen updateSpecialtyWomen(Long specialtyWomenId,
     SpecialtyWomenForm specialtyWomenForm);
 
+    public SpecialtyWomen updateSpecialtyWomenImage(Long specialtyWomenId,
+    MultipartFile image);
+
 }
