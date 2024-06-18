@@ -6,6 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -136,4 +137,24 @@ public class SpecialtyWomenController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
  }
+
+
+
+
+ 
+ // ---------------------------------- delete Specialty Women endpoint -----------------------------------
+
+ @DeleteMapping("/{specialtyWomenId}/delete")
+ public ResponseEntity<Object> deleteSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId){
+    try{
+     String resMessege = specialtyWomenService.deleteSpecialtyWomen(specialtyWomenId);
+     return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while deleting specialty women with this id :"+ specialtyWomenId, e.getMessage());
+     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+ }
+
+
+
 }
