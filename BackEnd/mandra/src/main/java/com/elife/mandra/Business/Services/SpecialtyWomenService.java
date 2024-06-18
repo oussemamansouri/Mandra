@@ -1,5 +1,7 @@
 package com.elife.mandra.Business.Services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.elife.mandra.DAO.Entities.SpecialtyWomen;
@@ -17,5 +19,8 @@ public interface SpecialtyWomenService {
 
     public SpecialtyWomen updateSpecialtyWomenImage(Long specialtyWomenId,
     MultipartFile image);
+
+     // Read operatoin
+    public Page<SpecialtyWomen> getSpecialtyWomens(Pageable pageable);
 
 }
