@@ -102,4 +102,34 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
         }
     }
 
+
+
+
+    // ---------------------------------- update Specialty Women Image -----------------------------------
+
+    @Override
+    public SpecialtyWomen updateSpecialtyWomenImage(Long specialtyWomenId, MultipartFile image) {
+         try {
+
+            // Fetch the specialty women first
+            SpecialtyWomen specialtyWomen = specialtyWomenRepository.findById(specialtyWomenId).orElse(null);
+            if (specialtyWomen == null) {
+                throw new RuntimeException("Failed to find specialty women with this id: " + specialtyWomenId);
+            }
+
+            // Validate if the file is an image
+            String extension = FilenameUtils.getExtension(image.getOriginalFilename());
+            if (!extension.matches("jpg|jpeg|png|gif")) {
+                throw new RuntimeException("Invalid image file type");
+            }
+    
+            String imagePath = fileService.saveFile(image); // Save the image and get the path
+            specialtyWomen.setImage(imagePath);
+            return specialtyWomenRepository.save(specialtyWomen);
+        } catch (Exception e) {
+            LOGGER.error("Error while updating specialty women image", e);
+            throw new RuntimeException("Error while updating specialty women image: " + e.getMessage(), e);
+        }
+    }
+
 }
