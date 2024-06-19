@@ -233,7 +233,7 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
-    // ----------------------------------     delete Owner    -----------------------------------
+    // ---------------------------------- delete Owner -----------------------------------
 
     @Override
     public String deleteOwner(Long id) {
@@ -246,6 +246,21 @@ public class OwnerServiceImp implements OwnerService {
         } catch (Exception e) {
             LOGGER.error("Error while deleting owner with id " + id, e);
             throw new RuntimeException("Error while deleting owner with id " + id + ": " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- get Active Owners -----------------------------------
+
+    @Override
+    public Page<Owner> getActiveOwners(Pageable pageable) {
+        try {
+            return ownerRepository.findByAccountState(AccountStateOption.Active, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding active owners", e);
+            throw new RuntimeException("Failed to find active owners: " + e.getMessage(), e);
         }
     }
 
