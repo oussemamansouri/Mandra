@@ -41,17 +41,18 @@ public class ContactController {
   public ResponseEntity<?> addContact(
           @Valid @RequestBody ContactForm contactForm,
           BindingResult result) {
+      try{    
       if (result.hasErrors()) {
           StringBuilder errors = new StringBuilder();
           result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
           return ResponseEntity.badRequest().body(errors.toString());
       }
-      try {
+
           Contact addedContact = contactService.addContact(contactForm);
-          
           return ResponseEntity.status(HttpStatus.CREATED).body(addedContact);
       } catch (Exception e) {
-          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+          ErrorResponse errorResponse = new ErrorResponse("Error while adding contact", e.getMessage());
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
       }
   }
 
@@ -99,7 +100,7 @@ public class ContactController {
      return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
     }catch(Exception e){
         ErrorResponse errorResponse = new ErrorResponse("Error while deleting contact with this id :"+ contactId, e.getMessage());
-     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
 

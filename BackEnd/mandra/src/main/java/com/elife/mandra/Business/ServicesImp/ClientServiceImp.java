@@ -192,6 +192,60 @@ public Client registerClient(AddUserForm clientForm) {
             throw new RuntimeException("Error while deleting client with id " + id + ": " + e.getMessage(), e);
         }
     }
+
+
+
+
+    // ---------------------------------- get Active Clients -----------------------------------
+
+    @Override
+    public Page<Client> getActiveClients(Pageable pageable) {
+        try {
+            return clientRepository.findByAccountState(AccountStateOption.Active, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding active clients", e);
+            throw new RuntimeException("Failed to find active clients: " + e.getMessage(), e);
+        }
+    }
+
+
+
+    // ---------------------------------- get Disabled Clients -----------------------------------
+
+    @Override
+    public Page<Client> getDisabledClients(Pageable pageable) {
+        try {
+            return clientRepository.findByAccountState(AccountStateOption.Disabled, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding diactive clients", e);
+            throw new RuntimeException("Failed to find diactive clients: " + e.getMessage(), e);
+        }
+    }
+
+
+
+        // ---------------------------------- change Client Account State -----------------------------------
+
+    @Override
+    public Client changeClientAccountState(Long clientId) {
+        try {
+            Client client = clientRepository.findById(clientId)
+            .orElseThrow(() -> new RuntimeException("Client not found with id: " + clientId));
+
+            AccountStateOption clientOldState = client.getAccountState();
+            if(clientOldState == AccountStateOption.Active){
+                client.setAccountState(AccountStateOption.Disabled);
+            }else{
+                client.setAccountState(AccountStateOption.Active);
+
+            }
+
+            return clientRepository.save(client);
+        } catch (Exception e) {
+            LOGGER.error("Error while changing client account state", e);
+            throw new RuntimeException("Error while hanging client account state: " + e.getMessage(), e);
+        }
+    }
     
 
  

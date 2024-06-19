@@ -19,11 +19,15 @@ public interface ClientService {
     //Read operation
     public Page<Client> getClients(Pageable pageable);
     public Client getClientById(Long id);
+    public Page<Client> getActiveClients(Pageable pageable);
+    public Page<Client> getDisabledClients(Pageable pageable);
+
  
     //Update operation
     public Client updateClient(Long id, UpdateUserForm client);
     public Client updateClientImage(Long id, MultipartFile image);
     public Client updateClientPassword(UpdatePasswordForm form, Long id);
+    public Client changeClientAccountState(Long clientId);
 
     //Delete operation
     public String deleteClientById(Long id); 

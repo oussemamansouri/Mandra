@@ -47,16 +47,17 @@ public class HotelController {
                                       @Valid @RequestPart("hotelForm") HotelForm hotelForm,
                                       @RequestPart("images") List<MultipartFile> images,
                                       BindingResult result) {
+        try {                              
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             Hotel addedHotel = hotelService.addHotel(ownerId, hotelForm, images);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedHotel);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while adding hotel", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -69,16 +70,17 @@ public class HotelController {
 @PutMapping("/{hotelId}/edit")
     public ResponseEntity<Object> updateHotel(@PathVariable(value = "hotelId") Long hotelId,@Valid @RequestBody HotelForm hotelForm,
     BindingResult result) {
+    try {
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
         return ResponseEntity.badRequest().body(errors.toString());
     }
-    try{
     Hotel updatedHotel = hotelService.updateHotel(hotelId, hotelForm);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedHotel);
     }catch(Exception e){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating hotel", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }
 

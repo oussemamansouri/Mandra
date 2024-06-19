@@ -42,6 +42,7 @@ public class ClientController {
 
 @PostMapping("/register")
     public ResponseEntity<?> registerClient(@Valid @RequestBody AddUserForm client, BindingResult result) {
+        try{
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -49,6 +50,11 @@ public class ClientController {
         }
         Client registeredClient = clientService.registerClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredClient);
+        }catch(Exception e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while register Client", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+
+        }
     }
 
 
@@ -59,6 +65,7 @@ public class ClientController {
 @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm client,
     BindingResult result) {
+    try{
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -66,6 +73,10 @@ public class ClientController {
     }
     Client updateClient = clientService.updateClient(id, client);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updateClient);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating Client", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
 
 
@@ -75,6 +86,7 @@ public class ClientController {
 @PutMapping("/{id}/edit-password")
     public ResponseEntity<Object> updateClientPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
     BindingResult result) {
+    try{    
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -82,6 +94,10 @@ public class ClientController {
     }
     Client updateClientPassword = clientService.updateClientPassword(form, id);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updateClientPassword);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating Client password", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
 
 
@@ -108,8 +124,13 @@ public class ClientController {
 
  @GetMapping("")
  public ResponseEntity<Object> getClients(@PageableDefault(size = 10) Pageable pageable) {
+    try {
      Page<Client> ClientsPage = clientService.getClients(pageable);
     return ResponseEntity.status(HttpStatus.OK).body(ClientsPage);
+    } catch (RuntimeException e) {
+          ErrorResponse errorResponse = new ErrorResponse("Error while getting clients", e.getMessage());
+          return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+}
  }
 
 
@@ -118,8 +139,13 @@ public class ClientController {
 
  @GetMapping("/{id}")
  public ResponseEntity<Object> getClientById( @PathVariable(value = "id") Long id  ) {
+    try {
     Client Client= clientService.getClientById(id);
     return ResponseEntity.status(HttpStatus.OK).body(Client);
+    } catch (RuntimeException e) {
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting client by this id : " + id, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
  }
  
 
@@ -138,6 +164,53 @@ public class ClientController {
      }
  }
  
+
+
+
+    // ---------------------------------- get Active Clients endpoint -----------------------------------
+
+     @GetMapping("/active")
+     public ResponseEntity<Object> getActiveClients(@PageableDefault(size = 10) Pageable pageable) {
+        try{
+        Page<Client> clientPage = clientService.getActiveClients(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(clientPage);
+        }catch(RuntimeException e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while getting Active Clients", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+        }
+     
+
+
+
+
+      // ---------------------------------- get Disabled Clients endpoint -----------------------------------
+
+    @GetMapping("/disabled")
+    public ResponseEntity<Object> getDisabledClients(@PageableDefault(size = 10) Pageable pageable) {
+        try{
+       Page<Client> clientPage = clientService.getDisabledClients(pageable);
+       return ResponseEntity.status(HttpStatus.OK).body(clientPage); 
+        }catch(RuntimeException e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while getting Disabled Clients", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+     }
+
+
+
+    // ---------------------------------- change Client Account State endpoint -----------------------------------
+
+    @PutMapping("/{clientId}/change-account-state")
+    public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "clientId") Long clientId ) {
+        try{
+    Client updatedClient = clientService.changeClientAccountState(clientId);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedClient);
+    }catch(RuntimeException e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while changing Client Account State", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+    }   
 
 
  }
