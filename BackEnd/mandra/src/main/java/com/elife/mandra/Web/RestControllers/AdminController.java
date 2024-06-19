@@ -36,6 +36,7 @@ public class AdminController {
 
 @PostMapping("/add")
     public ResponseEntity<?> addingAdmin(@Valid @RequestBody AddUserForm admin, BindingResult result) {
+        try{
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -43,6 +44,10 @@ public class AdminController {
         }
         Admin addedClient = adminService.addAdmin(admin);
         return ResponseEntity.status(HttpStatus.CREATED).body(addedClient);
+        }catch(Exception e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while adding aadmin", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
 
@@ -52,8 +57,13 @@ public class AdminController {
 
  @GetMapping("/{id}")
  public ResponseEntity<Object> getAdmin( @PathVariable(value = "id") Long id  ) {
+    try{
     Admin admin= adminService.getAdminById(id);
     return ResponseEntity.status(HttpStatus.OK).body(admin);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting admin", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
  }
  
 
@@ -64,6 +74,7 @@ public class AdminController {
  @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateAdmin(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm admin,
     BindingResult result) {
+    try{
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -71,6 +82,10 @@ public class AdminController {
     }
     Admin updatedAdmin = adminService.updateAdmin(id, admin);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAdmin);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating admin", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
 
 
@@ -99,6 +114,7 @@ public class AdminController {
 @PutMapping("/{id}/edit-password")
     public ResponseEntity<Object> updateAdminPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
     BindingResult result) {
+    try{    
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -106,6 +122,10 @@ public class AdminController {
     }
     Admin updatedAdminPassword = adminService.updateAdminPassword(form, id);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedAdminPassword);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating admin password", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
 
 
