@@ -19,6 +19,7 @@ public interface ClientService {
     //Read operation
     public Page<Client> getClients(Pageable pageable);
     public Client getClientById(Long id);
+    public Page<Client> getActiveClients(Pageable pageable);
  
     //Update operation
     public Client updateClient(Long id, UpdateUserForm client);
