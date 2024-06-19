@@ -44,16 +44,17 @@ public class RestaurantController {
             @Valid @RequestPart("restaurantForm") RestaurantForm restaurantForm,
             @RequestPart("images") List<MultipartFile> images,
             BindingResult result) {
+        try {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             Restaurant addedRestaurant = restaurantService.addReataurant(ownerId, restaurantForm, images);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedRestaurant);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while adding restaurant", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -66,16 +67,17 @@ public class RestaurantController {
     public ResponseEntity<Object> updateRestaurant(@PathVariable(value = "restaurantId") Long restaurantId,
             @Valid @RequestBody RestaurantForm restaurantForm,
             BindingResult result) {
+        try {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             Restaurant updatedRestaurant = restaurantService.updateRestaurant(restaurantId, restaurantForm);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedRestaurant);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while updating restaurant", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -138,7 +140,7 @@ public class RestaurantController {
      return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
     }catch(Exception e){
         ErrorResponse errorResponse = new ErrorResponse("Error while deleting restaurant with this id :"+ restaurantId, e.getMessage());
-     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
 
