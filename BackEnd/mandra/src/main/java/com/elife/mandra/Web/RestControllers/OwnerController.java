@@ -171,4 +171,13 @@ public class OwnerController {
 
  
 
+     // ----------------------------------      get Active Owners endpoint     -----------------------------------
+
+     @GetMapping("/active")
+     public ResponseEntity<Object> getActiveOwners(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Owner> ownerPage = ownerService.getActiveOwners(pageable);
+       return ResponseEntity.status(HttpStatus.OK).body(ownerPage);
+     }
+
+
 }
