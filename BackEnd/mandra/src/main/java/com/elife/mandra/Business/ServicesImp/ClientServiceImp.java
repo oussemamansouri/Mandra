@@ -207,6 +207,20 @@ public Client registerClient(AddUserForm clientForm) {
             throw new RuntimeException("Failed to find active clients: " + e.getMessage(), e);
         }
     }
+
+
+
+    // ---------------------------------- get Disabled Clients -----------------------------------
+
+    @Override
+    public Page<Client> getDisabledClients(Pageable pageable) {
+        try {
+            return clientRepository.findByAccountState(AccountStateOption.Disabled, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding diactive clients", e);
+            throw new RuntimeException("Failed to find diactive clients: " + e.getMessage(), e);
+        }
+    }
     
 
  
