@@ -161,6 +161,16 @@ public class ClientController {
      }
 
 
+
+    // ---------------------------------- change Client Account State endpoint -----------------------------------
+
+    @PutMapping("/{clientId}/change-account-state")
+    public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "clientId") Long clientId ) {
+    Client updatedClient = clientService.changeClientAccountState(clientId);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedClient);
+    }   
+
+
  }
 
 
