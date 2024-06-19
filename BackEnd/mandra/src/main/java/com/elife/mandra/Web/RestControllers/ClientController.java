@@ -150,6 +150,17 @@ public class ClientController {
      }
 
 
+
+
+      // ---------------------------------- get Diactive Clients endpoint -----------------------------------
+
+    @GetMapping("/disabled")
+    public ResponseEntity<Object> getDiactiveClients(@PageableDefault(size = 10) Pageable pageable) {
+       Page<Client> clientPage = clientService.getDisabledClients(pageable);
+      return ResponseEntity.status(HttpStatus.OK).body(clientPage); 
+     }
+
+
  }
 
 
