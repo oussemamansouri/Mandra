@@ -221,6 +221,31 @@ public Client registerClient(AddUserForm clientForm) {
             throw new RuntimeException("Failed to find diactive clients: " + e.getMessage(), e);
         }
     }
+
+
+
+        // ---------------------------------- change Client Account State -----------------------------------
+
+    @Override
+    public Client changeClientAccountState(Long clientId) {
+        try {
+            Client client = clientRepository.findById(clientId)
+            .orElseThrow(() -> new RuntimeException("Client not found with id: " + clientId));
+
+            AccountStateOption clientOldState = client.getAccountState();
+            if(clientOldState == AccountStateOption.Active){
+                client.setAccountState(AccountStateOption.Disabled);
+            }else{
+                client.setAccountState(AccountStateOption.Active);
+
+            }
+
+            return clientRepository.save(client);
+        } catch (Exception e) {
+            LOGGER.error("Error while changing client account state", e);
+            throw new RuntimeException("Error while hanging client account state: " + e.getMessage(), e);
+        }
+    }
     
 
  
