@@ -46,16 +46,17 @@ public class GuesthouseController {
             @Valid @RequestPart("guesthouseForm") GuesthouseForm guesthouseForm,
             @RequestPart("images") List<MultipartFile> images,
             BindingResult result) {
+        try {    
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             Guesthouse addedGuestHouse = guesthouseService.addGuestHouse(ownerId, guesthouseForm, images);
             return ResponseEntity.status(HttpStatus.CREATED).body(addedGuestHouse);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while adding guest house", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -67,17 +68,18 @@ public class GuesthouseController {
     @PutMapping("/{guesthouseId}/edit")
     public ResponseEntity<Object> updateGuestHouse(@PathVariable(value = "guesthouseId") Long guesthouseId,
             @Valid @RequestBody GuesthouseForm guesthouseForm,
-            BindingResult result) {
+            BindingResult result) {     
+        try {
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             Guesthouse updatedGuesthouse = guesthouseService.updateGuestHouse(guesthouseId, guesthouseForm);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedGuesthouse);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while updating guest house", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -143,7 +145,7 @@ public class GuesthouseController {
      return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
     }catch(Exception e){
         ErrorResponse errorResponse = new ErrorResponse("Error while deleting restaurant with this id :"+ guesthouseId, e.getMessage());
-     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
 
