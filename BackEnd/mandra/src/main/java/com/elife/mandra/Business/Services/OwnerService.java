@@ -18,6 +18,8 @@ public interface OwnerService {
     //Read operation
     public Page<Owner> getOwners(Pageable pageable);
     public Owner getOwnerById(Long id);
+    public Page<Owner> getActiveOwners(Pageable pageable);
+    public Page<Owner> getDisabledOwners(Pageable pageable);
  
     //Update operation
     public Owner uploadCinImage(Long id, MultipartFile cinImage);
@@ -25,6 +27,7 @@ public interface OwnerService {
     public Owner updateOwner(Long id, UpdateUserForm ownerForm);
     public Owner updateOwnerImage(Long id, MultipartFile image);
     public Owner updateOwnerPassword(UpdatePasswordForm form, Long id);
+    public Owner changeOwnerAccountState(Long ownerId);
 
     //Delete operation
     public String deleteOwner(Long id); 

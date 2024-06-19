@@ -1,9 +1,9 @@
 package com.elife.mandra.DAO.Entities;
 
-
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,14 +23,15 @@ import lombok.Setter;
 @Table(name = "Client")
 public class Client extends User {
 
-
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "accountState", nullable = false)
+    private AccountStateOption accountState;
 
     public Client(String firstname, String lastname, String email, String password,
-    String phoneNumber, RoleOption role, String image, AccountStateOption accountState) {
+            String phoneNumber, RoleOption role, String image, AccountStateOption accountState) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setEmail(email);
@@ -39,8 +39,7 @@ public class Client extends User {
         this.setPhoneNumber(phoneNumber);
         this.setRole(role);
         this.setImage(image);
-        this.setAccountState(accountState);
+        this.accountState = accountState;
     }
-
 
 }

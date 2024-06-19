@@ -2,7 +2,6 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.List;
 
-import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -40,7 +39,7 @@ public class Admin extends User {
     private List<SpecialtyWomen> SpecialtyWomens ;
 
         public Admin(String firstname, String lastname, String email, String password,
-    String phoneNumber, RoleOption role, String image, AccountStateOption accountState) {
+    String phoneNumber, RoleOption role, String image) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setEmail(email);
@@ -48,7 +47,6 @@ public class Admin extends User {
         this.setPhoneNumber(phoneNumber);
         this.setRole(role);
         this.setImage(image);
-        this.setAccountState(accountState);
     }
 
 

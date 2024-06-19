@@ -2,6 +2,7 @@ package com.elife.mandra.Business.ServicesImp;
 
 import java.util.List;
 
+
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public class OwnerServiceImp implements OwnerService {
                     ownerForm.getNbOfGuesthouses(),
                     RoleOption.Owner,
                     null, // image
-                    AccountStateOption.Diactive
+                    AccountStateOption.Disabled
                 );
                 return ownerRepository.save(newOwner);
             } else {
@@ -233,7 +234,7 @@ public class OwnerServiceImp implements OwnerService {
     }
 
 
-    // ----------------------------------     delete Owner    -----------------------------------
+    // ---------------------------------- delete Owner -----------------------------------
 
     @Override
     public String deleteOwner(Long id) {
@@ -246,6 +247,62 @@ public class OwnerServiceImp implements OwnerService {
         } catch (Exception e) {
             LOGGER.error("Error while deleting owner with id " + id, e);
             throw new RuntimeException("Error while deleting owner with id " + id + ": " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- get Active Owners -----------------------------------
+
+    @Override
+    public Page<Owner> getActiveOwners(Pageable pageable) {
+        try {
+            return ownerRepository.findByAccountState(AccountStateOption.Active, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding active owners", e);
+            throw new RuntimeException("Failed to find active owners: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- get Diactive Owners -----------------------------------
+
+    @Override
+    public Page<Owner> getDisabledOwners(Pageable pageable) {
+        try {
+            return ownerRepository.findByAccountState(AccountStateOption.Disabled, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding diactive owners", e);
+            throw new RuntimeException("Failed to find diactive owners: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- change Owner Account State -----------------------------------
+
+    @Override
+    public Owner changeOwnerAccountState(Long ownerId) {
+        try {
+            Owner owner = ownerRepository.findById(ownerId)
+            .orElseThrow(() -> new RuntimeException("Owner not found with id: " + ownerId));
+
+            AccountStateOption ownerOldState = owner.getAccountState();
+            if(ownerOldState == AccountStateOption.Active){
+                owner.setAccountState(AccountStateOption.Disabled);
+            }else{
+                owner.setAccountState(AccountStateOption.Active);
+
+            }
+
+            return ownerRepository.save(owner);
+        } catch (Exception e) {
+            LOGGER.error("Error while changing owner account state", e);
+            throw new RuntimeException("Error while hanging owner account state: " + e.getMessage(), e);
         }
     }
 

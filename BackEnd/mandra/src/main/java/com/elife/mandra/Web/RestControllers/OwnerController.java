@@ -65,6 +65,9 @@ public class OwnerController {
 
 
 
+
+
+
      // ----------------------------------      get Owner By Id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
@@ -72,6 +75,8 @@ public class OwnerController {
     Owner owner= ownerService.getOwnerById(id);
     return ResponseEntity.status(HttpStatus.OK).body(owner);
  }
+
+
 
 
 
@@ -91,6 +96,8 @@ public class OwnerController {
 
 
 
+
+
      // ----------------------------------      upload owner proof file endpoint     -----------------------------------
 
    @PutMapping("/{id}/upload-proof")
@@ -107,7 +114,9 @@ public class OwnerController {
 
 
 
-   // ----------------------------------      update Client endpoint     -----------------------------------
+
+
+   // ----------------------------------      update Owner endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateOwner(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm ownerForm,
@@ -120,6 +129,7 @@ public class OwnerController {
     Owner updatedOwner = ownerService.updateOwner(id, ownerForm);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
 }
+
 
 
 
@@ -140,6 +150,8 @@ public class OwnerController {
 
 
 
+
+
  // ----------------------------------      update Owner Password endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit-password")
@@ -156,6 +168,8 @@ public class OwnerController {
 
 
 
+
+
 // ----------------------------------      delete Owner endpoint     -----------------------------------
 
  @DeleteMapping("/{id}/delete")
@@ -169,6 +183,40 @@ public class OwnerController {
      }
  }
 
+
+
+
  
+
+    // ---------------------------------- get Active Owners endpoint -----------------------------------
+
+     @GetMapping("/active")
+     public ResponseEntity<Object> getActiveOwners(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Owner> ownerPage = ownerService.getActiveOwners(pageable);
+       return ResponseEntity.status(HttpStatus.OK).body(ownerPage);
+     }
+
+
+
+
+
+    // ---------------------------------- get Diactive Owners endpoint -----------------------------------
+
+    @GetMapping("/disabled")
+    public ResponseEntity<Object> getDiactiveOwners(@PageableDefault(size = 10) Pageable pageable) {
+       Page<Owner> ownerPage = ownerService.getDisabledOwners(pageable);
+      return ResponseEntity.status(HttpStatus.OK).body(ownerPage);      }
+
+
+
+
+    
+    // ---------------------------------- change Owner Account State endpoint -----------------------------------
+
+    @PutMapping("/{ownerId}/change-account-state")
+    public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "ownerId") Long ownerId ) {
+    Owner updatedOwner = ownerService.changeOwnerAccountState(ownerId);
+    return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+    }   
 
 }

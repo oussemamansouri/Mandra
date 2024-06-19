@@ -46,6 +46,9 @@ public class Owner extends User {
 
     @Column(name = "nbOfGuesthouses",nullable = false)
     private int nbOfGuesthouses ;
+
+    @Column(name = "accountState",nullable = false)
+    private AccountStateOption accountState ;
     
 
     // The rolation between the tables
@@ -76,7 +79,7 @@ public class Owner extends User {
         this.nbOfRestaurant = nbOfRestaurant;
         this.setRole(role);
         this.setImage(image);
-        this.setAccountState(accountState);
+        this.accountState = accountState;
     }
 
 
