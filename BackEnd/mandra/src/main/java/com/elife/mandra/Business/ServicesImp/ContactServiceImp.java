@@ -82,6 +82,25 @@ public class ContactServiceImp implements ContactService{
 
 
 
+    // ---------------------------------- delete Contact By Id  -----------------------------------
+
+    @Override
+    public String deleteContact(Long contactId) {
+        try{
+            if (!contactRepository.existsById(contactId)) {
+                throw new RuntimeException("Specialty women not found with id: " + contactId);
+            }
+            contactRepository.deleteById(contactId);
+            return "Contact deleted successfully";
+        }catch(Exception e){
+            LOGGER.error("Error while deleting contact with id " + contactId, e);
+            throw new RuntimeException("Error while deleting contact with id " + contactId + ": " + e.getMessage(), e);
+        }
+    }
+
+
+
+
 
    
 
