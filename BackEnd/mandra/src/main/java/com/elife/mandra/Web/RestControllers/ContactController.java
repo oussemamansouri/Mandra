@@ -6,6 +6,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -86,6 +87,21 @@ public class ContactController {
     }
  }
 
+
+
+
+  // ---------------------------------- delete Contact endpoint -----------------------------------
+
+ @DeleteMapping("/{contactId}/delete")
+ public ResponseEntity<Object> deleteSpecialtyWomen(@PathVariable(value = "contactId") Long contactId){
+    try{
+     String resMessege = contactService.deleteContact(contactId);
+     return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
+    }catch(Exception e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while deleting contact with this id :"+ contactId, e.getMessage());
+     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+ }
 
 
 
