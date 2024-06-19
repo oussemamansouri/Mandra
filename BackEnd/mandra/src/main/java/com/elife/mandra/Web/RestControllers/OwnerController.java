@@ -205,7 +205,8 @@ public class OwnerController {
     @GetMapping("/disabled")
     public ResponseEntity<Object> getDiactiveOwners(@PageableDefault(size = 10) Pageable pageable) {
        Page<Owner> ownerPage = ownerService.getDisabledOwners(pageable);
-      return ResponseEntity.status(HttpStatus.OK).body(ownerPage);      }
+      return ResponseEntity.status(HttpStatus.OK).body(ownerPage); 
+     }
 
 
 
