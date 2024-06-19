@@ -27,6 +27,7 @@ public interface OwnerService {
     public Owner updateOwner(Long id, UpdateUserForm ownerForm);
     public Owner updateOwnerImage(Long id, MultipartFile image);
     public Owner updateOwnerPassword(UpdatePasswordForm form, Long id);
+    public Owner changeOwnerAccountState(Long ownerId);
 
     //Delete operation
     public String deleteOwner(Long id); 
