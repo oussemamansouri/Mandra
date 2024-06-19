@@ -140,6 +140,16 @@ public class ClientController {
  
 
 
+
+    // ---------------------------------- get Active Clients endpoint -----------------------------------
+
+     @GetMapping("/active")
+     public ResponseEntity<Object> getActiveClients(@PageableDefault(size = 10) Pageable pageable) {
+        Page<Client> clientPage = clientService.getActiveClients(pageable);
+       return ResponseEntity.status(HttpStatus.OK).body(clientPage);
+     }
+
+
  }
 
 
