@@ -62,7 +62,7 @@ public class OwnerServiceImp implements OwnerService {
                     ownerForm.getNbOfGuesthouses(),
                     RoleOption.Owner,
                     null, // image
-                    AccountStateOption.Diactive
+                    AccountStateOption.Disabled
                 );
                 return ownerRepository.save(newOwner);
             } else {
@@ -261,6 +261,21 @@ public class OwnerServiceImp implements OwnerService {
         } catch (Exception e) {
             LOGGER.error("Error while finding active owners", e);
             throw new RuntimeException("Failed to find active owners: " + e.getMessage(), e);
+        }
+    }
+
+
+
+
+    // ---------------------------------- get Diactive Owners -----------------------------------
+
+    @Override
+    public Page<Owner> getDisabledOwners(Pageable pageable) {
+        try {
+            return ownerRepository.findByAccountState(AccountStateOption.Disabled, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding diactive owners", e);
+            throw new RuntimeException("Failed to find diactive owners: " + e.getMessage(), e);
         }
     }
 
