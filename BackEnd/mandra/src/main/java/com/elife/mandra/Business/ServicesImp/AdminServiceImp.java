@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.elife.mandra.Business.FileService;
 import com.elife.mandra.Business.Services.AdminService;
 import com.elife.mandra.DAO.Entities.Admin;
-import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.AdminRepository;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
@@ -57,8 +56,7 @@ public Admin addAdmin(AddUserForm adminForm) {
                     adminForm.getPassword(),
                     adminForm.getPhoneNumber(),
                     RoleOption.Admin,
-                    null,
-                    AccountStateOption.Active
+                    null
                 );
                 return adminRepository.save(newAdmin);
             } else {
