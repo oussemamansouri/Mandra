@@ -41,6 +41,7 @@ public class OwnerController {
 
 @PostMapping("/register")
     public ResponseEntity<?> registerOwner(@Valid @RequestBody AddOwnerForm ownerForm, BindingResult result) {
+        try{
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -48,6 +49,10 @@ public class OwnerController {
         }
         Owner registeredOwner = ownerService.registerOwner(ownerForm);
         return ResponseEntity.status(HttpStatus.CREATED).body(registeredOwner);
+        }catch(RuntimeException e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while register owner", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
 
@@ -58,8 +63,13 @@ public class OwnerController {
 
  @GetMapping("")
     public ResponseEntity<Object> getOwners(@PageableDefault(size = 10) Pageable pageable) {
+        try{
        Page<Owner> ownerPage = ownerService.getOwners(pageable);
       return ResponseEntity.status(HttpStatus.OK).body(ownerPage);
+        }catch(RuntimeException e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while getting owners", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
     }
 
 
@@ -72,8 +82,13 @@ public class OwnerController {
 
  @GetMapping("/{id}")
  public ResponseEntity<Object> getOwnerById( @PathVariable(value = "id") Long id  ) {
+    try{
     Owner owner= ownerService.getOwnerById(id);
     return ResponseEntity.status(HttpStatus.OK).body(owner);
+    }catch(RuntimeException e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while getting owner by this id :" + id, e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
  }
 
 
@@ -121,6 +136,7 @@ public class OwnerController {
 @PutMapping("/{id}/edit")
     public ResponseEntity<Object> updateOwner(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm ownerForm,
     BindingResult result) {
+    try{
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -128,6 +144,10 @@ public class OwnerController {
     }
     Owner updatedOwner = ownerService.updateOwner(id, ownerForm);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+    }catch(RuntimeException e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating owner", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
 
 
@@ -157,6 +177,7 @@ public class OwnerController {
 @PutMapping("/{id}/edit-password")
     public ResponseEntity<Object> updateOwnerPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
     BindingResult result) {
+    try{
     if (result.hasErrors()){
         StringBuilder errors = new StringBuilder();
         result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
@@ -164,6 +185,10 @@ public class OwnerController {
     }
     Owner updatedOwnerPassword = ownerService.updateOwnerPassword(form, id);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwnerPassword);
+    }catch(RuntimeException e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while updating owner password", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
 
 
@@ -192,20 +217,30 @@ public class OwnerController {
 
      @GetMapping("/active")
      public ResponseEntity<Object> getActiveOwners(@PageableDefault(size = 10) Pageable pageable) {
+        try{
         Page<Owner> ownerPage = ownerService.getActiveOwners(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(ownerPage);
+        return ResponseEntity.status(HttpStatus.OK).body(ownerPage);
+        }catch(RuntimeException e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while getting active owners", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
      }
 
 
 
 
 
-    // ---------------------------------- get Diactive Owners endpoint -----------------------------------
+    // ---------------------------------- get Disabled Owners endpoint -----------------------------------
 
     @GetMapping("/disabled")
-    public ResponseEntity<Object> getDiactiveOwners(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Object> getDisabledOwners(@PageableDefault(size = 10) Pageable pageable) {
+        try{
        Page<Owner> ownerPage = ownerService.getDisabledOwners(pageable);
-      return ResponseEntity.status(HttpStatus.OK).body(ownerPage); 
+       return ResponseEntity.status(HttpStatus.OK).body(ownerPage); 
+        }catch(RuntimeException e){
+            ErrorResponse errorResponse = new ErrorResponse("Error while getting Disabled owners", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
      }
 
 
@@ -216,8 +251,13 @@ public class OwnerController {
 
     @PutMapping("/{ownerId}/change-account-state")
     public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "ownerId") Long ownerId ) {
+    try{
     Owner updatedOwner = ownerService.changeOwnerAccountState(ownerId);
     return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedOwner);
+    }catch(RuntimeException e){
+        ErrorResponse errorResponse = new ErrorResponse("Error while changing Owner Account State", e.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
     }   
 
 }
