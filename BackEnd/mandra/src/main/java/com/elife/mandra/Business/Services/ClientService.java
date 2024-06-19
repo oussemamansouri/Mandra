@@ -27,6 +27,7 @@ public interface ClientService {
     public Client updateClient(Long id, UpdateUserForm client);
     public Client updateClientImage(Long id, MultipartFile image);
     public Client updateClientPassword(UpdatePasswordForm form, Long id);
+    public Client changeClientAccountState(Long clientId);
 
     //Delete operation
     public String deleteClientById(Long id); 
