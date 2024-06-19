@@ -15,4 +15,7 @@ public interface ContactService {
     public Page<Contact> getContacts(Pageable pageable);
     public Contact getContactyById(Long contactId);
 
+    //Delete Operation
+    public String deleteContact(Long contactId);
+
 }
