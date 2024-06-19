@@ -20,6 +20,8 @@ public interface ClientService {
     public Page<Client> getClients(Pageable pageable);
     public Client getClientById(Long id);
     public Page<Client> getActiveClients(Pageable pageable);
+    public Page<Client> getDisabledClients(Pageable pageable);
+
  
     //Update operation
     public Client updateClient(Long id, UpdateUserForm client);
