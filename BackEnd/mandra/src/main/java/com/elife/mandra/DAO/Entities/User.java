@@ -2,7 +2,6 @@ package com.elife.mandra.DAO.Entities;
 
 import java.util.Date;
 
-import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 
 import jakarta.persistence.Column;
@@ -46,8 +45,6 @@ public class User {
     @Column(name = "image",nullable = true)
     private String image ;
 
-    @Column(name = "accountState",nullable = false)
-    private AccountStateOption accountState ;
 
     @Column(name = "createDate",nullable = false,updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
