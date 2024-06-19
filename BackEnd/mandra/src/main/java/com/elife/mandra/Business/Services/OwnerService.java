@@ -19,6 +19,7 @@ public interface OwnerService {
     public Page<Owner> getOwners(Pageable pageable);
     public Owner getOwnerById(Long id);
     public Page<Owner> getActiveOwners(Pageable pageable);
+    public Page<Owner> getDisabledOwners(Pageable pageable);
  
     //Update operation
     public Owner uploadCinImage(Long id, MultipartFile cinImage);
