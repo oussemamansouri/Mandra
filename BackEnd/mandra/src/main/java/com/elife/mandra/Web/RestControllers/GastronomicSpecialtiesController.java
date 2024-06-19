@@ -47,18 +47,18 @@ public class GastronomicSpecialtiesController {
             @Valid @RequestPart("gastronomicSpecialtiesForm") GastronomicSpecialtiesForm gastronomicSpecialtiesForm,
             @RequestPart("image") MultipartFile image,
             BindingResult result) {
+        try{           
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             GastronomicSpecialties addedGastronomicSpecialties = gastronomicSpecialtiesService
             .addGastronomicSpecialtie(adminId, gastronomicSpecialtiesForm, image);
-            
             return ResponseEntity.status(HttpStatus.CREATED).body(addedGastronomicSpecialties);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while adding gastronomic specialtie", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -71,16 +71,17 @@ public class GastronomicSpecialtiesController {
     public ResponseEntity<Object> updateGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId,
             @Valid @RequestBody GastronomicSpecialtiesForm gastronomicSpecialtiesForm,
             BindingResult result) {
+        try{            
         if (result.hasErrors()) {
             StringBuilder errors = new StringBuilder();
             result.getAllErrors().forEach(error -> errors.append(error.getDefaultMessage()).append("; "));
             return ResponseEntity.badRequest().body(errors.toString());
         }
-        try {
             GastronomicSpecialties updatedGastronomicSpecialtie = gastronomicSpecialtiesService.updateGastronomicSpecialtie(gastronomicspecialtieId, gastronomicSpecialtiesForm);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(updatedGastronomicSpecialtie);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse("Error while updating gastronomic specialtie", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
 
@@ -147,7 +148,7 @@ public class GastronomicSpecialtiesController {
      return ResponseEntity.status(HttpStatus.ACCEPTED).body(resMessege);
     }catch(Exception e){
         ErrorResponse errorResponse = new ErrorResponse("Error while deleting gastronomic specialtie with this id :"+ gastronomicspecialtieId, e.getMessage());
-     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
  }
 
