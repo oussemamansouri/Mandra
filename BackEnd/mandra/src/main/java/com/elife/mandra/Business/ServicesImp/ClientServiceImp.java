@@ -192,6 +192,21 @@ public Client registerClient(AddUserForm clientForm) {
             throw new RuntimeException("Error while deleting client with id " + id + ": " + e.getMessage(), e);
         }
     }
+
+
+
+
+    // ---------------------------------- get Active Clients -----------------------------------
+
+    @Override
+    public Page<Client> getActiveClients(Pageable pageable) {
+        try {
+            return clientRepository.findByAccountState(AccountStateOption.Active, pageable);
+        } catch (Exception e) {
+            LOGGER.error("Error while finding active clients", e);
+            throw new RuntimeException("Failed to find active clients: " + e.getMessage(), e);
+        }
+    }
     
 
  
