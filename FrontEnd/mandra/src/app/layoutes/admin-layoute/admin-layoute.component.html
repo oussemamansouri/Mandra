@@ -1,13 +1,13 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
   <div class="d-flex align-items-center justify-content-between"> <a routerLink="/"
-      class="logo d-flex align-items-center"> <img src="../../../assets/img/logo.png" alt=""> <span
+      class="logo d-flex align-items-center"> <span
         class="d-none d-lg-block">Admin</span> </a> <i (click)="sidebarToggle()"
       class="bi bi-list toggle-sidebar-btn"></i></div>
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
       <li class="nav-item dropdown pe-3">
         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img
-            src="../../../assets/img/logo.png" alt="Profile" class="rounded-circle"> <span
+            src="../../../assets/img/default-image.jpg" alt="Profile" class="rounded-circle"> <span
             class="d-none d-md-block dropdown-toggle ps-2">User name</span> </a>
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
@@ -99,20 +99,7 @@
   </ul>
 </aside>
 
-<footer class="footer" id="footer">
-  <div class="container py-3">
-    <div class="row">
-      <div class="col-md-6">
-        <p class="text-muted">&copy; 2024 Mandra. All Rights Reserved.</p>
-      </div>
-      <div class="col-md-6">
-        <ul class="list-inline text-md-end">
-          <li class="list-inline-item"><a style="color: rgb(40, 40, 175);" href="#">Privacy Policy</a></li>
-          <li class="list-inline-item"><a style="color: rgb(40, 40, 175);" href="#">Terms of Use</a></li>
-          <li class="list-inline-item"><a style="color: rgb(40, 40, 175);" href="#">Contact Us</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+<footer id="footer" class="footer">
+  <div class="copyright"> &copy; Copyright <strong><span>Mandra</span></strong>. All Rights Reserved</div>
 </footer>
 <a class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
