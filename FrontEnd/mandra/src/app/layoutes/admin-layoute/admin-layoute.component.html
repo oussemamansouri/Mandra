@@ -1,2 +1,118 @@
-<p>admin-layoute works!</p>
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between"> <a routerLink="/"
+      class="logo d-flex align-items-center"> <img src="../../../assets/img/logo.png" alt=""> <span
+        class="d-none d-lg-block">Admin</span> </a> <i (click)="sidebarToggle()"
+      class="bi bi-list toggle-sidebar-btn"></i></div>
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item dropdown pe-3">
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img
+            src="../../../assets/img/logo.png" alt="Profile" class="rounded-circle"> <span
+            class="d-none d-md-block dropdown-toggle ps-2">User name</span> </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>User name</h6>
+            <span>User role</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li> <button class="dropdown-item d-flex align-items-center"> <a
+                class="dropdown-item d-flex align-items-center" routerLink="/admin/profile"> <i
+                  class="bi bi-person"></i> <span>Mon profil</span> </a> </button></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li> <button class="dropdown-item d-flex align-items-center"> <a
+                class="dropdown-item d-flex align-items-center"> <i class="bi bi-box-arrow-right"></i> <span>Se
+                  Déconnecter</span> </a></button></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
 <router-outlet></router-outlet>
+
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item"> <a class="nav-link collapsed" routerLink="/"> <i class="bi bi-house-door"></i>
+        <span>Accueil</span> </a></li>
+    <li class="nav-item"> <a class="nav-link collapsed " routerLink="/admin/dashboard"> <i class="bi bi-grid"></i>
+        <span>tableau de bord</span> </a></li>
+    <li class="nav-item"> <a class="nav-link collapsed" routerLink="/admin/profile"> <i class="bi bi-person"></i>
+        <span>Profil</span> </a></li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#"> <i
+          class="bi bi-people"></i><span>Propriétaires</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li> <a routerLink="/admin/owners"> <i class="bi bi-circle"></i><span>Consulter la liste active</span> </a></li>
+        <li> <a routerLink="/admin/owners"> <i class="bi bi-circle"></i><span>Consulter la liste disabled</span> </a></li>
+        <li> <a routerLink="/admin/owners/ajoute"> <i class="bi bi-circle"></i><span>Ajouter un propriétaire</span> </a></li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#"> <i
+          class="bi bi-people"></i><span>Clients</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li> <a routerLink="/admin/client"> <i class="bi bi-circle"></i><span>Consulter la liste active</span> </a></li>
+        <li> <a routerLink="/admin/client"> <i class="bi bi-circle"></i><span>Consulter la liste disabled</span> </a></li>
+        <li> <a routerLink="/admin/client/ajoute"> <i class="bi bi-circle"></i><span>Ajouter un Client</span> </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#Gastronomiques-nav" data-bs-toggle="collapse" href="#"> <i
+          class="bi bi-bookmark-check"></i><span>Gastronomiques specialties</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="Gastronomiques-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li> <a routerLink="/admin/client"> <i class="bi bi-circle"></i><span>Consulter la liste</span> </a></li>
+        <li> <a routerLink="/admin/client/ajoute"> <i class="bi bi-circle"></i><span>Ajouter</span> </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#femmes-nav" data-bs-toggle="collapse" href="#"> <i
+          class="bi bi-bookmark-check"></i><span>Femmes de spécialité</span><i class="bi bi-chevron-down ms-auto"></i> </a>
+      <ul id="femmes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li> <a routerLink="/admin/client"> <i class="bi bi-circle"></i><span>Consulter la liste</span> </a></li>
+        <li> <a routerLink="/admin/client/ajoute"> <i class="bi bi-circle"></i><span>Ajouter</span> </a>
+        </li>
+      </ul>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse"
+        routerLink="/admin/formation"> <i class="bi bi-building"></i><span>Hôtels</span> </a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" routerLink="/admin/ebook"> <i
+          class="bi bi-building"></i><span>Restaurants</span> </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" routerLink="/admin/ebook"> <i
+          class="bi bi-building"></i><span>Maisons d'hôtes</span> </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" routerLink="/admin/ebook"> <i
+          class="bi bi-person-rolodex"></i><span>Contacts</span> </a>
+    </li>
+  </ul>
+</aside>
+
+<footer class="footer" id="footer">
+  <div class="container py-3">
+    <div class="row">
+      <div class="col-md-6">
+        <p class="text-muted">&copy; 2024 Mandra. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6">
+        <ul class="list-inline text-md-end">
+          <li class="list-inline-item"><a style="color: rgb(40, 40, 175);" href="#">Privacy Policy</a></li>
+          <li class="list-inline-item"><a style="color: rgb(40, 40, 175);" href="#">Terms of Use</a></li>
+          <li class="list-inline-item"><a style="color: rgb(40, 40, 175);" href="#">Contact Us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+<a class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
