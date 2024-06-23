@@ -45,8 +45,7 @@ public class SecurityConfiguration {
     // Bean for loading client details from the database
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> clientRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Client not found"));
+        return username -> clientRepository.findByEmail(username).get(0);
     }
 
     @Bean
