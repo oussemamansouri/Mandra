@@ -1,11 +1,10 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,7 +16,9 @@ import com.elife.mandra.Business.Services.ClientService;
 import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+import com.elife.mandra.DAO.Repositories.AdminRepository;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
+import com.elife.mandra.DAO.Repositories.OwnerRepository;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
@@ -28,32 +29,49 @@ public class ClientServiceImp implements ClientService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClientServiceImp.class);
 
     final ClientRepository clientRepository ;
-    public ClientServiceImp(ClientRepository clientRepository ){
+    final OwnerRepository ownerRepository;
+    final AdminRepository adminRepository;
+    final BCryptPasswordEncoder bCryptPasswordEncoder;
+    final FileService fileService;
+
+    public ClientServiceImp(ClientRepository clientRepository,
+     OwnerRepository ownerRepository, AdminRepository adminRepository,
+     BCryptPasswordEncoder bCryptPasswordEncoder, FileService fileService){
+
         this.clientRepository = clientRepository;
+        this.ownerRepository = ownerRepository;
+        this.adminRepository = adminRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.fileService = fileService;
     }
 
     //or you can use the Field injection
     // @Autowired
     // ClientRepository clientRepository ;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // @Autowired
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private FileService fileService;
+    // @Autowired
+    // private FileService fileService;
 
 
 
 // ---------------------------------- Register Client -----------------------------------
 
 public Client registerClient(AddUserForm clientForm) {
-    try {
-        Optional<Client> existingClient = clientRepository.findByEmail(clientForm.getEmail());
-        
-        if (existingClient.isPresent()) {
-            throw new RuntimeException("This email is already in use!");
-        }
+    String email = clientForm.getEmail();
+    
+    // Check if the email is already used by any user type
+    boolean emailExists = clientRepository.existsByEmail(email) ||
+                          ownerRepository.existsByEmail(email) ||
+                          adminRepository.existsByEmail(email);
 
+    if (emailExists) {
+        throw new RuntimeException("This email is already in use!");
+    }
+
+    try {
         String encodedPassword = bCryptPasswordEncoder.encode(clientForm.getPassword());
         Client newClient = new Client(
                 clientForm.getFirstname(),
@@ -68,14 +86,12 @@ public Client registerClient(AddUserForm clientForm) {
 
         return clientRepository.save(newClient);
 
-    } catch (RuntimeException e) {
-        LOGGER.error("Error while registering client: " + e.getMessage(), e);
-        throw e;
     } catch (Exception e) {
-        LOGGER.error("Unexpected error while registering client", e);
+        LOGGER.error("Error while registering client: " + e.getMessage(), e);
         throw new RuntimeException("Unexpected error while registering client: " + e.getMessage(), e);
     }
 }
+
 
     
 
