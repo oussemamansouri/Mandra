@@ -1,7 +1,6 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.List;
-
+import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -47,8 +46,11 @@ public class OwnerServiceImp implements OwnerService {
     public Owner registerOwner(AddOwnerForm ownerForm) {
          try {
           
-            List<Owner> nbOwners = ownerRepository.findByEmail(ownerForm.getEmail());
-            if (nbOwners.isEmpty()) {
+            Optional<Owner> existingOwner = ownerRepository.findByEmail(ownerForm.getEmail());
+            if (existingOwner.isPresent()) {
+                throw new RuntimeException("This email is already in use!");
+            }
+            
                 ownerForm.setPassword(bCryptPasswordEncoder.encode(ownerForm.getPassword()));
                 Owner newOwner = new Owner(
                     ownerForm.getFirstname(),
@@ -66,9 +68,7 @@ public class OwnerServiceImp implements OwnerService {
                     AccountStateOption.Disabled
                 );
                 return ownerRepository.save(newOwner);
-            } else {
-                throw new RuntimeException("This email is already in use!");
-            }
+           
         } catch (Exception e) {
             LOGGER.error("Error while registering owner", e);
             throw new RuntimeException("Error while registering owner: " + e.getMessage(), e);
