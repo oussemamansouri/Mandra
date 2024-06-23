@@ -1,7 +1,6 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.List;
-
+import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -46,8 +45,11 @@ public class AdminServiceImp implements AdminService{
 
 public Admin addAdmin(AddUserForm adminForm) {
         try {
-            List<Admin> nbAdmins = adminRepository.findByEmail(adminForm.getEmail());
-            if (nbAdmins.isEmpty()) {
+            Optional<Admin> existingAdmin = adminRepository.findByEmail(adminForm.getEmail());
+            if (existingAdmin.isPresent()) {
+                throw new RuntimeException("This email is already in use!");
+            }
+            
                 adminForm.setPassword(bCryptPasswordEncoder.encode(adminForm.getPassword()));
                 Admin newAdmin = new Admin(
                     adminForm.getFirstname(),
@@ -59,9 +61,6 @@ public Admin addAdmin(AddUserForm adminForm) {
                     null
                 );
                 return adminRepository.save(newAdmin);
-            } else {
-                throw new RuntimeException("This email is already in use!");
-            }
         } catch (Exception e) {
             LOGGER.error("Error while adding admin", e);
             throw new RuntimeException("Error while adding admin: " + e.getMessage(), e);
