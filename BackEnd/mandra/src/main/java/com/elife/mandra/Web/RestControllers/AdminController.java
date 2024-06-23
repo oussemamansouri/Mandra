@@ -2,6 +2,7 @@ package com.elife.mandra.Web.RestControllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,6 +57,7 @@ public class AdminController {
 // ----------------------------------      get admin by id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getAdmin( @PathVariable(value = "id") Long id  ) {
     try{
     Admin admin= adminService.getAdminById(id);
@@ -72,6 +74,7 @@ public class AdminController {
 // ----------------------------------      update admin endpoint     -----------------------------------
 
  @PutMapping("/{id}/edit")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateAdmin(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm admin,
     BindingResult result) {
     try{
@@ -95,6 +98,7 @@ public class AdminController {
 // ----------------------------------      edit image endpoint     -----------------------------------
 
    @PutMapping("/{id}/edit-image")
+   @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateAdminImage(@PathVariable(value = "id") Long id, 
                                                     @RequestParam("image") MultipartFile image) {
         try {
@@ -112,6 +116,7 @@ public class AdminController {
 // ----------------------------------      update admin Password endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit-password")
+@PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateAdminPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
     BindingResult result) {
     try{    
