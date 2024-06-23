@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/clients")
-// @PreAuthorize("hasAnyRole('Admin','Client')")
 public class ClientController {
 
    
@@ -65,6 +64,7 @@ public class ClientController {
 // ----------------------------------      update Client endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit")
+@PreAuthorize("hasAnyRole('Admin', 'Client') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateClient(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm client,
     BindingResult result) {
     try{
@@ -86,6 +86,7 @@ public class ClientController {
 // ----------------------------------      update Client Password endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit-password")
+@PreAuthorize("hasAnyRole('Client') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateClientPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
     BindingResult result) {
     try{    
@@ -108,6 +109,8 @@ public class ClientController {
 // ----------------------------------      edit image endpoint     -----------------------------------
 
    @PutMapping("/{id}/edit-image")
+   @PreAuthorize("hasAnyRole('Admin', 'Client') and hasAuthority('UPDATE_PRIVILEGE')")
+
     public ResponseEntity<Object> updateClientImage(@PathVariable(value = "id") Long id, 
                                                     @RequestParam("image") MultipartFile image) {
         try {
@@ -125,6 +128,7 @@ public class ClientController {
 // ----------------------------------      get Clients endpoint     -----------------------------------
 
  @GetMapping("")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getClients(@PageableDefault(size = 10) Pageable pageable) {
     try {
      Page<Client> ClientsPage = clientService.getClients(pageable);
@@ -140,7 +144,7 @@ public class ClientController {
  // ----------------------------------      get Client By Id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
- @PreAuthorize("hasAnyRole('Admin', 'Client') and hasAuthority('READ_PRIVILEGE')")
+ @PreAuthorize("hasAnyRole('Admin', 'Owner') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getClientById( @PathVariable(value = "id") Long id  ) {
     try {
     Client Client= clientService.getClientById(id);
@@ -157,6 +161,7 @@ public class ClientController {
 // ----------------------------------      delete Client endpoint     -----------------------------------
 
  @DeleteMapping("/{id}/delete")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteClient(@PathVariable Long id) {
      try {
          String resMessage = clientService.deleteClientById(id);
@@ -173,6 +178,7 @@ public class ClientController {
     // ---------------------------------- get Active Clients endpoint -----------------------------------
 
      @GetMapping("/active")
+     @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
      public ResponseEntity<Object> getActiveClients(@PageableDefault(size = 10) Pageable pageable) {
         try{
         Page<Client> clientPage = clientService.getActiveClients(pageable);
@@ -190,6 +196,7 @@ public class ClientController {
       // ---------------------------------- get Disabled Clients endpoint -----------------------------------
 
     @GetMapping("/disabled")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<Object> getDisabledClients(@PageableDefault(size = 10) Pageable pageable) {
         try{
        Page<Client> clientPage = clientService.getDisabledClients(pageable);
@@ -205,6 +212,7 @@ public class ClientController {
     // ---------------------------------- change Client Account State endpoint -----------------------------------
 
     @PutMapping("/{clientId}/change-account-state")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "clientId") Long clientId ) {
         try{
     Client updatedClient = clientService.changeClientAccountState(clientId);
