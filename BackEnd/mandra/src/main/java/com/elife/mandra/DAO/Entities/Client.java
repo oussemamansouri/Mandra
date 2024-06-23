@@ -59,7 +59,7 @@ public class Client extends User implements UserDetails{
 
     @Override
     public String getPassword() {
-      return this.getPassword();
+      return super.getPassword();
    }
 
    // We can use those later
