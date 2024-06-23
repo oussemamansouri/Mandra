@@ -18,4 +18,6 @@ public interface OwnerRepository extends JpaRepository<Owner,Long>{
 
     public Page<Owner> findByAccountState(AccountStateOption accountState, Pageable pageable);
 
+    public boolean existsByEmail(String email);
+
 }
