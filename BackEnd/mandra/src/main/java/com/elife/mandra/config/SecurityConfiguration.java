@@ -2,12 +2,14 @@ package com.elife.mandra.config;
 
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +20,9 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 
+import com.elife.mandra.DAO.Repositories.AdminRepository;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
+import com.elife.mandra.DAO.Repositories.OwnerRepository;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -33,20 +37,43 @@ public class SecurityConfiguration {
     private final RSAPublicKey key;
     private final RSAPrivateKey priv;
     private final ClientRepository clientRepository;
+     private final OwnerRepository ownerRepository;
+    private final AdminRepository adminRepository;
 
     public SecurityConfiguration(@Value("${jwt.public.key}") RSAPublicKey key,
             @Value("${jwt.private.key}") RSAPrivateKey priv,
-            ClientRepository clientRepository) {
+            ClientRepository clientRepository, OwnerRepository ownerRepository, AdminRepository adminRepository) {
         this.key = key;
         this.priv = priv;
         this.clientRepository = clientRepository;
+        this.ownerRepository = ownerRepository;
+        this.adminRepository = adminRepository;
     }
 
-    // Bean for loading client details from the database
+    // Bean for loading user details from the database
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> clientRepository.findByEmail(username).get(0);
+        return username -> {
+            Optional<? extends UserDetails> user = clientRepository.findByEmail(username)
+                    .map(client -> (UserDetails) client);
+    
+            if (user.isEmpty()) {
+                user = ownerRepository.findByEmail(username)
+                        .map(owner -> (UserDetails) owner);
+            }
+    
+            if (user.isEmpty()) {
+                user = adminRepository.findByEmail(username)
+                        .map(admin -> (UserDetails) admin);
+            }
+    
+            return user.orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        };
     }
+    
+    
+
+    
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
