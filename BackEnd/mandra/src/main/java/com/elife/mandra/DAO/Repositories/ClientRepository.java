@@ -8,13 +8,12 @@ import org.springframework.stereotype.Repository;
 import com.elife.mandra.DAO.Entities.Client;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
 
-    public List<Client> findByEmail(String email);
+    public Optional<Client> findByEmail(String email);
 
     public Page<Client> findByAccountState(AccountStateOption accountState, Pageable pageable);
 
