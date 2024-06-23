@@ -17,4 +17,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     public Page<Client> findByAccountState(AccountStateOption accountState, Pageable pageable);
 
+    public boolean existsByEmail(String email);
+
 }
