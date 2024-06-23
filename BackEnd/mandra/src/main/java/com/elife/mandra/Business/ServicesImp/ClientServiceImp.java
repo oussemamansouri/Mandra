@@ -1,6 +1,5 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
@@ -49,9 +48,9 @@ public class ClientServiceImp implements ClientService {
 
 public Client registerClient(AddUserForm clientForm) {
     try {
-        List<Client> existingClient = clientRepository.findByEmail(clientForm.getEmail());
+        Optional<Client> existingClient = clientRepository.findByEmail(clientForm.getEmail());
         
-        if (!existingClient.isEmpty()) {
+        if (existingClient.isPresent()) {
             throw new RuntimeException("This email is already in use!");
         }
 
