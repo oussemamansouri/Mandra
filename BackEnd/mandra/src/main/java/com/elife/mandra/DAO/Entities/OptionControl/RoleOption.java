@@ -14,7 +14,7 @@ import static com.elife.mandra.DAO.Entities.OptionControl.PrivilegeOption.*;
 public enum RoleOption {
     Admin(Set.of(READ_PRIVILEGE, WRITE_PRIVILEGE, UPDATE_PRIVILEGE, DELETE_PRIVILEGE)),
     Owner(Set.of(READ_PRIVILEGE, WRITE_PRIVILEGE, UPDATE_PRIVILEGE, DELETE_PRIVILEGE)),
-    Client(Set.of(READ_PRIVILEGE, WRITE_PRIVILEGE, DELETE_PRIVILEGE));
+    Client(Set.of(READ_PRIVILEGE, WRITE_PRIVILEGE, UPDATE_PRIVILEGE));
 
     @Getter
     private final Set<PrivilegeOption> privileges;
