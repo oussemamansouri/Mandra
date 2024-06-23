@@ -125,7 +125,6 @@ public class ClientController {
 // ----------------------------------      get Clients endpoint     -----------------------------------
 
  @GetMapping("")
- @PreAuthorize("hasAnyRole('Admin', 'Client') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getClients(@PageableDefault(size = 10) Pageable pageable) {
     try {
      Page<Client> ClientsPage = clientService.getClients(pageable);
@@ -141,6 +140,7 @@ public class ClientController {
  // ----------------------------------      get Client By Id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
+ @PreAuthorize("hasAnyRole('Admin', 'Client') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getClientById( @PathVariable(value = "id") Long id  ) {
     try {
     Client Client= clientService.getClientById(id);
