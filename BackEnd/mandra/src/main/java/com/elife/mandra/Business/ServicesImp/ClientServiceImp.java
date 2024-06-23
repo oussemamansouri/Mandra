@@ -1,7 +1,6 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.List;
-
+import java.util.Optional;
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -45,32 +44,39 @@ public class ClientServiceImp implements ClientService {
 
 
 
-// ----------------------------------      register Client     -----------------------------------
+// ---------------------------------- Register Client -----------------------------------
 
 public Client registerClient(AddUserForm clientForm) {
-        try {
-            List<Client> nbClients = clientRepository.findByEmail(clientForm.getEmail());
-            if (nbClients.isEmpty()) {
-                clientForm.setPassword(bCryptPasswordEncoder.encode(clientForm.getPassword()));
-                Client newClient = new Client(
-                    clientForm.getFirstname(),
-                    clientForm.getLastname(),
-                    clientForm.getEmail(),
-                    clientForm.getPassword(),
-                    clientForm.getPhoneNumber(),
-                    RoleOption.Client,
-                    null, // image
-                    AccountStateOption.Active
-                );
-                return clientRepository.save(newClient);
-            } else {
-                throw new RuntimeException("This email is already in use!");
-            }
-        } catch (Exception e) {
-            LOGGER.error("Error while registering client", e);
-            throw new RuntimeException("Error while registering client: " + e.getMessage(), e);
+    try {
+        Optional<Client> existingClient = clientRepository.findByEmail(clientForm.getEmail());
+        
+        if (existingClient.isPresent()) {
+            throw new RuntimeException("This email is already in use!");
         }
+
+        String encodedPassword = bCryptPasswordEncoder.encode(clientForm.getPassword());
+        Client newClient = new Client(
+                clientForm.getFirstname(),
+                clientForm.getLastname(),
+                clientForm.getEmail(),
+                encodedPassword,
+                clientForm.getPhoneNumber(),
+                RoleOption.Client,
+                null, // image
+                AccountStateOption.Active
+        );
+
+        return clientRepository.save(newClient);
+
+    } catch (RuntimeException e) {
+        LOGGER.error("Error while registering client: " + e.getMessage(), e);
+        throw e;
+    } catch (Exception e) {
+        LOGGER.error("Unexpected error while registering client", e);
+        throw new RuntimeException("Unexpected error while registering client: " + e.getMessage(), e);
     }
+}
+
     
 
 
