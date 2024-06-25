@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +43,7 @@ public class GuesthouseController {
     // ---------------------------------- add Guest House by owner endpoint -----------------------------------
 
     @PostMapping("/{ownerId}/add")
+    @PreAuthorize("hasAnyRole('Owner') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<?> addGuestHouse(@PathVariable Long ownerId,
             @Valid @RequestPart("guesthouseForm") GuesthouseForm guesthouseForm,
             @RequestPart("images") List<MultipartFile> images,
@@ -66,6 +68,7 @@ public class GuesthouseController {
      // ---------------------------------- update restaurant endpoint -----------------------------------
 
     @PutMapping("/{guesthouseId}/edit")
+    @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateGuestHouse(@PathVariable(value = "guesthouseId") Long guesthouseId,
             @Valid @RequestBody GuesthouseForm guesthouseForm,
             BindingResult result) {     
@@ -89,6 +92,7 @@ public class GuesthouseController {
     // ----------------------------------      update Guest House images endpoint     -----------------------------------   
 
  @PutMapping("/{guesthouseId}/edit-images")
+ @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
  public ResponseEntity<Object> updateGuestHouseImages(@PathVariable(value = "guesthouseId") Long guesthouseId, 
                                                  @RequestParam("images") List<MultipartFile> images) {
      try {
@@ -139,6 +143,7 @@ public class GuesthouseController {
  // ----------------------------------      delete guest house endpoint     -----------------------------------
 
  @DeleteMapping("/{guesthouseId}/delete")
+ @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteGuestHouse(@PathVariable(value = "guesthouseId") Long guesthouseId){
     try{
      String resMessege = guesthouseService.deleteGuestHouse(guesthouseId);

@@ -1,6 +1,10 @@
 package com.elife.mandra.DAO.Entities;
 
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,22 +28,22 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "Admin")
-public class Admin extends User {
+public class Admin extends User implements UserDetails {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    private Long id ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @OneToMany(mappedBy = "Admin", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "Admin", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<GastronomicSpecialties> GastronomicSpecialties ;
+    private List<GastronomicSpecialties> GastronomicSpecialties;
 
-    @OneToMany(mappedBy = "Admin", cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "Admin", cascade = CascadeType.ALL)
     @JsonIgnore
-    private List<SpecialtyWomen> SpecialtyWomens ;
+    private List<SpecialtyWomen> SpecialtyWomens;
 
-        public Admin(String firstname, String lastname, String email, String password,
-    String phoneNumber, RoleOption role, String image) {
+    public Admin(String firstname, String lastname, String email, String password,
+            String phoneNumber, RoleOption role, String image) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setEmail(email);
@@ -49,7 +53,39 @@ public class Admin extends User {
         this.setImage(image);
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.getRole().getAuthorities();
+    }
 
+    @Override
+    public String getUsername() {
+        return this.getEmail();
+    }
+
+    @Override
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
-

@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class SpecialtyWomenController {
     // ---------------------------------- add Specialty Women by admin endpoint -----------------------------------
 
     @PostMapping("/{adminId}/add")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<?> addGastronomicSpecialtie(@PathVariable Long adminId,
             @Valid @RequestPart("specialtywomenform") SpecialtyWomenForm specialtywomenform,
             @RequestPart("image") MultipartFile image,
@@ -69,6 +71,7 @@ public class SpecialtyWomenController {
     // ---------------------------------- update Specialty Women endpoint -----------------------------------
 
     @PutMapping("/{specialtyWomenId}/edit")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId,
             @Valid @RequestBody SpecialtyWomenForm specialtyWomenForm,
             BindingResult result) {
@@ -93,6 +96,7 @@ public class SpecialtyWomenController {
       // ---------------------------------- edit Specialty Women image endpoint -----------------------------------
 
    @PutMapping("/{specialtyWomenId}/edit-image")
+   @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
    public ResponseEntity<Object> updateSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId, 
                                                    @RequestParam("image") MultipartFile image) {
        try {
@@ -146,6 +150,7 @@ public class SpecialtyWomenController {
  // ---------------------------------- delete Specialty Women endpoint -----------------------------------
 
  @DeleteMapping("/{specialtyWomenId}/delete")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteSpecialtyWomen(@PathVariable(value = "specialtyWomenId") Long specialtyWomenId){
     try{
      String resMessege = specialtyWomenService.deleteSpecialtyWomen(specialtyWomenId);

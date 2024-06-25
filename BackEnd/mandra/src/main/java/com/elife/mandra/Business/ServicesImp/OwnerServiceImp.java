@@ -1,12 +1,10 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.List;
-
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +16,8 @@ import com.elife.mandra.Business.Services.OwnerService;
 import com.elife.mandra.DAO.Entities.Owner;
 import com.elife.mandra.DAO.Entities.OptionControl.AccountStateOption;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+import com.elife.mandra.DAO.Repositories.AdminRepository;
+import com.elife.mandra.DAO.Repositories.ClientRepository;
 import com.elife.mandra.DAO.Repositories.OwnerRepository;
 import com.elife.mandra.Web.Requests.OwnerForms.AddOwnerForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
@@ -28,16 +28,28 @@ public class OwnerServiceImp implements OwnerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImp.class);
 
+   final ClientRepository clientRepository ;
     final OwnerRepository ownerRepository;
-    public OwnerServiceImp(OwnerRepository ownerRepository){
+    final AdminRepository adminRepository;
+    final BCryptPasswordEncoder bCryptPasswordEncoder;
+    final FileService fileService;
+    
+    public OwnerServiceImp(ClientRepository clientRepository,
+     OwnerRepository ownerRepository, AdminRepository adminRepository,
+     BCryptPasswordEncoder bCryptPasswordEncoder, FileService fileService){
+
+        this.clientRepository = clientRepository;
         this.ownerRepository = ownerRepository;
+        this.adminRepository = adminRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.fileService = fileService;
     }
+    //or we can 
+    // @Autowired
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    private FileService fileService ;
+    // @Autowired
+    // private FileService fileService ;
 
 
 
@@ -45,10 +57,17 @@ public class OwnerServiceImp implements OwnerService {
 
     @Override
     public Owner registerOwner(AddOwnerForm ownerForm) {
+        String email = ownerForm.getEmail();
+    
+        // Check if the email is already used by any user type
+        boolean emailExists = clientRepository.existsByEmail(email) ||
+                              ownerRepository.existsByEmail(email) ||
+                              adminRepository.existsByEmail(email);
+    
+        if (emailExists) {
+            throw new RuntimeException("This email is already in use!");
+        }
          try {
-          
-            List<Owner> nbOwners = ownerRepository.findByEmail(ownerForm.getEmail());
-            if (nbOwners.isEmpty()) {
                 ownerForm.setPassword(bCryptPasswordEncoder.encode(ownerForm.getPassword()));
                 Owner newOwner = new Owner(
                     ownerForm.getFirstname(),
@@ -66,9 +85,7 @@ public class OwnerServiceImp implements OwnerService {
                     AccountStateOption.Disabled
                 );
                 return ownerRepository.save(newOwner);
-            } else {
-                throw new RuntimeException("This email is already in use!");
-            }
+           
         } catch (Exception e) {
             LOGGER.error("Error while registering owner", e);
             throw new RuntimeException("Error while registering owner: " + e.getMessage(), e);

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,7 @@ public class RestaurantController {
     // ---------------------------------- add Restaurant by owner endpoint -----------------------------------
 
     @PostMapping("/{ownerId}/add")
+    @PreAuthorize("hasAnyRole('Owner') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<?> addRestaurant(@PathVariable Long ownerId,
             @Valid @RequestPart("restaurantForm") RestaurantForm restaurantForm,
             @RequestPart("images") List<MultipartFile> images,
@@ -64,6 +66,7 @@ public class RestaurantController {
     // ---------------------------------- update restaurant endpoint -----------------------------------
 
     @PutMapping("/{restaurantId}/edit")
+    @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateRestaurant(@PathVariable(value = "restaurantId") Long restaurantId,
             @Valid @RequestBody RestaurantForm restaurantForm,
             BindingResult result) {
@@ -87,6 +90,7 @@ public class RestaurantController {
  // ----------------------------------      update Reastaurant images endpoint     -----------------------------------   
 
  @PutMapping("/{restaurantId}/edit-images")
+ @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
  public ResponseEntity<Object> updateRestaurantImages(@PathVariable(value = "restaurantId") Long restaurantId, 
                                                  @RequestParam("images") List<MultipartFile> images) {
      try {
@@ -134,6 +138,7 @@ public class RestaurantController {
 // ----------------------------------      delete restaurant endpoint     -----------------------------------
 
  @DeleteMapping("/{restaurantId}/delete")
+@PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteRestaurant(@PathVariable(value = "restaurantId") Long restaurantId){
     try{
      String resMessege = restaurantService.deleteRestaurant(restaurantId);

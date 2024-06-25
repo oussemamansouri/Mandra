@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class GastronomicSpecialtiesController {
     // ---------------------------------- add Gastronomic Specialties by admin endpoint -----------------------------------
 
     @PostMapping("/{adminId}/add")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<?> addGastronomicSpecialtie(@PathVariable Long adminId,
             @Valid @RequestPart("gastronomicSpecialtiesForm") GastronomicSpecialtiesForm gastronomicSpecialtiesForm,
             @RequestPart("image") MultipartFile image,
@@ -68,6 +70,7 @@ public class GastronomicSpecialtiesController {
      // ---------------------------------- update Gastronomic Specialties endpoint -----------------------------------
 
     @PutMapping("/{gastronomicspecialtieId}/edit")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId,
             @Valid @RequestBody GastronomicSpecialtiesForm gastronomicSpecialtiesForm,
             BindingResult result) {
@@ -91,6 +94,7 @@ public class GastronomicSpecialtiesController {
     // ----------------------------------      edit Gastronomic Specialties image endpoint     -----------------------------------
 
    @PutMapping("/{gastronomicspecialtieId}/edit-image")
+   @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId, 
                                                     @RequestParam("image") MultipartFile image) {
         try {
@@ -142,6 +146,7 @@ public class GastronomicSpecialtiesController {
  // ---------------------------------- delete Gastronomic Specialtie endpoint -----------------------------------
 
  @DeleteMapping("/{gastronomicspecialtieId}/delete")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteGastronomicSpecialtie(@PathVariable(value = "gastronomicspecialtieId") Long gastronomicspecialtieId){
     try{
      String resMessege = gastronomicSpecialtiesService.deleteGastronomicSpecialtie(gastronomicspecialtieId);

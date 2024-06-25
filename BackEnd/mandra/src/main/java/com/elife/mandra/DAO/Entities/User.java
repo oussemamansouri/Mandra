@@ -3,6 +3,7 @@ package com.elife.mandra.DAO.Entities;
 import java.util.Date;
 
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
@@ -33,6 +34,7 @@ public class User {
     @Column(name = "email",length = 30,nullable = false)
     private String email ;
 
+    @JsonIgnore // Ignore password during serialization
     @Column(name = "password",nullable = false)
     private String password ;
 

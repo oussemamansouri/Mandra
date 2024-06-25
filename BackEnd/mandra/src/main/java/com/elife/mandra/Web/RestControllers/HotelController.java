@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +44,7 @@ public class HotelController {
  // ----------------------------------      add Hotel by owner endpoint     -----------------------------------   
 
     @PostMapping("/{ownerId}/add")
+    @PreAuthorize("hasAnyRole('Owner') and hasAuthority('WRITE_PRIVILEGE')")
     public ResponseEntity<?> addHotel(@PathVariable Long ownerId,
                                       @Valid @RequestPart("hotelForm") HotelForm hotelForm,
                                       @RequestPart("images") List<MultipartFile> images,
@@ -68,6 +70,7 @@ public class HotelController {
  // ----------------------------------      update hotel endpoint     -----------------------------------
 
 @PutMapping("/{hotelId}/edit")
+@PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateHotel(@PathVariable(value = "hotelId") Long hotelId,@Valid @RequestBody HotelForm hotelForm,
     BindingResult result) {
     try {
@@ -90,6 +93,7 @@ public class HotelController {
  // ----------------------------------      update Hotel images endpoint     -----------------------------------   
 
  @PutMapping("/{hotelId}/edit-images")
+ @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
  public ResponseEntity<Object> updateHotelImages(@PathVariable(value = "hotelId") Long hotelId, 
                                                  @RequestParam("images") List<MultipartFile> images) {
      try {
@@ -136,6 +140,7 @@ public class HotelController {
 // ----------------------------------      delete hotel endpoint     -----------------------------------
 
  @DeleteMapping("/{hotelIdid}/delete")
+@PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteHotel(@PathVariable Long hotelIdid) {
      try {
          String resMessage = hotelService.deleteHotel(hotelIdid);

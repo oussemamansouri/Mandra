@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +64,7 @@ public class ContactController {
     // ---------------------------------- get Contacts endpoint -----------------------------------
 
  @GetMapping("")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<Object> getContacts(@PageableDefault(size = 10) Pageable pageable) {
         try{
        Page<Contact> contactPage = contactService.getContacts(pageable);
@@ -75,9 +77,10 @@ public class ContactController {
 
 
 
-        // ---------------------------------- get Contact By Id endpoint -----------------------------------
+    // ---------------------------------- get Contact By Id endpoint -----------------------------------
 
  @GetMapping("/{contactId}")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getSpecialtyWomenById( @PathVariable(value = "contactId") Long contactId ) {
     try{
         Contact contact = contactService.getContactyById(contactId);
@@ -94,6 +97,7 @@ public class ContactController {
   // ---------------------------------- delete Contact endpoint -----------------------------------
 
  @DeleteMapping("/{contactId}/delete")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteSpecialtyWomen(@PathVariable(value = "contactId") Long contactId){
     try{
      String resMessege = contactService.deleteContact(contactId);

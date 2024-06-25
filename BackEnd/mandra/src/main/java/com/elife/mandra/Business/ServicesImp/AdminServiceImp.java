@@ -1,12 +1,10 @@
 package com.elife.mandra.Business.ServicesImp;
 
-import java.util.List;
-
 
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,6 +14,8 @@ import com.elife.mandra.Business.Services.AdminService;
 import com.elife.mandra.DAO.Entities.Admin;
 import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.AdminRepository;
+import com.elife.mandra.DAO.Repositories.ClientRepository;
+import com.elife.mandra.DAO.Repositories.OwnerRepository;
 import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
@@ -25,29 +25,50 @@ public class AdminServiceImp implements AdminService{
 
       private static final Logger LOGGER = LoggerFactory.getLogger(AdminServiceImp.class);
 
-      final AdminRepository adminRepository;
-       public AdminServiceImp(AdminRepository adminRepository){
-          this.adminRepository = adminRepository;
+    final ClientRepository clientRepository ;
+    final OwnerRepository ownerRepository;
+    final AdminRepository adminRepository;
+    final BCryptPasswordEncoder bCryptPasswordEncoder;
+    final FileService fileService;
+    
+    public AdminServiceImp(ClientRepository clientRepository,
+     OwnerRepository ownerRepository, AdminRepository adminRepository,
+     BCryptPasswordEncoder bCryptPasswordEncoder, FileService fileService){
+
+        this.clientRepository = clientRepository;
+        this.ownerRepository = ownerRepository;
+        this.adminRepository = adminRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.fileService = fileService;
     }
 
     //or you can use the Field injection
     // @Autowired
     // ClientRepository clientRepository ;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    // @Autowired
+    // private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @Autowired
-    private FileService fileService ;
+    // @Autowired
+    // private FileService fileService ;
 
 
 
  // ----------------------------------     add Admin      -----------------------------------
 
 public Admin addAdmin(AddUserForm adminForm) {
+
+    String email = adminForm.getEmail();
+    
+    // Check if the email is already used by any user type
+    boolean emailExists = clientRepository.existsByEmail(email) ||
+                          ownerRepository.existsByEmail(email) ||
+                          adminRepository.existsByEmail(email);
+
+    if (emailExists) {
+        throw new RuntimeException("This email is already in use!");
+    }
         try {
-            List<Admin> nbAdmins = adminRepository.findByEmail(adminForm.getEmail());
-            if (nbAdmins.isEmpty()) {
                 adminForm.setPassword(bCryptPasswordEncoder.encode(adminForm.getPassword()));
                 Admin newAdmin = new Admin(
                     adminForm.getFirstname(),
@@ -59,9 +80,6 @@ public Admin addAdmin(AddUserForm adminForm) {
                     null
                 );
                 return adminRepository.save(newAdmin);
-            } else {
-                throw new RuntimeException("This email is already in use!");
-            }
         } catch (Exception e) {
             LOGGER.error("Error while adding admin", e);
             throw new RuntimeException("Error while adding admin: " + e.getMessage(), e);
