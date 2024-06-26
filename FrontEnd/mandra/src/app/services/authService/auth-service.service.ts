@@ -56,4 +56,28 @@ export class AuthServiceService {
   }
 
 
+    // Method to automatically log in a user if they are already authenticated
+    autoLogin() {
+      const userData = this.storageService.getSavedUser();
+      if (!userData) {
+        return;
+      }
+      this.AuthenticatedUser$.next(userData); // Update BehaviorSubject with authenticated user
+    }
+
+    
+
+    // Method to log out the current user
+    logout() {
+      this.http.request('post', this.baseURL + 'auth/signout', {
+        withCredentials: true // Include credentials (cookies) in the request
+      }).subscribe({
+        next: () => {
+          this.storageService.clean(); // Clear local storage
+          this.AuthenticatedUser$.next(null); // Reset authenticated user
+          this.router.navigate(['/signin']); // Navigate to the sign-in page
+        }
+      });
+    }
+
 }
