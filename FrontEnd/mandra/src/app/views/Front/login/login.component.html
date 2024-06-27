@@ -1,1 +1,28 @@
-<p>login works!</p>
+<div class="login-main">
+<div class="login-container">
+  <form id="connexionForm">
+      <h1> Connexion </h1>
+      <div class="input-group">
+          <label for="email" class="login-label">Adresse email</label>
+          <div class="input-icon">
+              <i class="fas fa-envelope"></i>
+              <input type="email" id="email" name="email" required>
+          </div>
+      </div>
+
+      <div class="input-group">
+          <label for="password" class="login-label">Mot de passe:</label>
+          <div class="input-icon">
+              <i class="fas fa-lock"></i>
+              <input type="password" id="password" name="password" required>
+          </div>
+      </div>
+
+      <button type="button">Se connecter</button>
+      <div>
+          <p>Créer un compte <a routerLink="/signup">S'inscrire</a></p>
+      </div>
+
+  </form>
+</div>
+</div>

@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+
+
+
+
+
+  //  // Lifecycle hook that is called when the component is destroyed
+  //  ngOnDestroy() {
+  //   // Unsubscribe from the AuthenticatedUser$ observable to prevent memory leaks
+  //   this.AuthUserSub.unsubscribe();
+  // }
+
 }
