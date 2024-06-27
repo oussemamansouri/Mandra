@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RegistreOwnerRoutingModule } from './registre-owner-routing.module';
 import { RegistreOwnerComponent } from './registre-owner/registre-owner.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { RegistreOwnerComponent } from './registre-owner/registre-owner.componen
   ],
   imports: [
     CommonModule,
-    RegistreOwnerRoutingModule
+    RegistreOwnerRoutingModule,
+    FormsModule
   ]
 })
 export class RegistreOwnerModule { }

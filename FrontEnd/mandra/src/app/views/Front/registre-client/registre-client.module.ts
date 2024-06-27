@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { RegistreClientRoutingModule } from './registre-client-routing.module';
 import { RegistreClientComponent } from './registre-client/registre-client.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { RegistreClientComponent } from './registre-client/registre-client.compo
   ],
   imports: [
     CommonModule,
-    RegistreClientRoutingModule
+    RegistreClientRoutingModule,
+    FormsModule
   ]
 })
 export class RegistreClientModule { }

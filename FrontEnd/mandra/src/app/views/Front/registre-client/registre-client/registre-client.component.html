@@ -1,1 +1,142 @@
-<p>registre-client works!</p>
+<main>
+  <div class="container">
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-8">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-7 col-md-8 d-flex flex-column align-items-center justify-content-center">
+            <!-- <div class="d-flex justify-content-center py-4"> <a routerLink="/" class="logo d-flex align-items-center w-auto"> <img src="../../../../../assets/admin/img/logo.png"  alt="">  </a></div> -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">Créer un compte apprenant</h5>
+                  <p class="text-center small">Entrez vos données personnelles pour créer un compte</p>
+                </div>
+                <form class="row g-3 needs-validation" novalidate #f="ngForm" (ngSubmit)="register(f)">
+
+                  <div class="col-sm-6">
+                    <label for="yourName" class="form-label">Nom</label>
+                    <input type="text" name="firstname" #firstname="ngModel" ngModel class="form-control" id="yourName"
+                      required minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}"
+                      [ngClass]="{'is-invalid': firstname.invalid && firstname.touched, 'is-valid': firstname.valid && firstname.touched}">
+                    <div class="invalid-feedback" *ngIf="firstname.touched && firstname.errors">
+                      <div *ngIf="firstname.errors?.['required']">Votre nom est requis!</div>
+                      <div *ngIf="firstname.errors?.['minlength']">Votre nom doit compter au moins 2 caractères !</div>
+                      <div *ngIf="firstname.errors?.['maxlength']">Votre nom ne doit pas dépasser 15 caractères !</div>
+                      <div *ngIf="firstname.errors?.['pattern']">Votre nom ne doit contenir que des caractères
+                        alphabétiques !</div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="yourName" class="form-label">Prenom</label>
+                    <input type="text" name="lastname" #lastname="ngModel" ngModel class="form-control" id="yourName"
+                      required minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}"
+                      [ngClass]="{'is-invalid': lastname.invalid && lastname.touched, 'is-valid': lastname.valid && lastname.touched}">
+                    <div class="invalid-feedback" *ngIf="lastname.touched && lastname.errors">
+                      <div *ngIf="lastname.errors?.['required']">Votre prenom est requis!</div>
+                      <div *ngIf="lastname.errors?.['minlength']">Votre prenom doit compter au moins 2 caractères !
+                      </div>
+                      <div *ngIf="lastname.errors?.['maxlength']">Votre prenom ne doit pas dépasser 15 caractères !
+                      </div>
+                      <div *ngIf="lastname.errors?.['pattern']">Votre prenom ne doit contenir que des caractères
+                        alphabétiques !</div>
+
+                    </div>
+                  </div>
+
+
+
+
+
+
+                  <div class="col-sm-6">
+                    <label for="yourUsername" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend">@</span>
+                      <input type="email" name="email" #email="ngModel" ngModel class="form-control" id="yourUsername"
+                        [ngClass]="{'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched}"
+                        required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="nom@domaine.com">
+                      <div class="invalid-feedback" *ngIf="email.touched && email.invalid">
+                        <div *ngIf="email.errors?.['required']">Veuillez entrer votre adresse email!</div>
+                        <div *ngIf="email.errors?.['email']">Veuillez entrer une adresse email valide!</div>
+                        <div *ngIf="email.errors?.['pattern']">L'adresse email doit être sous la forme nom@domaine.com!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-sm-6">
+                    <label for="yourName" class="form-label">Téléphone</label>
+                    <input type="tel" name="tel" #tel="ngModel" ngModel class="form-control" id="yourName"
+                      [ngClass]="{'is-invalid': tel.invalid && tel.touched, 'is-valid': tel.valid && tel.touched}"
+                      required minlength="5" pattern="[0-9]{5,15}" maxlength="15">
+                    <div class="invalid-feedback" *ngIf="tel.touched &&tel.errors">
+                      <div *ngIf="tel.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
+                      <div *ngIf="tel.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
+                      <div *ngIf="tel.errors?.['minlength']">le Téléphone du Centre doit compter au moins 5 chiffres !
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="yourName" class="form-label">Address</label>
+                    <input type="text" name="address" #address="ngModel" ngModel class="form-control" id="yourName"
+                      [ngClass]="{'is-invalid': address.invalid && address.touched, 'is-valid': address.valid && address.touched}"
+                      minlength="4" required>
+                    <div class="invalid-feedback" *ngIf="address.touched && address.errors">
+                      <div *ngIf="address.errors?.['minlength']">Votre adresse doit compter au moins 4 caractères !
+                      </div>
+                      <div *ngIf="address.errors?.['required']">Veuillez entrer votre adresse!</div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="yourDOB" class="form-label">Date de naissance</label>
+                    <input type="date" name="dob" #dob="ngModel" ngModel class="form-control" id="yourDOB" required
+                      [max]="maxDate()"
+                      [ngClass]="{'is-invalid': dob.invalid && dob.touched, 'is-valid': dob.valid && dob.touched}">
+                    <div class="invalid-feedback" *ngIf="dob.touched && dob.errors">
+                      <div *ngIf="dob.errors?.['required']">Votre date de naissance est requise!</div>
+                      <div *ngIf="dob.errors?.['futureDate']">Votre date de naissance ne peut pas être dans le futur!
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                  <div class="col-sm-6">
+                    <label for="yourPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="password" #password="ngModel" ngModel class="form-control"
+                      id="yourPassword"
+                      [ngClass]="{'is-invalid': password.invalid && password.touched, 'is-valid': password.valid && password.touched}"
+                      required minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                    <div class="invalid-feedback" *ngIf="password.touched && password.errors">
+                      <div *ngIf="password.errors?.['required']">Veuillez entrer votre mot de passe !</div>
+                      <div *ngIf="password.errors?.['minlength']">Votre mot de passe doit compter au moins 8 caractères
+                        !</div>
+                      <div *ngIf="password.errors?.['pattern']">Votre mot de passe doit contenir au moins une lettre, un
+                        chiffre et un caractère spécial !</div>
+
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit" [disabled]="f.invalid">Créer un compte</button>
+                  </div>
+                  <div class="col-12">
+                    <div class="alert alert-danger" *ngIf="errormessage">{{errormessage}}</div>
+                  </div>
+
+                  <div class="col-12">
+                    <p class="small mb-0">Vous avez déjà un compte ? <a routerLink="/signin">Se Connecter</a></p>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
