@@ -13,7 +13,7 @@ const routes: Routes = [
   {path:'',component:FrontLayouteComponent,children:[
     {path:'',redirectTo:'home',pathMatch:'full'},
     {path:'home',loadChildren:()=>import('./views/Front/home/home.module').then(m=>m.HomeModule)},
-    {path:'login',loadChildren:()=>import('./views/Front/login/login.module').then(m=>m.LoginModule)},
+    {path:'signin',loadChildren:()=>import('./views/Front/login/login.module').then(m=>m.LoginModule)},
     {path:'signup',loadChildren:()=>import('./views/Front/registre/registre.module').then(m=>m.RegistreModule)},
     {path:'signup/client',loadChildren:()=>import('./views/Front/registre-client/registre-client.module').then(m=>m.RegistreClientModule)},
     {path:'signup/owner',loadChildren:()=>import('./views/Front/registre-owner/registre-owner.module').then(m=>m.RegistreOwnerModule)},
