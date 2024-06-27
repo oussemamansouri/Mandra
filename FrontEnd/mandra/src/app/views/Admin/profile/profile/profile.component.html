@@ -1,1 +1,235 @@
-<p>profile works!</p>
+  <div class="pagetitle">
+    <h1>Profil</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
+
+        <li class="breadcrumb-item active">Profil</li>
+      </ol>
+    </nav>
+  </div>
+  <section class="section profile">
+    <div class="row">
+      <div class="col-xl-4">
+        <form>
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+              <div class="zoom">
+                <label for="image" class="upload-image">
+                  <img src="{{imagepath}}{{profile.img}}" alt="Profile" class="rounded-circle">
+                  <span class="fa-stack fa-lg upload-icon">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"></i>
+                  </span>
+                </label>
+              </div>
+              <h2>{{profile.username | titlecase}}</h2>
+              <h3>{{profile.role | titlecase}} </h3>
+              <input type="file" id="image" class="visually-hidden" required accept="public/images/*"
+                (change)="updateimage($event)">
+            </div>
+          </div>
+        </form>
+      </div>
+
+
+
+      <div class="col-xl-8">
+        <div class="card">
+          <div class="card-body pt-3">
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab"
+                  data-bs-target="#profile-overview">Aperçu</button></li>
+              <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                  data-bs-target="#profile-edit">Modifier profil</button></li>
+              <!-- <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Paramètres</button></li> -->
+              <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                  data-bs-target="#profile-change-password">Changer mot de passe</button></li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                <h5 class="card-title">Concernant</h5>
+                <p class="small fst-italic">En tant qu’administrateur du site Web, je suis responsable de veiller à ce
+                  que le site fonctionne bien et réponde aux besoins de nos utilisateurs. Mon travail consiste à gérer
+                  les comptes utilisateurs, surveiller l’activité du site.</p>
+                <h5 class="card-title">Détails du profil</h5>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label ">Nom d'utilisateur</div>
+                  <div class="col-lg-9 col-md-8">{{profile.username | titlecase}}</div>
+                </div>
+
+
+
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                  <div class="col-lg-9 col-md-8">{{profile.tel}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-3 col-md-4 label">Email</div>
+                  <div class="col-lg-9 col-md-8">{{profile.email}}</div>
+                </div>
+              </div>
+              <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+                <form #f="ngForm" (ngSubmit)="update(f)">
+
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Nom d'utilisateur</label>
+                    <div class="col-md-8 col-lg-9"> <input (focus)="message()" [(ngModel)]="profile.username"
+                        name="username" #username="ngModel" ngModel required minlength="2" maxlength="20"
+                        pattern="[a-zA-Z\s]{2,20}"
+                        [ngClass]="{'is-invalid': username.invalid && username.touched, 'is-valid': username.valid && username.touched}"
+                        type="text" class="form-control">
+                      <div class="invalid-feedback" *ngIf="username.touched && username.errors">
+                        <div *ngIf="username.errors?.['required']">le nom d'utilisateur est requis!</div>
+                        <div *ngIf="username.errors?.['minlength']">le nom d'utilisateur doit compter au moins 2
+                          caractères !</div>
+                        <div *ngIf="username.errors?.['maxlength']">le nom d'utilisateur ne doit pas dépasser 20
+                          caractères !</div>
+                        <div *ngIf="username.errors?.['pattern']">le nom d'utilisateur ne doit contenir que des
+                          caractères alphabétiques !</div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Téléphone</label>
+                    <div class="col-md-8 col-lg-9"> <input (focus)="message()" [(ngModel)]="profile.tel" name="tel"
+                        #tel="ngModel" ngModel
+                        [ngClass]="{'is-invalid': tel.invalid && tel.touched, 'is-valid': tel.valid && tel.touched}"
+                        required minlength="5" pattern="[0-9]{5,15}" maxlength="15" type="text" class="form-control"
+                        value="{{profile.tel}}">
+                      <div class="invalid-feedback" *ngIf="tel.touched &&tel.errors">
+                        <div *ngIf="tel.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
+                        <div *ngIf="tel.errors?.['minlength']">le Téléphone du manager doit compter au moins 5 chiffres
+                          !</div>
+                        <div *ngIf="tel.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                    <div class="col-md-8 col-lg-9"> <input (focus)="message()" [(ngModel)]="profile.email" name="email"
+                        #email="ngModel" ngModel
+                        [ngClass]="{'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched}"
+                        required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="nom@domaine.com"
+                        type="email" class="form-control" value="{{profile.email}}">
+                      <div class="invalid-feedback" *ngIf="email.touched && email.invalid">
+                        <div *ngIf="email.errors?.['required']">Veuillez entrer votre adresse email!</div>
+                        <div *ngIf="email.errors?.['email']">Veuillez entrer une adresse email valide!</div>
+                        <div *ngIf="email.errors?.['pattern']">L'adresse email doit être sous la forme nom@domaine.com!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center"> <button [disabled]="f.invalid" type="submit"
+                      class="btn btn-primary">Enregistrer</button></div>
+                  <br>
+                  <div class="alert alert-success" role="alert" *ngIf="secmessage">
+                    {{secmessage}}
+                  </div>
+                  <div class="alert alert-danger" role="alert" *ngIf="errmessage">
+                    {{errmessage}}
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane fade pt-3" id="profile-settings">
+                <form>
+                  <div class="row mb-3">
+                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Notifications par e-mail</label>
+                    <div class="col-md-8 col-lg-9">
+                      <div class="form-check"> <input class="form-check-input" type="checkbox" id="changesMade" checked>
+                        <label class="form-check-label" for="changesMade"> modifications apportées à votre compte
+                        </label></div>
+                      <div class="form-check"> <input class="form-check-input" type="checkbox" id="newProducts" checked>
+                        <label class="form-check-label" for="newProducts"> Information sur les nouveaux produits et
+                          services </label></div>
+                      <div class="form-check"> <input class="form-check-input" type="checkbox" id="proOffers"> <label
+                          class="form-check-label" for="proOffers"> Offres de marketing et de promotion </label></div>
+                      <div class="form-check"> <input class="form-check-input" type="checkbox" id="securityNotify"
+                          checked disabled> <label class="form-check-label" for="securityNotify"> Alertes de sécurité
+                        </label></div>
+                    </div>
+                  </div>
+                  <div class="text-center"> <button type="submit" class="btn btn-primary">Enregistrer</button></div>
+                </form>
+              </div>
+
+
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+                <form #f2="ngForm" (ngSubmit)="updatepassword(f2)">
+                  <div class="row mb-3">
+                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input (focus)="message()" name="oldPassword" [(ngModel)]="old" #oldPassword="ngModel"
+                        [ngClass]="{'is-invalid':oldPassword.invalid && oldPassword.touched}" ngModel required
+                        type="password" class="form-control">
+                      <div class="invalid-feedback" *ngIf="oldPassword.touched && !old">
+                        <div>Veuillez entrer votre mot de passe actuel !</div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+                  <div class="row mb-3">
+                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nouveau mot de passe</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="newPassword" (focus)="message()" [(ngModel)]="new" #newPassword="ngModel"
+                        [ngClass]="{'is-invalid': newPassword.invalid && newPassword.touched, 'is-valid': newPassword.valid && newPassword.touched}"
+                        required minlength="8" type="password" class="form-control"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                      <div class="invalid-feedback" *ngIf="newPassword.touched && newPassword.invalid">
+                        <div *ngIf="newPassword.errors?.['required']">Veuillez entrer votre nouveau mot de passe !</div>
+                        <div *ngIf="newPassword.errors?.['minlength']">Votre mot de passe doit compter au moins 8
+                          caractères !</div>
+                        <div *ngIf="newPassword.errors?.['pattern']">Votre mot de passe doit contenir au moins une
+                          lettre, un chiffre et un caractère spécial !</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Répéter le nouveau mot de
+                      passe</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="repeatPassword" (focus)="message()" [(ngModel)]="repe" #repeatPassword="ngModel"
+                        [ngClass]="{'is-invalid': repeatPassword.invalid && repeatPassword.touched, 'is-valid': newPassword.valid && newPassword.touched && !notthesame() }"
+                        required minlength="8" type="password" class="form-control"
+                        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                      <div class="invalid-feedback" *ngIf="repeatPassword.touched && repeatPassword.invalid">
+                        <div *ngIf="repeatPassword.errors?.['required']">Veuillez entrer votre nouveau mot de passe !
+                        </div>
+                        <div *ngIf="repeatPassword.errors?.['minlength']">Votre mot de passe doit compter au moins 8
+                          caractères !</div>
+                        <div *ngIf="repeatPassword.errors?.['pattern']">Votre mot de passe doit contenir au moins une
+                          lettre, un chiffre et un caractère spécial !</div>
+                      </div>
+                      <div class="invalid-feedback" *ngIf=" repeatPassword.touched && notthesame()">Les deux mots de
+                        passe ne correspondent pas !</div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="text-center"> <button [disabled]="f2.invalid" type="submit"
+                      class="btn btn-primary">Enregistrer</button></div>
+                  <br>
+                  <div class="alert alert-success" role="alert" *ngIf="secmessagepass">
+                    {{secmessagepass}}
+                  </div>
+                  <div class="alert alert-danger" role="alert" *ngIf="errmessagepass">
+                    {{errmessagepass}}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
