@@ -5,7 +5,8 @@ import { authenticationGuard } from './guards/authentication.guard';
 import { FrontLayouteComponent } from './layoutes/front-layoute/front-layoute.component';
 
 const routes: Routes = [
-  {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['Admin']},children:[
+  {path:'admin',component:AdminLayouteComponent,children:[
+    // {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['Admin']},children:[
     {path:'',redirectTo:'dashboard',pathMatch:'full'},
     {path:'dashboard',loadChildren:()=> import('./views/Admin/dashboard/dashboard.module').then(m=>m.DashboardModule)},
     {path:'profile',loadChildren:()=> import('./views/Admin/profile/profile.module').then(m=>m.ProfileModule)},
