@@ -1,0 +1,75 @@
+.registre-main{
+  height: 100%;
+  background-color: #f6f6f6;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+.registre-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  position: relative;
+}
+.card {
+  background-color: #fff;
+  width: 90%;
+  max-width: 300px;
+  height: 300px;
+  border-radius: 13px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+.card:hover {
+  transform: scale(1.05);
+}
+.icon {
+  width: 80%;
+  max-width: 270px;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+.description {
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 0 10px;
+}
+.extra-info {
+  display: none;
+  width: 90%;
+  max-width: 200px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: #f5ddd0;
+  color: #d2572b;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  text-align: center;
+  position: absolute;
+  bottom: 65px;
+}
+.card-container:hover .extra-info {
+  display: block;
+}
