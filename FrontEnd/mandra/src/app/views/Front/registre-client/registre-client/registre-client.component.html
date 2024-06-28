@@ -68,41 +68,18 @@
 
                   <div class="col-sm-6">
                     <label for="yourName" class="form-label">Téléphone</label>
-                    <input type="tel" name="tel" #tel="ngModel" ngModel class="form-control" id="yourName"
-                      [ngClass]="{'is-invalid': tel.invalid && tel.touched, 'is-valid': tel.valid && tel.touched}"
+                    <input type="tel" name="phoneNumber" #phoneNumber="ngModel" ngModel class="form-control" id="phoneNumber"
+                      [ngClass]="{'is-invalid': phoneNumber.invalid && phoneNumber.touched, 'is-valid': phoneNumber.valid && phoneNumber.touched}"
                       required minlength="5" pattern="[0-9]{5,15}" maxlength="15">
-                    <div class="invalid-feedback" *ngIf="tel.touched &&tel.errors">
-                      <div *ngIf="tel.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
-                      <div *ngIf="tel.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
-                      <div *ngIf="tel.errors?.['minlength']">le Téléphone du Centre doit compter au moins 5 chiffres !
+                    <div class="invalid-feedback" *ngIf="phoneNumber.touched &&phoneNumber.errors">
+                      <div *ngIf="phoneNumber.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
+                      <div *ngIf="phoneNumber.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
+                      <div *ngIf="phoneNumber.errors?.['minlength']">le Téléphone du Centre doit compter au moins 5 chiffres !
                       </div>
                     </div>
                   </div>
 
-                  <div class="col-sm-6">
-                    <label for="yourName" class="form-label">Address</label>
-                    <input type="text" name="address" #address="ngModel" ngModel class="form-control" id="yourName"
-                      [ngClass]="{'is-invalid': address.invalid && address.touched, 'is-valid': address.valid && address.touched}"
-                      minlength="4" required>
-                    <div class="invalid-feedback" *ngIf="address.touched && address.errors">
-                      <div *ngIf="address.errors?.['minlength']">Votre adresse doit compter au moins 4 caractères !
-                      </div>
-                      <div *ngIf="address.errors?.['required']">Veuillez entrer votre adresse!</div>
-                    </div>
-                  </div>
 
-                  <div class="col-sm-6">
-                    <label for="yourDOB" class="form-label">Date de naissance</label>
-                    <input type="date" name="dob" #dob="ngModel" ngModel class="form-control" id="yourDOB" required
-                      [max]="maxDate()"
-                      [ngClass]="{'is-invalid': dob.invalid && dob.touched, 'is-valid': dob.valid && dob.touched}">
-                    <div class="invalid-feedback" *ngIf="dob.touched && dob.errors">
-                      <div *ngIf="dob.errors?.['required']">Votre date de naissance est requise!</div>
-                      <div *ngIf="dob.errors?.['futureDate']">Votre date de naissance ne peut pas être dans le futur!
-                      </div>
-                    </div>
-
-                  </div>
 
 
                   <div class="col-sm-6">
