@@ -3,8 +3,7 @@
 
   <nav class="header-nav ms-auto">
      <ul class="d-flex align-items-center">
-                <li class="nav-item d-block d-lg-none"> <a class="nav-link nav-icon search-bar-toggle " href="#"> <i class="bi bi-search"></i> </a></li>
-        <li class="nav-item dropdown pe-3" *ngIf="data">
+        <li class="nav-item dropdown pe-3" *ngIf="data != null">
            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img  src="{{imagepath}}{{data.img}}" alt="Profile" class="rounded-circle"> <span class="d-none d-md-block dropdown-toggle ps-2">{{data.name| titlecase}}</span> </a>
            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
@@ -22,8 +21,8 @@
            </ul>
         </li>
 
-        <li class="nav-item  pe-3" *ngIf="!data">
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" routerLink="/signin" > <img  src="../../../assets/admin/img/default-image.jpg" alt="Profile" class="rounded-circle">  <span class="d-none d-md-block  ps-2">Connexion</span> </a>
+        <li class="nav-item  pe-3" *ngIf="data == null">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" routerLink="/signin" > <img  src="../../../assets/img/default-image.jpg" alt="Profile" class="rounded-circle">  <span class="d-none d-md-block  ps-2">Connexion</span> </a>
        </li>
 
 
@@ -39,7 +38,7 @@
   <ul class="sidebar-nav" >
     <li class="nav-item"> <a class="nav-link collapsed" routerLink="/"> <i class="bi bi-house-door"></i>  <span>Accueil</span> </a></li>
     <li class="nav-item" style="cursor: pointer;" *ngIf="data" (click)="navigateprofile()"> <a class="nav-link collapsed "  > <i class="bi bi-person"></i> <span>Profil</span> </a></li>
-    <li class="nav-item" *ngIf="!data"> <a class="nav-link collapsed" routerLink="/login"> <i class="bi bi-person"></i> <span>Connexion</span> </a></li>
+    <li class="nav-item" *ngIf="!data"> <a class="nav-link collapsed" routerLink="/signin"> <i class="bi bi-person"></i> <span>Connexion</span> </a></li>
     <li class="nav-item"> <a class="nav-link collapsed " routerLink="/search"> <i class="bi bi-search"></i><span>Recherche</span> </a></li>
     <li class="nav-item"> <a class="nav-link collapsed" routerLink="/about"> <i class="bi bi-card-text"></i><span>à propos de nous</span> </a></li>
   </ul>
