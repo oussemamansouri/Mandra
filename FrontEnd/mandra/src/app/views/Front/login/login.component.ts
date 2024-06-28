@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthServiceService } from 'src/app/services/authService/auth-service.service';
 
 @Component({
@@ -7,61 +9,61 @@ import { AuthServiceService } from 'src/app/services/authService/auth-service.se
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy{
 
-  token:any
-  errmessage:any
-    data:any
-    // url:any
-    // helper=new JwtHelperService
-    // constructor(private auth:AuthServiceService,private route:Router,private act:ActivatedRoute) { }
+  errmessage!: string;
+  AuthUserSub!: Subscription; // Subscription to the authenticated user observable
 
-    ngOnInit(): void {
-      // this.url=this.act.snapshot.queryParams['backurl']
-      // if(this.auth.logedin()==true){
-      //   this.token=localStorage.getItem('token')
-      //   let decodeToken = this.helper.decodeToken(this.token)
-      //   switch(decodeToken.role) {
-      //     case 'admin':
-      //       this.route.navigate(['/admin'])
-      //       break;
-      //     case 'client':
-      //       this.route.navigate(['/client'])
-      //       break;
-      //       case 'centre':
-      //         this.route.navigate(['/centre'])
-      //         break;
-      //     default:
-      //       this.route.navigate(['/login'])
-      //   }
-      // }
+  constructor(private router: Router, private authService: AuthServiceService) { }
+
+  ngOnInit(): void {
+    // Subscribe to the AuthenticatedUser$ observable to monitor authentication state
+    this.AuthUserSub = this.authService.AuthenticatedUser$.subscribe({
+      next: user => {
+        // If a user is authenticated, navigate to the home page
+        if (user) {
+          this.router.navigate(['/']);
+        }
+      }
+    });
+    // const user:any = window.localStorage.getItem('authenticated-user')
+    // if(user){
+    //   this.router.navigate(['/']);
+    // }
+  }
+
+  loginuser(formLogin: NgForm) {
+    // Validate the form
+    if (!formLogin.valid) {
+      return;
     }
 
-    loginuser(f:any){
-    //   let body=f.value
-    //   this.auth.login(body).subscribe(res=>{
-    //     this.data=res
-    //     this.auth.savedata(this.data.token.token)
-    //     let decodeToken = this.helper.decodeToken(this.data.token.token)
-    //     // if (this.url){this.route.navigate([this.url])}
+    const email = formLogin.value.email; // Get email from the form
+    const password = formLogin.value.password; // Get password from the form
 
-    //     switch(decodeToken.role) {
-    //       case 'admin':
-    //         this.route.navigate(['/admin'])
-    //         break;
-    //       case 'client':
-    //         this.route.navigate(['/client'])
-    //         break;
-    //         case 'centre':
-    //           this.route.navigate(['/centre'])
-    //           break;
-    //       default:
-    //         this.route.navigate(['/login'])
-    //     }
+    // Call the login method from AuthService
+    this.authService.login(email, password).subscribe({
+      next: userData => {
+        if(userData.roles.find(role => role.includes('ROLE_Admin'))){
+          this.router.navigate(['/admin']);
+        }else if(userData.roles.find(role => role.includes('ROLE_Owner'))){
+          this.router.navigate(['/owner']);
+        }else if(userData.roles.find(role => role.includes('ROLE_Client'))){
+        this.router.navigate(['/client']);
+        }else{
+          this.router.navigate(['/']);
+        }
+      },
+      error: err => {
+        // On error, set the error message and log it to the console
+        this.errmessage = err;
+      }
+    });
+  }
 
-    //   },(err:HttpErrorResponse)=>this.errmessage=err.error)
-    // }
-
-}
-
+  // Lifecycle hook that is called when the component is destroyed
+  ngOnDestroy() {
+    // Unsubscribe from the AuthenticatedUser$ observable to prevent memory leaks
+    this.AuthUserSub.unsubscribe();
+  }
 }
