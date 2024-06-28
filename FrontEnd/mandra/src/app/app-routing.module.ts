@@ -5,8 +5,7 @@ import { authenticationGuard } from './guards/authentication.guard';
 import { FrontLayouteComponent } from './layoutes/front-layoute/front-layoute.component';
 
 const routes: Routes = [
-  {path:'admin',component:AdminLayouteComponent,children:[
-    // {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['Admin']},children:[
+    {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Admin']},children:[
     {path:'',redirectTo:'dashboard',pathMatch:'full'},
     {path:'dashboard',loadChildren:()=> import('./views/Admin/dashboard/dashboard.module').then(m=>m.DashboardModule)},
     {path:'profile',loadChildren:()=> import('./views/Admin/profile/profile.module').then(m=>m.ProfileModule)},
@@ -22,7 +21,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled', // Enable scroll restoration
+      anchorScrolling: 'enabled', // Enable anchor scrolling
+      scrollOffset: [0, 0], // Optional: Adjust the scroll offset if needed
+    })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
