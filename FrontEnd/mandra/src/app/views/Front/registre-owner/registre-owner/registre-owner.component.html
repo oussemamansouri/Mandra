@@ -1,162 +1,163 @@
 <br>
 <main>
   <div class="container">
-     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-8">
-        <div class="container">
-           <div class="row justify-content-center">
-              <div class="col-lg-7 col-md-8 d-flex flex-column align-items-center justify-content-center">
-                 <!-- <div class="d-flex justify-content-center py-8"> <a routerLink="/" class="logo d-flex align-items-center w-auto"> <img src="../../../../../assets/admin/img/logo.png" alt="">  </a></div> -->
-                 <div class="card mb-3">
-                    <div class="card-body">
-                       <div class="pt-4 pb-2">
-                          <h5 class="card-title text-center pb-0 fs-4">Créer un compte centre de formation</h5>
-                          <p class="text-center small">Entrez vos données personnelles pour créer un compte</p>
-                       </div>
-                       <form class="row g-3 needs-validation"  #f="ngForm" (ngSubmit)="registre(f)">
-                          <div class="col-sm-5">
-                             <label for="yourName" class="form-label">Nom du Centre</label> <input type="text" name="name" #name="ngModel" ngModel   class="form-control" required minlength="2" maxlength="20"   pattern="[a-zA-Z\s]{2,20}" [ngClass]="{'is-invalid': name.invalid && name.touched, 'is-valid': name.valid && name.touched}"  >
-                             <div class="invalid-feedback" *ngIf="name.touched && name.errors">
-                              <div *ngIf="name.errors?.['required']">le nom est requis!</div>
-                              <div *ngIf="name.errors?.['minlength']">le nom doit compter au moins 2 caractères !</div>
-                              <div *ngIf="name.errors?.['maxlength']">le nom ne doit pas dépasser 20 caractères !</div>
-                              <div *ngIf="name.errors?.['pattern']">le nom ne doit contenir que des caractères alphabétiques !</div>
-                          </div>
-                          </div>
-
-
-                          <div class="col-sm-7">
-                            <label for="yourUsername" class="form-label">Email</label>
-                            <div class="input-group has-validation">
-                              <span class="input-group-text" id="inputGroupPrepend">@</span>
-                              <input type="email" name="email" #email="ngModel" ngModel class="form-control"
-                              [ngClass]="{'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched}"
-                              required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="nom@domaine.com">
-                              <div class="invalid-feedback" *ngIf="email.touched && email.invalid">
-                                <div *ngIf="email.errors?.['required']">Veuillez entrer votre adresse email!</div>
-                                <div *ngIf="email.errors?.['email']">Veuillez entrer une adresse email valide!</div>
-                                <div *ngIf="email.errors?.['pattern']">L'adresse email doit être sous la forme nom@domaine.com!</div>
-                              </div>
-                            </div>
-                          </div>
-
-
-
-
-
-                       <div class="col-sm-6">
-                        <label for="yourName" class="form-label">Localisation</label>
-                        <input type="text" name="localisation" #localisation="ngModel" ngModel class="form-control"
-                        [ngClass]="{'is-invalid': localisation.invalid && localisation.touched, 'is-valid': localisation.valid && localisation.touched}" required >
-                        <div class="invalid-feedback" *ngIf="localisation.touched && localisation.errors">
-                          <div *ngIf="localisation.errors?.['required']">Veuillez entrer votre adresse!</div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm-6">
-                        <label for="yourName" class="form-label">Numéro d'enregistrement fiscal</label>
-                        <input type="text" name="fiscale" #fiscale="ngModel" ngModel class="form-control"
-                        [ngClass]="{'is-invalid': fiscale.invalid && fiscale.touched, 'is-valid': fiscale.valid && fiscale.touched}"
-                        required pattern="[0-9]{8}">
-                        <div class="invalid-feedback" *ngIf="fiscale.touched && fiscale.errors">
-                          <div *ngIf="fiscale.errors?.['required']">Veuillez entrer votre NIF!</div>
-                          <div *ngIf="fiscale.errors?.['pattern']">Le NIF doit être composé de 8 chiffres!</div>
-                        </div>
-                      </div>
-
-
-
-
-
-
-                   <div class="col-sm-6">
-                    <label for="yourName" class="form-label">Nom du manager</label> <input type="text" name="nom_manager" #nom_manager="ngModel" ngModel   class="form-control" required minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}" [ngClass]="{'is-invalid': nom_manager.invalid && nom_manager.touched, 'is-valid': nom_manager.valid && nom_manager.touched}"  >
-                    <div class="invalid-feedback" *ngIf="nom_manager.touched && nom_manager.errors">
-                     <div *ngIf="nom_manager.errors?.['required']">le nom du manager est requis!</div>
-                     <div *ngIf="nom_manager.errors?.['minlength']">le nom du manager doit compter au moins 2 caractères !</div>
-                     <div *ngIf="nom_manager.errors?.['maxlength']">le nom du manager ne doit pas dépasser 20 caractères !</div>
-                     <div *ngIf="nom_manager.errors?.['pattern']">le nom du manager ne doit contenir que des caractères alphabétiques !</div>
-
-                 </div>
-                 </div>
-
-
-                 <div class="col-sm-6">
-                  <label for="yourName" class="form-label">Prénom du manager</label> <input type="text" name="prenom_manager" #prenom_manager="ngModel" ngModel   class="form-control" required minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}" [ngClass]="{'is-invalid': prenom_manager.invalid && name.touched, 'is-valid': prenom_manager.valid && prenom_manager.touched}"  >
-                  <div class="invalid-feedback" *ngIf="prenom_manager.touched && prenom_manager.errors">
-                   <div *ngIf="prenom_manager.errors?.['required']">le prenom du manager est requis!</div>
-                   <div *ngIf="prenom_manager.errors?.['minlength']">le prenom du manager doit compter au moins 2 caractères !</div>
-                   <div *ngIf="prenom_manager.errors?.['maxlength']">le prenom du manager ne doit pas dépasser 20 caractères !</div>
-                   <div *ngIf="prenom_manager.errors?.['pattern']">le prenom du manager ne doit contenir que des caractères alphabétiques !</div>
-
-               </div>
-               </div>
-
-               <div class="col-sm-6">
-                <label for="yourName" class="form-label">Téléphone du manager</label>
-                <input type="tel" name="tel_manager" #tel_manager="ngModel" ngModel class="form-control" id="yourName"
-                [ngClass]="{'is-invalid': tel_manager.invalid && tel_manager.touched, 'is-valid': tel_manager.valid && tel_manager.touched}"  required minlength="5" pattern="[0-9]{5,15}" maxlength="15" >
-                <div class="invalid-feedback" *ngIf="tel_manager.touched &&tel_manager.errors">
-                  <div *ngIf="tel_manager.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
-                  <div *ngIf="tel_manager.errors?.['minlength']">le Téléphone du manager doit compter au moins 5 chiffres !</div>
-                  <div *ngIf="tel_manager.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
+    <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-8">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-7 col-md-8 d-flex flex-column align-items-center justify-content-center">
+            <!-- <div class="d-flex justify-content-center py-8"> <a routerLink="/" class="logo d-flex align-items-center w-auto"> <img src="../../../../../assets/admin/img/logo.png" alt="">  </a></div> -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">Créer un compte centre de formation</h5>
+                  <p class="text-center small">Entrez vos données personnelles pour créer un compte</p>
                 </div>
-              </div>
+                <form class="row g-3 needs-validation" #f="ngForm" (ngSubmit)="registre(f)">
 
-              <div class="col-sm-6">
-                <label for="yourName" class="form-label">Téléphone du Centre </label>
-                <input type="tel" name="tel" #tel="ngModel" ngModel class="form-control" id="yourName"
-                [ngClass]="{'is-invalid': tel.invalid && tel.touched, 'is-valid': tel.valid && tel.touched}" required minlength="5"  pattern="[0-9]{5,15}" maxlength="15">
-                <div class="invalid-feedback" *ngIf="tel.touched &&tel.errors">
-                  <div *ngIf="tel.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
-                  <div *ngIf="tel.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
-                  <div *ngIf="tel.errors?.['minlength']">le Téléphone du Centre doit compter au moins 5 chiffres !</div>
-                </div>
-              </div>
 
-              <div class="col-sm-6">
-                <label for="yourName" class="form-label">Les services</label>
-                <input type="text" name="services" #services="ngModel" ngModel class="form-control"
-               [ngClass]="{'is-invalid': services.invalid && services.touched, 'is-valid': services.valid && services.touched}" required >
-                <div class="invalid-feedback" *ngIf="services.touched && services.errors">
-                  <div *ngIf="services.errors?.['required']">Veuillez entrer votre services!</div>
-                </div>
-              </div>
+                  <div class="col-sm-6">
+                    <label for="firstname" class="form-label">Nom</label> <input type="text"
+                      name="firstname" #firstname="ngModel" ngModel class="form-control" required minlength="2"
+                      maxlength="15" pattern="[a-zA-Z]{2,15}"
+                      [ngClass]="{'is-invalid': firstname.invalid && firstname.touched, 'is-valid': firstname.valid && firstname.touched}">
+                    <div class="invalid-feedback" *ngIf="firstname.touched && firstname.errors">
+                      <div *ngIf="firstname.errors?.['required']">le nom du manager est requis!</div>
+                      <div *ngIf="firstname.errors?.['minlength']">le nom du manager doit compter au moins 2
+                        caractères !</div>
+                      <div *ngIf="firstname.errors?.['maxlength']">le nom du manager ne doit pas dépasser 20
+                        caractères !</div>
+                      <div *ngIf="firstname.errors?.['pattern']">le nom du manager ne doit contenir que des caractères
+                        alphabétiques !</div>
 
-              <div class="col-sm-6">
-                <label for="yourPassword" class="form-label">Mot de passe</label>
-                <input type="password" name="password" #password="ngModel" ngModel class="form-control" id="yourPassword"
-                [ngClass]="{'is-invalid': password.invalid && password.touched, 'is-valid': password.valid && password.touched}" required  minlength="8"  pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
-                <div class="invalid-feedback" *ngIf="password.touched && password.errors">
-                  <div *ngIf="password.errors?.['required']">Veuillez entrer votre mot de passe !</div>
-                  <div *ngIf="password.errors?.['minlength']">Votre mot de passe doit compter au moins 8 caractères !</div>
-                  <div *ngIf="password.errors?.['pattern']">Votre mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial !</div>
-                </div>
-              </div>
-
-                          <!-- <div class="col-12">
-                             <div class="form-check">
-                                <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required> <label class="form-check-label" for="acceptTerms">J’accepte les  <a href="#">modalités et conditions</a></label>
-                                <div class="invalid-feedback">Vous devez accepter avant de soumettre.</div>
-                             </div>
-                          </div> -->
-                          <div class="col-12">
-                            <button  [disabled]="f.invalid" class="btn btn-primary w-100" type="submit">Créer un compte</button>
-                          </div>
-                          <div class="col-12">
-                            <div class="alert alert-danger" *ngIf="errmessage">{{errmessage}}</div></div>
-                          <div class="col-12">
-
-                             <p class="small mb-0">Vous avez déjà un compte ?<a routerLink="/login"> Se Connecter</a></p>
-                          </div>
-                       </form>
                     </div>
-                 </div>
+                  </div>
 
+
+                  <div class="col-sm-6">
+                    <label for="lastname" class="form-label">Prénom</label> <input type="text"
+                      name="lastname" #lastname="ngModel" ngModel class="form-control" required
+                      minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}"
+                      [ngClass]="{'is-invalid': lastname.invalid && lastname.touched, 'is-valid': lastname.valid && lastname.touched}">
+                    <div class="invalid-feedback" *ngIf="lastname.touched && lastname.errors">
+                      <div *ngIf="lastname.errors?.['required']">le prenom du manager est requis!</div>
+                      <div *ngIf="lastname.errors?.['minlength']">le prenom du manager doit compter au moins 2
+                        caractères !</div>
+                      <div *ngIf="lastname.errors?.['maxlength']">le prenom du manager ne doit pas dépasser 20
+                        caractères !</div>
+                      <div *ngIf="lastname.errors?.['pattern']">le prenom du manager ne doit contenir que des
+                        caractères alphabétiques !</div>
+
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="yourUsername" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend">@</span>
+                      <input type="email" name="email" #email="ngModel" ngModel class="form-control"
+                        [ngClass]="{'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched}"
+                        required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="nom@domaine.com">
+                      <div class="invalid-feedback" *ngIf="email.touched && email.invalid">
+                        <div *ngIf="email.errors?.['required']">Veuillez entrer votre adresse email!</div>
+                        <div *ngIf="email.errors?.['email']">Veuillez entrer une adresse email valide!</div>
+                        <div *ngIf="email.errors?.['pattern']">L'adresse email doit être sous la forme nom@domaine.com!
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="phoneNumber" class="form-label">Téléphone</label>
+                    <input type="tel" name="phoneNumber" #phoneNumber="ngModel" ngModel class="form-control"
+                      id="yourName"
+                      [ngClass]="{'is-invalid': phoneNumber.invalid && phoneNumber.touched, 'is-valid': phoneNumber.valid && phoneNumber.touched}"
+                      required minlength="5" pattern="[0-9]{5,15}" maxlength="15">
+                    <div class="invalid-feedback" *ngIf="phoneNumber.touched &&phoneNumber.errors">
+                      <div *ngIf="phoneNumber.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
+                      <div *ngIf="phoneNumber.errors?.['minlength']">le Téléphone du manager doit compter au moins 5
+                        chiffres !</div>
+                      <div *ngIf="phoneNumber.errors?.['pattern']">Veuillez entrer un nombre entier valide!</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-sm-4">
+                    <label for="nbOfHotels" class="form-label">Nombre d’hôtels que vous possédez</label>
+                    <input type="number" name="nbOfHotels" #nbOfHotels="ngModel" ngModel class="form-control"
+                           id="nbOfHotels"
+                           [ngClass]="{'is-invalid': nbOfHotels.invalid && nbOfHotels.touched, 'is-valid': nbOfHotels.valid && nbOfHotels.touched}"
+                           required
+                           min="0" max="10">
+                    <div class="invalid-feedback" *ngIf="nbOfHotels.touched && nbOfHotels.errors">
+                      <div *ngIf="nbOfHotels.errors?.['required']">Veuillez entrer le nombre d'hôtels!</div>
+                      <div *ngIf="nbOfHotels.errors?.['min']">Le nombre d'hôtels doit être au moins de 0!</div>
+                      <div *ngIf="nbOfHotels.errors?.['max']">Le nombre d'hôtels ne peut pas dépasser 10!</div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <label for="nbOfRestaurant" class="form-label">Nombre des Restaurants que vous possédez</label>
+                    <input type="number" name="nbOfRestaurant" #nbOfRestaurant="ngModel" ngModel class="form-control"
+                           id="nbOfRestaurant"
+                           [ngClass]="{'is-invalid': nbOfRestaurant.invalid && nbOfRestaurant.touched, 'is-valid': nbOfRestaurant.valid && nbOfRestaurant.touched}"
+                           required
+                           min="0" max="10">
+                    <div class="invalid-feedback" *ngIf="nbOfRestaurant.touched && nbOfRestaurant.errors">
+                      <div *ngIf="nbOfRestaurant.errors?.['required']">Veuillez entrer le nombre de restaurants!</div>
+                      <div *ngIf="nbOfRestaurant.errors?.['min']">Le nombre de restaurants doit être au moins de 0!</div>
+                      <div *ngIf="nbOfRestaurant.errors?.['max']">Le nombre de restaurants ne peut pas dépasser 10!</div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <label for="nbOfGuesthouses" class="form-label">Nombre des maisons d'hôtes que vous possédez</label>
+                    <input type="number" name="nbOfGuesthouses" #nbOfGuesthouses="ngModel" ngModel class="form-control"
+                           id="nbOfGuesthouses"
+                           [ngClass]="{'is-invalid': nbOfGuesthouses.invalid && nbOfGuesthouses.touched, 'is-valid': nbOfGuesthouses.valid && nbOfGuesthouses.touched}"
+                           required
+                           min="0" max="10">
+                    <div class="invalid-feedback" *ngIf="nbOfGuesthouses.touched && nbOfGuesthouses.errors">
+                      <div *ngIf="nbOfGuesthouses.errors?.['required']">Veuillez entrer le nombre de maisons d'hôtes!</div>
+                      <div *ngIf="nbOfGuesthouses.errors?.['min']">Le nombre de maisons d'hôtes doit être au moins de 0!</div>
+                      <div *ngIf="nbOfGuesthouses.errors?.['max']">Le nombre de maisons d'hôtes ne peut pas dépasser 10!</div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <label for="yourPassword" class="form-label">Mot de passe</label>
+                    <input type="password" name="password" #password="ngModel" ngModel class="form-control"
+                      id="yourPassword"
+                      [ngClass]="{'is-invalid': password.invalid && password.touched, 'is-valid': password.valid && password.touched}"
+                      required minlength="8" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$">
+                    <div class="invalid-feedback" *ngIf="password.touched && password.errors">
+                      <div *ngIf="password.errors?.['required']">Veuillez entrer votre mot de passe !</div>
+                      <div *ngIf="password.errors?.['minlength']">Votre mot de passe doit compter au moins 8 caractères
+                        !</div>
+                      <div *ngIf="password.errors?.['pattern']">Votre mot de passe doit contenir au moins une lettre, un
+                        chiffre et un caractère spécial !</div>
+                    </div>
+                  </div>
+
+
+                  <div class="col-12">
+                    <button [disabled]="f.invalid" class="btn btn-primary w-100" type="submit">Créer un compte</button>
+                  </div>
+                  <div class="col-12">
+                    <div class="alert alert-danger" *ngIf="errormessage">{{errormessage}}</div>
+                  </div>
+                  <div class="col-12">
+
+                    <p class="small mb-0">Vous avez déjà un compte ?<a routerLink="/login"> Se Connecter</a></p>
+                  </div>
+                </form>
               </div>
-           </div>
+            </div>
+
+          </div>
         </div>
+      </div>
 
 
-     </section>
+    </section>
   </div>
 </main>
