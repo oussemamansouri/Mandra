@@ -36,7 +36,7 @@ export class AuthServiceService {
         let errorMessage = 'An unknown error occurred!';
 
        //  if (err.error.message === 'Bad credentials') {
-        errorMessage = 'The email address or password you entered is invalid';
+        errorMessage = 'L’adresse e-mail ou le mot de passe que vous avez saisi est invalide';
        //  }
         return throwError(() => new Error(errorMessage));
       }),
@@ -65,7 +65,7 @@ export class AuthServiceService {
       this.AuthenticatedUser$.next(userData); // Update BehaviorSubject with authenticated user
     }
 
-    
+
 
     // Method to log out the current user
     logout() {
