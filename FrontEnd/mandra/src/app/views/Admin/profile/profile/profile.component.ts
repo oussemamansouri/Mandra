@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiServiceService } from 'src/app/services/apiService/api-service.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +19,7 @@ export class ProfileComponent {
   errmessagepass:any
   secmessagepass:any
 
-  constructor( private api:ApiServiceService,private route:Router) {}
+  // constructor( private api:ApiServiceService,private route:Router) {}
 
   ngOnInit(): void {
     // this.api.getadmin().subscribe(data=>this.profile=data)
