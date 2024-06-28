@@ -1,6 +1,8 @@
 import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthServiceService } from 'src/app/services/authService/auth-service.service';
 
 @Component({
   selector: 'app-front-layoute',
@@ -12,19 +14,21 @@ export class FrontLayouteComponent {
   isSidebarOpen = false;
   data:any
   imagepath:any='http://localhost:8080/'
+  errmessage!: string;
+  AuthUserSub!: Subscription; // Subscription to the authenticated user observable
 
-
-  constructor(@Inject(DOCUMENT) private document: Document,private route:Router) {}
+  constructor(private router:Router, private authService:AuthServiceService) {}
 
   ngOnInit(): void {
-    // const token = localStorage.getItem('token');
-    // if (token) {
-    //   const decodedToken = this.helper.decodeToken(token);
-    //   if (decodedToken.role === 'client' ) {
-    //     decodedToken.role = 'Apprenant';
-    //   }
-    //   this.data = decodedToken;
-    // }else{this.data=''}
+     // Subscribe to the AuthenticatedUser$ observable to monitor authentication state
+     this.AuthUserSub = this.authService.AuthenticatedUser$.subscribe({
+      next: user => {
+        if (user) {
+          this.data = user;
+          console.log(this.data)
+        }
+      }
+    });
   }
 
   sidebarToggle() {
@@ -32,37 +36,32 @@ export class FrontLayouteComponent {
   }
 
   logout(){
-    localStorage.removeItem('token')
-    this.route.navigate(['/'])
-    this.ngOnInit()
-       }
+  this.authService.logout();
+    this.ngOnInit();
+    this.router.navigate(['/']);
+  }
 
   navigateprofile(){
-    switch(this.data.role) {
-      case 'admin':
-        this.route.navigate(['/admin'])
+    switch(this.data.role.name) {
+      case 'ROLE_Admin':
+        this.router.navigate(['/admin'])
         break;
-      case 'client':
-        this.route.navigate(['/client'])
+      case 'ROLE_Owner':
+        this.router.navigate(['/owner'])
         break;
-        case 'centre':
-          this.route.navigate(['/centre'])
+        case 'ROLE_Client':
+          this.router.navigate(['/client'])
           break;
       default:
-        this.route.navigate(['/login'])
+        this.router.navigate(['/login'])
     }
 
   }
 
-
-
-  scrollTop() {
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
-
+  // Lifecycle hook that is called when the component is destroyed
+  ngOnDestroy() {
+    // Unsubscribe from the AuthenticatedUser$ observable to prevent memory leaks
+    this.AuthUserSub.unsubscribe();
   }
 
 }
