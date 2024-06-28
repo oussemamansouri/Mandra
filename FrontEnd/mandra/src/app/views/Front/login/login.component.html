@@ -1,0 +1,64 @@
+<div class="container">
+  <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+          <div class="d-flex justify-content-center py-4">
+            <a routerLink="/" class="logo d-flex align-items-center w-auto">
+              <img src="../../../../../assets/img/logo.png" alt="">
+            </a>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="pt-4 pb-2">
+                <h5 class="card-title text-center pb-0 fs-4">Se connecter à votre compte</h5>
+                <p class="text-center small">Entrez votre courriel et votre mot de passe pour vous connecter</p>
+              </div>
+              <form class="row g-3 needs-validation" novalidate #formLogin="ngForm" (ngSubmit)="loginuser(formLogin)">
+
+                <div class="col-12">
+                  <label for="yourUsername" class="form-label">Email</label>
+                  <div class="input-group has-validation">
+                    <input type="email" name="email" class="form-control" id="yourUsername" #email="ngModel" ngModel
+                      required
+                      [ngClass]="{'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched}"
+                      pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" placeholder="nom@domaine.com">
+                    <div class="invalid-feedback" *ngIf="email.touched && email.invalid">
+                      <div *ngIf="email.errors?.['required']">Veuillez entrer votre adresse email!</div>
+                      <div *ngIf="email.errors?.['email']">Veuillez entrer une adresse email valide!</div>
+                      <div *ngIf="email.errors?.['pattern']">L'adresse email doit être sous la forme nom@domaine.com!
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <label for="yourPassword" class="form-label">Mot de passe</label>
+                  <input type="password" name="password" class="form-control" #password="ngModel" ngModel required
+                    [ngClass]="{'is-invalid': password.invalid && password.touched}" minlength="8">
+                  <div class="invalid-feedback" *ngIf="password.touched && password.errors">
+                    <div *ngIf="password.errors?.['required']">Veuillez entrer votre mot de passe !</div>
+                    <div *ngIf="password.errors?.['minlength']">Votre mot de passe doit compter au moins 8 caractères !
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <button class="btn btn-primary w-100" type="submit" [disabled]="formLogin.invalid">Connexion</button>
+                </div>
+
+                <div class="col-12">
+                  <div class="alert alert-danger" *ngIf="errmessage">{{errmessage}}</div>
+                </div>
+                <div class="col-12">
+                  <p class="small mb-0">Vous n'avez pas encore de compte? <a routerLink="/signup">Créer un compte</a></p>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

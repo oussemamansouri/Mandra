@@ -38,7 +38,7 @@ public class WebSecurityConfig {
         http
             .authorizeHttpRequests((requests) -> requests
                 // Allows access without authentication to /auth/** and /webjars/** endpoints
-                .requestMatchers(
+                .requestMatchers("admin/**",
                 "/auth/**",
                 "/owners/register",
                 "/clients/register",
