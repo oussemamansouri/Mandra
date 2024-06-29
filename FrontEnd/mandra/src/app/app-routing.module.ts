@@ -11,6 +11,9 @@ const routes: Routes = [
     {path:'',redirectTo:'dashboard',pathMatch:'full'},
     {path:'dashboard',loadChildren:()=> import('./views/Admin/dashboard/dashboard.module').then(m=>m.DashboardModule)},
     {path:'profile',loadChildren:()=> import('./views/Admin/profile/profile.module').then(m=>m.ProfileModule)},
+    {path:'owners/add',loadChildren:()=> import('./views/Admin/add-owner/add-owner.module').then(m=>m.AddOwnerModule)},
+    {path:'owners/active',loadChildren:()=> import('./views/Admin/active-owners/active-owners.module').then(m=>m.ActiveOwnersModule)},
+    {path:'owners/disabled',loadChildren:()=> import('./views/Admin/disabled-owners/disabled-owners.module').then(m=>m.DisabledOwnersModule)},
   ]},
 
   {path:'client',component:ClientLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Client']},children:[
