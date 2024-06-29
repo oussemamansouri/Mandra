@@ -27,8 +27,12 @@
   text-align: center;
   width: 100%;
   padding: 20px;
-  
+
 }
 /* /////// */
 
+.rounded-image{
+  border-radius: 50%;
+  border: 2px solid white;
+}
 

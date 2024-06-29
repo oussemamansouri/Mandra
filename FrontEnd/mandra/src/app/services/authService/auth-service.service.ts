@@ -21,8 +21,8 @@ export class AuthServiceService {
   ) { }
 
 
-   // Method to log in a user with email and password
-   login(email: string, password: string) {
+  // Method to log in a user with email and password
+  login(email: string, password: string) {
     let httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json', // Set content type to JSON
@@ -31,13 +31,10 @@ export class AuthServiceService {
       withCredentials: true // Include credentials (cookies) in the request
     };
 
-    return this.http.post<AuthResponseData>(this.baseURL + 'auth/signin', null, httpOptions).pipe(
+    return this.http.post<AuthResponseData>(this.baseURL + '/auth/signin', null, httpOptions).pipe(
       catchError(err => {
         let errorMessage = 'An unknown error occurred!';
-
-       //  if (err.error.message === 'Bad credentials') {
         errorMessage = 'L’adresse e-mail ou le mot de passe que vous avez saisi est invalide';
-       //  }
         return throwError(() => new Error(errorMessage));
       }),
       tap(user => {
@@ -52,9 +49,8 @@ export class AuthServiceService {
         this.storageService.saveUser(extractedUser); // Save user to local storage
         this.AuthenticatedUser$.next(extractedUser); // Update BehaviorSubject with authenticated user
       })
-    );
+    ).toPromise(); // Convert Observable to Promise to ensure completion before returning
   }
-
 
     // Method to automatically log in a user if they are already authenticated
     autoLogin() {
@@ -69,7 +65,7 @@ export class AuthServiceService {
 
     // Method to log out the current user
     logout() {
-      this.http.request('post', this.baseURL + 'auth/signout', {
+      this.http.request('post', this.baseURL + '/auth/signout', {
         withCredentials: true // Include credentials (cookies) in the request
       }).subscribe({
         next: () => {

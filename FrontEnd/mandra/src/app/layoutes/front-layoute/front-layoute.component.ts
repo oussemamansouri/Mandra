@@ -2,6 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AdminService } from 'src/app/services/apiServices/AdminService/admin.service';
+import { ClientService } from 'src/app/services/apiServices/ClientService/client.service';
+import { OwnerService } from 'src/app/services/apiServices/OwnerService/owner.service';
 import { AuthServiceService } from 'src/app/services/authService/auth-service.service';
 
 @Component({
@@ -12,22 +15,42 @@ import { AuthServiceService } from 'src/app/services/authService/auth-service.se
 export class FrontLayouteComponent {
 
   isSidebarOpen = false;
-  data:any
-  imagepath:any='http://localhost:8080/'
+  user: any = null
+  baseURL!: string
   errmessage!: string;
   AuthUserSub!: Subscription; // Subscription to the authenticated user observable
 
-  constructor(private router:Router, private authService:AuthServiceService) {}
+  constructor(private router: Router, private authService: AuthServiceService,
+    private adminService: AdminService, private clientService: ClientService,
+    private ownerService: OwnerService, @Inject('BaseURL') private BaseURL: string) { }
 
   ngOnInit(): void {
-     // Subscribe to the AuthenticatedUser$ observable to monitor authentication state
-     this.AuthUserSub = this.authService.AuthenticatedUser$.subscribe({
-      next: user => {
-        if (user) {
-          this.data = user;
-          console.log(this.data)
+    // Subscribe to the AuthenticatedUser$ observable to monitor authentication state
+    this.AuthUserSub = this.authService.AuthenticatedUser$.subscribe({
+      next: data => {
+        this.baseURL = this.BaseURL
+        if(data){
+        switch (data?.role.name) {
+          case 'ROLE_Admin':
+            this.adminService.getAdmin(data.id).subscribe(
+              info => this.user = info
+            )
+            break;
+          case 'ROLE_Owner':
+            this.ownerService.getOwnerById(data.id).subscribe(
+              info => this.user = info
+            )
+            break;
+          case 'ROLE_Client':
+            this.clientService.getClientById(data.id).subscribe(
+              info => this.user = info
+            )
+            break;
+          default:
+            this.router.navigate(['/signin'])
         }
       }
+    }
     });
   }
 
@@ -35,25 +58,25 @@ export class FrontLayouteComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
-  logout(){
-  this.authService.logout();
-    this.ngOnInit();
-    this.router.navigate(['/']);
+  logout() {
+    this.authService.logout();
+    this.AuthUserSub.unsubscribe();
+    this.user = null
   }
 
-  navigateprofile(){
-    switch(this.data.role.name) {
-      case 'ROLE_Admin':
+  navigateprofile() {
+    switch (this.user.role) {
+      case 'Admin':
         this.router.navigate(['/admin'])
         break;
-      case 'ROLE_Owner':
+      case 'Owner':
         this.router.navigate(['/owner'])
         break;
-        case 'ROLE_Client':
-          this.router.navigate(['/client'])
-          break;
+      case 'Client':
+        this.router.navigate(['/client'])
+        break;
       default:
-        this.router.navigate(['/login'])
+        this.router.navigate(['/signin'])
     }
 
   }

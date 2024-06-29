@@ -17,9 +17,14 @@ export class ClientService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    registerClient(client: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + "clients/register", client, this.httpOptions)
-    .pipe(catchError(this.processHTTPMsgService.handleError));
+  registerClient(client: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl + "/clients/register", client, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getClientById(clientId: number): Observable<any> {
+    return this.http.get<any>(this.baseUrl + `/clients/${clientId}`, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
 }

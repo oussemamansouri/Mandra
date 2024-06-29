@@ -18,8 +18,16 @@ export class OwnerService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    registerOwner(owner: any): Observable<any> {
-    return this.http.post<any>(this.baseUrl + "owners/register", owner, this.httpOptions)
-    .pipe(catchError(this.processHTTPMsgService.handleError));
+  registerOwner(owner: any): Observable<any> {
+    return this.http.post<any>(this.baseUrl + "/owners/register", owner, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
   }
+
+
+  getOwnerById(ownerId: number): Observable<any> {
+    return this.http.get<any>(this.baseUrl + `/owners/${ownerId}`, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
 }
