@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AddOwnerRoutingModule } from './add-owner-routing.module';
 import { AddOwnerComponent } from './add-owner/add-owner.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { AddOwnerComponent } from './add-owner/add-owner.component';
   ],
   imports: [
     CommonModule,
-    AddOwnerRoutingModule
+    AddOwnerRoutingModule,
+    FormsModule
   ]
 })
 export class AddOwnerModule { }
