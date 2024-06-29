@@ -31,7 +31,7 @@ export class AuthServiceService {
       withCredentials: true // Include credentials (cookies) in the request
     };
 
-    return this.http.post<AuthResponseData>(this.baseURL + 'auth/signin', null, httpOptions).pipe(
+    return this.http.post<AuthResponseData>(this.baseURL + '/auth/signin', null, httpOptions).pipe(
       catchError(err => {
         let errorMessage = 'An unknown error occurred!';
         errorMessage = 'L’adresse e-mail ou le mot de passe que vous avez saisi est invalide';
@@ -65,7 +65,7 @@ export class AuthServiceService {
 
     // Method to log out the current user
     logout() {
-      this.http.request('post', this.baseURL + 'auth/signout', {
+      this.http.request('post', this.baseURL + '/auth/signout', {
         withCredentials: true // Include credentials (cookies) in the request
       }).subscribe({
         next: () => {
