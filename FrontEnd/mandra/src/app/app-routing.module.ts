@@ -15,6 +15,9 @@ const routes: Routes = [
     {path:'owners/active',loadChildren:()=> import('./views/Admin/active-owners/active-owners.module').then(m=>m.ActiveOwnersModule)},
     {path:'owners/disabled',loadChildren:()=> import('./views/Admin/disabled-owners/disabled-owners.module').then(m=>m.DisabledOwnersModule)},
     {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
+    {path:'restaurants',loadChildren:()=> import('./views/Admin/restaurants/restaurants.module').then(m=>m.RestaurantsModule)},
+    {path:'guast-house',loadChildren:()=> import('./views/Admin/guast-house/guast-house.module').then(m=>m.GuastHouseModule)},
+
 
   ]},
 
