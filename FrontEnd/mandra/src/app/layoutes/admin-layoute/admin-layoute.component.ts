@@ -54,7 +54,9 @@ export class AdminLayouteComponent implements OnInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
+  // Lifecycle hook that is called when the component is destroyed
   ngOnDestroy() {
+    // Unsubscribe from the AuthenticatedUser$ observable to prevent memory leaks
     this.AuthUserSub.unsubscribe();
   }
 }

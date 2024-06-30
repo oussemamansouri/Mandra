@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +63,7 @@ public class OwnerController {
     // ----------------------------------      get Owners endpoint     -----------------------------------
 
  @GetMapping("")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<Object> getOwners(@PageableDefault(size = 10) Pageable pageable) {
         try{
        Page<Owner> ownerPage = ownerService.getOwners(pageable);
@@ -81,6 +83,7 @@ public class OwnerController {
      // ----------------------------------      get Owner By Id endpoint     -----------------------------------
 
  @GetMapping("/{id}")
+ @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('READ_PRIVILEGE')")
  public ResponseEntity<Object> getOwnerById( @PathVariable(value = "id") Long id  ) {
     try{
     Owner owner= ownerService.getOwnerById(id);
@@ -134,6 +137,7 @@ public class OwnerController {
    // ----------------------------------      update Owner endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit")
+@PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateOwner(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdateUserForm ownerForm,
     BindingResult result) {
     try{
@@ -157,6 +161,7 @@ public class OwnerController {
  // ----------------------------------      upload owner image endpoint     -----------------------------------
 
  @PutMapping("/{id}/edit-image")
+ @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
  public ResponseEntity<Object> updateOwnerImage(@PathVariable(value = "id") Long id, 
                                                  @RequestParam("image") MultipartFile image) {
      try {
@@ -175,6 +180,7 @@ public class OwnerController {
  // ----------------------------------      update Owner Password endpoint     -----------------------------------
 
 @PutMapping("/{id}/edit-password")
+@PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateOwnerPasswoed(@PathVariable(value = "id") Long id,@Valid @RequestBody UpdatePasswordForm form,
     BindingResult result) {
     try{
@@ -198,6 +204,7 @@ public class OwnerController {
 // ----------------------------------      delete Owner endpoint     -----------------------------------
 
  @DeleteMapping("/{id}/delete")
+ @PreAuthorize("hasAnyRole('Admin') and hasAuthority('DELETE_PRIVILEGE')")
  public ResponseEntity<Object> deleteOwner(@PathVariable Long id) {
      try {
          String resMessage = ownerService.deleteOwner(id);
@@ -216,6 +223,7 @@ public class OwnerController {
     // ---------------------------------- get Active Owners endpoint -----------------------------------
 
      @GetMapping("/active")
+     @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
      public ResponseEntity<Object> getActiveOwners(@PageableDefault(size = 10) Pageable pageable) {
         try{
         Page<Owner> ownerPage = ownerService.getActiveOwners(pageable);
@@ -233,6 +241,7 @@ public class OwnerController {
     // ---------------------------------- get Disabled Owners endpoint -----------------------------------
 
     @GetMapping("/disabled")
+    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('READ_PRIVILEGE')")
     public ResponseEntity<Object> getDisabledOwners(@PageableDefault(size = 10) Pageable pageable) {
         try{
        Page<Owner> ownerPage = ownerService.getDisabledOwners(pageable);
@@ -250,6 +259,7 @@ public class OwnerController {
     // ---------------------------------- change Owner Account State endpoint -----------------------------------
 
     @PutMapping("/{ownerId}/change-account-state")
+    // @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "ownerId") Long ownerId ) {
     try{
     Owner updatedOwner = ownerService.changeOwnerAccountState(ownerId);

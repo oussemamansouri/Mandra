@@ -30,4 +30,49 @@ export class OwnerService {
   }
 
 
+  updateOwnerCin(ownerId: number, image:FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-cin-image`,image, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateOwnerProof(ownerId: number, pdf:FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-proof`,pdf, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getDisabledOwners(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/owners/disabled?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  getActiveOwners(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/owners/active?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  changeOwnerStatus(ownerId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/change-account-state`, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  deleteOwner(ownerId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/owners/${ownerId}/delete`, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateOwnerImage(ownerId: number, formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/edit-image`, formData, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  updateOwner(ownerId: number, body: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/edit`, body,this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
 }

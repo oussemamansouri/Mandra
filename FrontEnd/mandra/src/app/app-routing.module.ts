@@ -11,6 +11,13 @@ const routes: Routes = [
     {path:'',redirectTo:'dashboard',pathMatch:'full'},
     {path:'dashboard',loadChildren:()=> import('./views/Admin/dashboard/dashboard.module').then(m=>m.DashboardModule)},
     {path:'profile',loadChildren:()=> import('./views/Admin/profile/profile.module').then(m=>m.ProfileModule)},
+    {path:'owners/add',loadChildren:()=> import('./views/Admin/add-owner/add-owner.module').then(m=>m.AddOwnerModule)},
+    {path:'owners/active',loadChildren:()=> import('./views/Admin/active-owners/active-owners.module').then(m=>m.ActiveOwnersModule)},
+    {path:'owners/disabled',loadChildren:()=> import('./views/Admin/disabled-owners/disabled-owners.module').then(m=>m.DisabledOwnersModule)},
+    {path:'owners/details',loadChildren:()=> import('./views/Admin/owner-details/owner-details.module').then(m=>m.OwnerDetailsModule)},
+    {path:'owners/update',loadChildren:()=> import('./views/Admin/update-owner/update-owner.module').then(m=>m.UpdateOwnerModule)},
+    {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
+
   ]},
 
   {path:'client',component:ClientLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Client']},children:[
