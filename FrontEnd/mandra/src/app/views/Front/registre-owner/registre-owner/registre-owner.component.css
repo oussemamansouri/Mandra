@@ -1,0 +1,104 @@
+/* Modal backdrop */
+.custom-modal {
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+}
+
+/* Show modal */
+.custom-modal.show {
+  display: flex;
+}
+
+/* Modal dialog */
+.custom-modal-dialog {
+  position: relative;
+  width: 90%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Modal content */
+.custom-modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Modal header */
+.custom-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  border-top-left-radius: 0.3rem;
+  border-top-right-radius: 0.3rem;
+}
+
+/* Modal title */
+.custom-modal-title {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 1.25rem;
+}
+
+/* Close button */
+.custom-modal-close {
+  padding: 0.5rem 1rem;
+  margin: -0.5rem -0.5rem -0.5rem auto;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+}
+
+/* Modal body */
+.custom-modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+
+/* Modal footer */
+.custom-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  border-bottom-right-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+}
+
+/* Button styles */
+.custom-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+}
+
+.custom-btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.custom-btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+

@@ -9,7 +9,7 @@
             <div class="card mb-3">
               <div class="card-body">
                 <div class="pt-4 pb-2">
-                  <h5 class="card-title text-center pb-0 fs-4">Créer un compte centre de formation</h5>
+                  <h5 class="card-title text-center pb-0 fs-4">Créer un compte propriétaire</h5>
                   <p class="text-center small">Entrez vos données personnelles pour créer un compte</p>
                 </div>
                 <form class="row g-3 needs-validation" #f="ngForm" (ngSubmit)="registre(f)">
@@ -140,10 +140,10 @@
 
 
                   <div class="col-12">
-                    <button [disabled]="f.invalid" class="btn btn-primary w-100" type="submit">Créer un compte</button>
+                    <button [disabled]="f.invalid" class="btn btn-primary w-100" type="submit">Suivants</button>
                   </div>
                   <div class="col-12">
-                    <div class="alert alert-danger" *ngIf="errormessage">{{errormessage}}</div>
+                    <div class="alert alert-danger" *ngIf="errmessage">{{errmessage}}</div>
                   </div>
                   <div class="col-12">
 
@@ -157,7 +157,58 @@
         </div>
       </div>
 
+        <!-- upload cin image Modal start here -->
+<div class="custom-modal" [class.show]="showModal" id="uploadCinImage">
+  <div class="custom-modal-dialog">
+    <div class="custom-modal-content">
+      <div class="custom-modal-header">
+        <h2 class="custom-modal-title" id="staticBackdropLabel">Télécharger votre image de cin</h2>
+      </div>
+      <div class="custom-modal-body">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Choisir un image</label>
+          <input class="form-control"  (change)="selectImage($event)" type="file" id="formFile">
+          <br>
+            <div *ngIf="uploadCinImageErrur" class="alert alert-danger" role="alert">
+             {{uploadCinImageErrur}}
+            </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer" *ngIf="file">
+        <button type="button" class="custom-btn custom-btn-primary" (click)="updateCinImage()">Suivant</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- upload cin image Modal end here -->
+
+
+<!-- upload proof file Modal start here -->
+<div class="custom-modal" [class.show]="showPoofModal" id="uploadProofFile">
+  <div class="custom-modal-dialog">
+    <div class="custom-modal-content">
+      <div class="custom-modal-header">
+        <h2 class="custom-modal-title" id="staticBackdropLabel">Télécharger votre preuve</h2>
+      </div>
+      <div class="custom-modal-body">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Choisir un PDF contient tous les documents nécessaires</label>
+          <input class="form-control"  (change)="selectPDF($event)" type="file" id="formFile">
+          <br>
+            <div *ngIf="uploadProofErrur" class="alert alert-danger" role="alert">
+             {{uploadProofErrur}}
+            </div>
+        </div>
+      </div>
+      <div class="custom-modal-footer" *ngIf="file">
+        <button type="button" class="custom-btn custom-btn-primary" (click)="updateProof()">Registre</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- upload cin image Modal end here -->
 
     </section>
   </div>
+
 </main>
