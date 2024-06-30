@@ -36,7 +36,7 @@ export class AddOwnerComponent {
       },
       (err: HttpErrorResponse) => {
         this.errmessage = "Ce email est déjà utilisé!";
-        this.showModal = true;
+        this.showModal = false;
       }
     );
   }
@@ -76,17 +76,17 @@ export class AddOwnerComponent {
     const formData = new FormData();
     formData.append('cinImage', this.file);
 
-    this.ownerService.updateOwnerCin(this.newOwnerId, formData).subscribe(
-      res => {
+    this.ownerService.updateOwnerCin(this.newOwnerId, formData).subscribe({
+      next:res => {
         this.showModal = false;
         this.uploadCinImageErrur = "";
         this.file = null;
         this.showPoofModal = true;
       },
-      (err: HttpErrorResponse) => {
+      error:(err: HttpErrorResponse) => {
         this.uploadCinImageErrur = "Échec du chargement!";
       }
-    );
+  });
   }
 
 
