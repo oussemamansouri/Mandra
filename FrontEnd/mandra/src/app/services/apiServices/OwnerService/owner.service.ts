@@ -13,10 +13,6 @@ export class OwnerService {
     withCredentials: true
   };
 
-  simpleHttpOptions = {
-    withCredentials: true
-  };
-
 
   constructor(private http: HttpClient, @Inject('BaseURL') private baseUrl: string,
     private processHTTPMsgService: ProcessHttpmsgService) { }
@@ -35,12 +31,12 @@ export class OwnerService {
 
 
   updateOwnerCin(ownerId: number, image:FormData): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-cin-image`,image, this.simpleHttpOptions)
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-cin-image`,image, {  withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   updateOwnerProof(ownerId: number, pdf:FormData): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-proof`,pdf, this.simpleHttpOptions)
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-proof`,pdf, {  withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
@@ -58,6 +54,11 @@ export class OwnerService {
 
   deleteOwner(ownerId: number): Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}/owners/${ownerId}/delete`, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateOwnerImage(ownerId: number, formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/edit-image`, formData, {  withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
