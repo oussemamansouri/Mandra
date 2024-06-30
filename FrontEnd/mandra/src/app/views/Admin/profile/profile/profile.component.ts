@@ -61,7 +61,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       formData.append('image', file);
       this.adminService.updateAdminImage(this.profile.id, formData).subscribe(
         res => {
-          this.ngOnInit();
+          this.router.navigate(['/admin'])
         },
         err => console.error('Error updating image', err)
       );
