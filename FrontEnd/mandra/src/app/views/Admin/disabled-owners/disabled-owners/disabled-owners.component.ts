@@ -1,7 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { OwnerService } from 'src/app/services/apiServices/OwnerService/owner.service';
 
 
@@ -10,7 +9,7 @@ import { OwnerService } from 'src/app/services/apiServices/OwnerService/owner.se
   templateUrl: './disabled-owners.component.html',
   styleUrls: ['./disabled-owners.component.css']
 })
-export class DisabledOwnersComponent implements OnInit, OnDestroy{
+export class DisabledOwnersComponent implements OnInit{
   searchTerm: any;
   baseURL!: string;
   owners: any[] = []; // Initialize as an empty array
@@ -18,33 +17,32 @@ export class DisabledOwnersComponent implements OnInit, OnDestroy{
   page: number = 0;
   size: number = 10;
   totalPages: number = 0; // Initialize as 0
-  subscriptions: Subscription = new Subscription();
 
   constructor(@Inject("BaseURL") private BaseURL: string, private ownerService: OwnerService,
+  private changeDetectorRef: ChangeDetectorRef,
    private router: Router) {
     this.baseURL = BaseURL;
   }
 
-  ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-  }
+
 
 
   ngOnInit(): void {
     this.loadOwners();
+    //  this.changeDetectorRef.detectChanges();
   }
 
   loadOwners(): void {
-    const loadOwnersSub = this.ownerService.getDisabledOwners(this.page, this.size).subscribe(
-      info => {
+    this.ownerService.getDisabledOwners(this.page, this.size).subscribe({
+      next: (info:any) => {
         this.owners = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.changeDetectorRef.detectChanges();
       },
-      (err: HttpErrorResponse) => {
+      error:(err: HttpErrorResponse) => {
         console.error('Error loading owners:', err.message);
       }
-    );
-    this.subscriptions.add(loadOwnersSub);
+  });
   }
 
 
@@ -62,15 +60,16 @@ export class DisabledOwnersComponent implements OnInit, OnDestroy{
 
   deleteOwner(): void {
     if (this.ownerid) {
-      this.ownerService.deleteOwner(this.ownerid).subscribe(
-        (res) => {
+      this.ownerService.deleteOwner(this.ownerid).subscribe({
+        next:(res:any) => {
           console.log('Owner deleted successfully');
           this.loadOwners();
+          // this.changeDetectorRef.detectChanges();
         },
-        (err: HttpErrorResponse) => {
+        error:(err: HttpErrorResponse) => {
           console.error('Error while deleting owner:', err.message);
         }
-      );
+    });
     } else {
       console.error('No owner ID provided for deletion');
     }
@@ -79,13 +78,14 @@ export class DisabledOwnersComponent implements OnInit, OnDestroy{
 
 
   changeToActive(id: number) {
-    this.ownerService.changeOwnerStatus(id).subscribe(
-      res =>{
-        this.loadOwners();
+    this.ownerService.changeOwnerStatus(id).subscribe({
+      next:() =>{
+        // this.loadOwners();
+        console.log("Error while changing owner account state")
       },
-      (err:HttpErrorResponse) =>
-        console.log("Error while changing owner account state"+ err.message)
-    )
+      error:(err:HttpErrorResponse) =>
+        console.log("Error while changing owner account state")
+  })
   }
 
   sendId(id: any) {
