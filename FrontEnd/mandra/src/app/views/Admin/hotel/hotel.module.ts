@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AddOwnerRoutingModule } from './add-owner-routing.module';
-import { AddOwnerComponent } from './add-owner/add-owner.component';
+import { HotelRoutingModule } from './hotel-routing.module';
+import { HotelComponent } from './hotel/hotel.component';
 import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    AddOwnerComponent
+    HotelComponent
   ],
   imports: [
     CommonModule,
-    AddOwnerRoutingModule,
+    HotelRoutingModule,
     FormsModule
   ]
 })
-export class AddOwnerModule { }
+export class HotelModule { }

@@ -13,6 +13,10 @@ export class OwnerService {
     withCredentials: true
   };
 
+  simpleHttpOptions = {
+    withCredentials: true
+  };
+
 
   constructor(private http: HttpClient, @Inject('BaseURL') private baseUrl: string,
     private processHTTPMsgService: ProcessHttpmsgService) { }
@@ -29,5 +33,32 @@ export class OwnerService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
+
+  updateOwnerCin(ownerId: number, image:FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-cin-image`,image, this.simpleHttpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateOwnerProof(ownerId: number, pdf:FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/upload-proof`,pdf, this.simpleHttpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  getDisabledOwners(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/owners/disabled?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  changeOwnerStatus(ownerId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/change-account-state`, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  deleteOwner(ownerId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/owners/${ownerId}/delete`, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
 
 }

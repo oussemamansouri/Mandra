@@ -25,6 +25,7 @@ export class FrontLayouteComponent {
     private ownerService: OwnerService, @Inject('BaseURL') private BaseURL: string) { }
 
   ngOnInit(): void {
+    this.authService.autoLogin()
     // Subscribe to the AuthenticatedUser$ observable to monitor authentication state
     this.AuthUserSub = this.authService.AuthenticatedUser$.subscribe({
       next: data => {

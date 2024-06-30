@@ -319,7 +319,7 @@ public class OwnerServiceImp implements OwnerService {
             return ownerRepository.save(owner);
         } catch (Exception e) {
             LOGGER.error("Error while changing owner account state", e);
-            throw new RuntimeException("Error while hanging owner account state: " + e.getMessage(), e);
+            throw new RuntimeException("Error while changing owner account state: " + e.getMessage(), e);
         }
     }
 
