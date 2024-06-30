@@ -52,12 +52,12 @@ export class OwnerService {
 
 
   changeOwnerStatus(ownerId: number): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/change-account-state`, this.httpOptions)
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/change-account-state`, {  withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
   deleteOwner(ownerId: number): Observable<any> {
-    return this.http.delete<any>(`${this.baseUrl}/owners/${ownerId}/delete`, this.httpOptions)
+    return this.http.delete<any>(`${this.baseUrl}/owners/${ownerId}/delete`, {  withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
