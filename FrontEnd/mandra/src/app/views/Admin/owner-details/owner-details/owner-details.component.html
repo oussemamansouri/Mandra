@@ -36,13 +36,13 @@
       <div class="card">
         <div class="card-body pt-3">
           <ul class="nav nav-tabs nav-tabs-bordered">
-            <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab"
+            <li class="nav-item"> <button class="nav-link active" style="color: black;" data-bs-toggle="tab"
                 data-bs-target="#profile-overview">Aperçu</button></li>
-            <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+            <li class="nav-item"> <button class="nav-link" style="color: black;" data-bs-toggle="tab"
                 data-bs-target="#profile-hôtels">hôtels</button></li>
-            <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+            <li class="nav-item"> <button class="nav-link" style="color: black;" data-bs-toggle="tab"
                 data-bs-target="#profile-Restaurants">Restaurants</button></li>
-            <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+            <li class="nav-item"> <button class="nav-link" style="color: black;" data-bs-toggle="tab"
                 data-bs-target="#profile-hôtes">Maisons d'hôtes</button></li>
           </ul>
 
@@ -67,7 +67,7 @@
               </div>
 
               <div class="row">
-                <div class="col-lg-3 col-md-4 label"> Afficher le CV</div>
+                <div class="col-lg-3 col-md-4 label"> Afficher le CIN</div>
                 <div class="col-lg-9 col-md-8"> <button  style="border-color:white ; padding: 0;"
                     class="btn btn-outline-light btn-lg "> <a style="color: black; padding: 15px;" href={{imagepath}}{{owner.cinImage}}
                       target="_blank"><i class="bi bi-credit-card-2-front-fill " ></i></a></button></div>
@@ -85,7 +85,7 @@
                     class="btn btn-primary">Modifier</button></div>
                     <div *ngIf="owner.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button
                       class="btn btn-warning " (click)="changeAccountStauts()" >Désactiver le compte</button></div>
-                      <div  *ngIf="owner.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button 
+                      <div  *ngIf="owner.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button
                         class="btn btn-primary" (click)="changeAccountStauts()">Activer le compte</button></div>
                 <div class="col-lg-3 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
                     class="btn btn-danger">Supprimer</button></div>
