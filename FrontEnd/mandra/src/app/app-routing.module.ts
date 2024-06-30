@@ -15,6 +15,7 @@ const routes: Routes = [
     {path:'owners/active',loadChildren:()=> import('./views/Admin/active-owners/active-owners.module').then(m=>m.ActiveOwnersModule)},
     {path:'owners/disabled',loadChildren:()=> import('./views/Admin/disabled-owners/disabled-owners.module').then(m=>m.DisabledOwnersModule)},
     {path:'owners/details',loadChildren:()=> import('./views/Admin/owner-details/owner-details.module').then(m=>m.OwnerDetailsModule)},
+    {path:'owners/update',loadChildren:()=> import('./views/Admin/update-owner/update-owner.module').then(m=>m.UpdateOwnerModule)},
     {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
 
   ]},
