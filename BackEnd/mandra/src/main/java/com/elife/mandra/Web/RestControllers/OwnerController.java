@@ -259,7 +259,7 @@ public class OwnerController {
     // ---------------------------------- change Owner Account State endpoint -----------------------------------
 
     @PutMapping("/{ownerId}/change-account-state")
-    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
+    // @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "ownerId") Long ownerId ) {
     try{
     Owner updatedOwner = ownerService.changeOwnerAccountState(ownerId);
