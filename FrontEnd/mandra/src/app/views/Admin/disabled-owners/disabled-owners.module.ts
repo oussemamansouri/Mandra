@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DisabledOwnersRoutingModule } from './disabled-owners-routing.module';
 import { DisabledOwnersComponent } from './disabled-owners/disabled-owners.component';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     DisabledOwnersRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ]
 })
 export class DisabledOwnersModule { }
