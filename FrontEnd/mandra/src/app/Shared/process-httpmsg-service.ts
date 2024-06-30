@@ -9,14 +9,27 @@ export class ProcessHttpmsgService {
 
   constructor() { }
 
-  public handleError(error:HttpErrorResponse|any){
-    let errMsg:string;
-    //(Client side error)
-    if(error.error instanceof ErrorEvent){
-      errMsg=error.error.message
-    }else{ //Server side error
-      errMsg=`Json server Error: An error has occured. please try again later-${error.message || ''}`
+  public handleError(error: HttpErrorResponse | any) {
+    let errMsg: string;
+
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errMsg = `Client-side error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      const serverError = error.error as ErrorResponse;
+      const errorMessage = serverError.message || 'An error occurred, please try again later.';
+      const errorDetails = serverError.details || '';
+
+      errMsg = `Server-side error: ${error.status} ${error.statusText || ''} - ${errorMessage} ${errorDetails}`;
     }
-    return throwError(()=>errMsg)
+
+    return throwError(() => new Error(errMsg));
   }
+}
+
+// Define the ErrorResponse interface for TypeScript
+interface ErrorResponse {
+  message: string;
+  details: string;
 }
