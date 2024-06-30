@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                 "/clients/register",
                 "/contacts/add",
                 "/owners/register","/owners/{id}/upload-proof", "/owners/{id}/upload-cin-image",
+                "/owners/{ownerId}/change-account-state",
                 "/specialtywomens/*","/specialtywomens/{specialtyWomenId}",
                 "/gastronomicspecialties/*","/gastronomicspecialties/{gastronomicspecialtieId}",
                 "/guesthouses/*","/guesthouses/{guesthouseId}",
