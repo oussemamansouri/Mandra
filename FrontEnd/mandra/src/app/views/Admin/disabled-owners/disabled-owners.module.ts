@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { DisabledOwnersRoutingModule } from './disabled-owners-routing.module';
 import { DisabledOwnersComponent } from './disabled-owners/disabled-owners.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { DisabledOwnersComponent } from './disabled-owners/disabled-owners.compo
   ],
   imports: [
     CommonModule,
-    DisabledOwnersRoutingModule
+    DisabledOwnersRoutingModule,
+    FormsModule
   ]
 })
 export class DisabledOwnersModule { }
