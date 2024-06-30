@@ -101,7 +101,6 @@ public class OwnerController {
  // ----------------------------------      upload owner cin image endpoint     -----------------------------------
 
    @PutMapping("/{id}/upload-cin-image")
-   @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> updateOwnerCinImage(@PathVariable(value = "id") Long id, 
                                                     @RequestParam("cinImage") MultipartFile image) {
         try {
@@ -120,7 +119,6 @@ public class OwnerController {
      // ----------------------------------      upload owner proof file endpoint     -----------------------------------
 
    @PutMapping("/{id}/upload-proof")
-   @PreAuthorize("hasAnyRole('Admin','Owner') and hasAuthority('UPDATE_PRIVILEGE')")
    public ResponseEntity<Object> updateOwnerProof(@PathVariable(value = "id") Long id, 
                                                    @RequestParam("proof") MultipartFile file) {
        try {
