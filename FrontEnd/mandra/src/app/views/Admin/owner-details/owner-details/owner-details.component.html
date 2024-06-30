@@ -1,1 +1,440 @@
-<p>owner-details works!</p>
+<div class="pagetitle">
+  <h1>Profil Propriétaire</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
+      <li class="breadcrumb-item"><a>Propriétaires</a></li>
+      <li class="breadcrumb-item"><a routerLink="/admin/owners">Consulet la liste</a></li>
+      <li class="breadcrumb-item active">Profil</li>
+    </ol>
+  </nav>
+</div>
+<section class="section profile">
+  <div class="row">
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+          <div class="zoom">
+            <label for="image" class="upload-image">
+              <img *ngIf="owner.image" src="{{imagepath}}{{owner.image}}" alt="Profile" class="rounded-circle">
+              <img *ngIf="!owner.image" src="../../../../../assets/img/default-image.jpg" alt="Profile" class="rounded-circle">
+              <span class="fa-stack fa-lg upload-icon">
+                <i class="fas fa-circle fa-stack-2x"></i>
+                <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"></i>
+              </span>
+
+            </label>
+          </div>
+          <h2>{{owner.firstname | titlecase}}</h2>
+          <h3>Propriétaire </h3>
+          <input type="file" id="image" class="visually-hidden" required accept="public/images/*"
+            (change)="updateimage($event)">
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-body pt-3">
+          <ul class="nav nav-tabs nav-tabs-bordered">
+            <li class="nav-item"> <button class="nav-link active" data-bs-toggle="tab"
+                data-bs-target="#profile-overview">Aperçu</button></li>
+            <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                data-bs-target="#profile-hôtels">hôtels</button></li>
+            <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                data-bs-target="#profile-Restaurants">Restaurants</button></li>
+            <li class="nav-item"> <button class="nav-link" data-bs-toggle="tab"
+                data-bs-target="#profile-hôtes">Maisons d'hôtes</button></li>
+          </ul>
+
+          <div class="tab-content pt-2">
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+              <h5 class="card-title">Détails</h5>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Nom</div>
+                <div class="col-lg-9 col-md-8">{{owner.firstname | titlecase}}</div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Prenom</div>
+                <div class="col-lg-9 col-md-8">{{owner.lastname | titlecase}}</div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Téléphone</div>
+                <div class="col-lg-9 col-md-8">{{owner.phoneNumber }}</div>
+              </div>
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">{{owner.email}}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label"> Afficher le CV</div>
+                <div class="col-lg-9 col-md-8"> <button  style="border-color:white ;"
+                    class="btn btn-outline-light btn-lg "> <a style="color: black;" href={{imagepath}}{{owner.cinImage}}
+                      target="_blank"><i class="bi bi-credit-card-2-front-fill "></i></a></button></div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label"> Afficher le preuve</div>
+                <div class="col-lg-9 col-md-8"> <button style="border-color:white ;"
+                    class="btn btn-outline-light btn-lg "> <a style="color: black;" href={{imagepath}}{{owner.proof}}
+                      target="_blank"><i class="bi bi-credit-card-2-front-fill "></i></a></button></div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-2 col-md-4 label"><button (click)="sendidclient()"
+                    class="btn btn-primary">Modifier</button></div>
+                <div class="col-lg-7 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
+                    class="btn btn-danger">Supprimer</button></div>
+              </div>
+            </div>
+
+
+            <div class="tab-pane fade pt-3" id="profile-hôtels">
+              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="participation==0">
+                Ce client ne participe à aucune formation
+              </div>
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col" *ngFor="let item of participation">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3"
+                    class="btn btn-outline-light" (click)="getformationid(item.Formation.id)">
+                    <div class="card h-100">
+                      <div class="zoomcard">
+                        <img src="{{imagepath}}{{item.Formation.img}}" class="card-img-top" alt="..."
+                          style="height: 200px; width: 200px; object-fit: cover;">
+
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">{{item.Formation.titre}}</h5>
+                        <!-- <p class="card-text"  style="color: black;">{{item.Formation.discription}}</p> -->
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="tab-pane fade pt-3" id="profile-Restaurants">
+              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="achat==0">
+                Ce client n’a pas d’ebooks
+              </div>
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col" *ngFor="let item of achat">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    class="btn btn-outline-light" (click)="getbookId(item.Ebook.id)">
+                    <div class="card h-100">
+                      <div class="zoomcard">
+                        <img src="{{imagepath}}{{item.Ebook.img}}" class="card-img-top" alt="..."
+                          style="height: 200px; width: 200px; object-fit: cover;">
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">{{item.Ebook.titre}}</h5>
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="tab-pane fade pt-3" id="profile-hôtes">
+              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="achat==0">
+                Ce client n’a pas d’ebooks
+              </div>
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col" *ngFor="let item of achat">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    class="btn btn-outline-light" (click)="getbookId(item.Ebook.id)">
+                    <div class="card h-100">
+                      <div class="zoomcard">
+                        <img src="{{imagepath}}{{item.Ebook.img}}" class="card-img-top" alt="..."
+                          style="height: 200px; width: 200px; object-fit: cover;">
+
+                      </div>
+                      <div class="card-body">
+                        <h5 class="card-title">{{item.Ebook.titre}}</h5>
+                        <!-- <p class="card-text"  style="color: black;"> {{item.Ebook.discription}}</p> -->
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Warning</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer ce apprenant ? <br>
+          il supprimera également toutes les données qui y sont liées !!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+            (click)="deleteclient()">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ebook.titre | titlecase}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+
+          <div class="col-md-2 col-lg-2" class="row mb-3">
+            <img src="{{imagepath}}{{ebook.img}}" alt="Profile">
+          </div>
+
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;">Acheteurs : </div>
+            <div class="col-lg-9 col-md-8">{{buys.count | number}}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-user">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;">Description :</div>
+            <div class="col-lg-9 col-md-8" style="word-wrap: break-word">{{ebook.discription | titlecase}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970; ">Auteur :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.auteur | titlecase }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Format :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.format }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  "> Pages :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.nb_pages | number}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Prix :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.prix | number}} DT</div>
+          </div>
+          <div class="row" *ngIf="ebook.promotion">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Promotion :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.promotion | number }} %</div>
+          </div>
+          <div class="row" *ngIf="ebook.categorie!='Autre'">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Domaine :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.categorie | titlecase }} </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Créé à :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.createdAt | date }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Mis à jour à :</div>
+            <div class="col-lg-9 col-md-8">{{ebook.updatedAt | date }} </div>
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="downloadebook()" class="btn btn-outline-dark btn-sm " title="Download Ebook">
+            <span class="material-symbols-outlined">
+              download
+            </span></button>
+          <button *ngIf="buys.count!=0" type="button" (click)="sendid2()" data-bs-dismiss="modal"
+            class="btn btn-outline-dark btn-sm " title="Voir les acheteurs"> <span class="material-symbols-outlined">
+              group
+            </span></button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendebookid()">Mettre à
+            jour</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal"
+            data-bs-target="#exampleModal2">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+
+          Êtes-vous sûr de vouloir supprimer ce ebook ? <br>
+          il supprimera également toutes les données qui y sont liées !!
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+            (click)="deleteebook()">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{formation.titre | titlecase}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+
+          <div class="col-md-2 col-lg-2" class="row mb-3">
+            <img src="{{imagepath}}{{formation.img}}" alt="Profile">
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">participation : </div>
+            <div class="col-lg-8 col-md-8">{{participants.count | number}}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-user">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
+            <div class="col-lg-8 col-md-8" style="word-wrap: break-word">{{formation.discription | titlecase}}</div>
+          </div>
+          <div class="row" *ngIf="formation.date_debut ">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970; ">Date de la debut :</div>
+            <div class="col-lg-8 col-md-8">{{formation.date_debut | date }}</div>
+          </div>
+          <div class="row" *ngIf="formation.date_fin ">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970; ">Date de la fin :</div>
+            <div class="col-lg-8 col-md-8">{{formation.date_fin | date }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Prix :</div>
+            <div class="col-lg-8 col-md-8">{{formation.prix }} DT</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  "> Heures :</div>
+            <div class="col-lg-8 col-md-8">{{formation.heures | number}} h</div>
+          </div>
+          <div class="row" *ngIf="formation.promotion">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Promotion :</div>
+            <div class="col-lg-8 col-md-8">{{formation.promotion | number}} %</div>
+          </div>
+          <div class="row" *ngIf="formation.categorie!='Autre'">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Domaine :</div>
+            <div class="col-lg-8 col-md-8">{{formation.categorie | titlecase}} </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Etat :</div>
+            <div class="col-lg-8 col-md-8">{{formation.etat | titlecase}} </div>
+          </div>
+
+          <div class="row" *ngIf="formation.diplome">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Diplome :</div>
+            <div class="col-lg-8 col-md-8">{{formation.diplome | titlecase}} </div>
+          </div>
+
+          <div class="row" *ngIf="formation.certifiee">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Certifiee :</div>
+            <div class="col-lg-8 col-md-8">{{formation.certifiee | titlecase}} </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Centre :</div>
+            <div class="col-lg-8 col-md-8">{{formation.Centre.name | titlecase}} </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Localisation :</div>
+            <div class="col-lg-8 col-md-8">{{formation.Centre.localisation | titlecase}} </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Télephone :</div>
+            <div class="col-lg-8 col-md-8">{{formation.Centre.tel }} </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Créé à :</div>
+            <div class="col-lg-8 col-md-8">{{formation.createdAt | date }} </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Mis a jour à :</div>
+            <div class="col-lg-8 col-md-8">{{formation.updatedAt | date }}</div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="participants.count!=0" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"
+            (click)="sendid()">Participants</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendformationid()">Mettre à
+            jour</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal"
+            data-bs-target="#exampleModal4">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body ">
+          Êtes-vous sûr de vouloir supprimer ce formation ? <br>
+          il supprimera également toutes les données qui y sont liées !!
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+            (click)="deleteformation()">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
