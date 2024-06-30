@@ -68,20 +68,20 @@
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label"> Afficher le CV</div>
-                <div class="col-lg-9 col-md-8"> <button  style="border-color:white ;"
-                    class="btn btn-outline-light btn-lg "> <a style="color: black;" href={{imagepath}}{{owner.cinImage}}
-                      target="_blank"><i class="bi bi-credit-card-2-front-fill "></i></a></button></div>
+                <div class="col-lg-9 col-md-8"> <button  style="border-color:white ; padding: 0;"
+                    class="btn btn-outline-light btn-lg "> <a style="color: black; padding: 15px;" href={{imagepath}}{{owner.cinImage}}
+                      target="_blank"><i class="bi bi-credit-card-2-front-fill " ></i></a></button></div>
               </div>
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label"> Afficher le preuve</div>
-                <div class="col-lg-9 col-md-8"> <button style="border-color:white ;"
-                    class="btn btn-outline-light btn-lg "> <a style="color: black;" href={{imagepath}}{{owner.proof}}
+                <div class="col-lg-9 col-md-8"> <button style="border-color:white ;padding: 0;"
+                    class="btn btn-outline-light btn-lg "> <a style="color: black;padding: 15px;;" href={{imagepath}}{{owner.proof}}
                       target="_blank"><i class="bi bi-credit-card-2-front-fill "></i></a></button></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-2 col-md-4 label"><button (click)="sendidclient()"
+                <div class="col-lg-2 col-md-4 label"><button (click)="sendOwnerToUpdate()"
                     class="btn btn-primary">Modifier</button></div>
                 <div class="col-lg-7 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
                     class="btn btn-danger">Supprimer</button></div>
@@ -105,7 +105,6 @@
                       </div>
                       <div class="card-body">
                         <h5 class="card-title">{{item.Formation.titre}}</h5>
-                        <!-- <p class="card-text"  style="color: black;">{{item.Formation.discription}}</p> -->
                       </div>
                     </div>
                   </button>
@@ -183,12 +182,12 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Êtes-vous sûr de vouloir supprimer ce apprenant ? <br>
+          Êtes-vous sûr de vouloir supprimer ce propriétaire ? <br>
           il supprimera également toutes les données qui y sont liées !!
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-            (click)="deleteclient()">Supprimer</button>
+            (click)="deleteOwner()">Supprimer</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
 
         </div>
