@@ -47,6 +47,13 @@ export class OwnerService {
   }
 
 
+  getActiveOwners(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/owners/active?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
   changeOwnerStatus(ownerId: number): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/change-account-state`, {  withCredentials: true})
       .pipe(catchError(this.processHTTPMsgService.handleError));
@@ -59,6 +66,12 @@ export class OwnerService {
 
   updateOwnerImage(ownerId: number, formData: FormData): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/edit-image`, formData, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  updateOwner(ownerId: number, body: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/edit`, body,this.httpOptions)
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
