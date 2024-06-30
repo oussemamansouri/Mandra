@@ -1,0 +1,117 @@
+<div class="pagetitle">
+  <h1>Mise à jour un propriétaire</h1>
+  <nav>
+     <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
+        <li class="breadcrumb-item">propriétaire</li>
+        <li class="breadcrumb-item active">Mise à jour un propriétaire</li>
+     </ol>
+  </nav>
+</div>
+<section class="section">
+ <form class="row g-3 needs-validation"   #f="ngForm" (ngSubmit)="updateOwner(f)">
+
+  <div class="col-md-4">
+    <label for="validationCustomUsername" class="form-label">Email</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="inputGroupPrepend">@</span>
+      <input type="email" readonly disabled="" class="form-control" id="validationCustomUsername" [(ngModel)]="owner.email" placeholder="email@example.com" aria-describedby="inputGroupPrepend"  [ngClass]="{'is-invalid': email.invalid && email.touched, 'is-valid': email.valid && email.touched}" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" placeholder="nom@domaine.com" name="email" #email="ngModel" ngModel>
+      <div class="invalid-feedback" *ngIf="email.touched && email.invalid">
+        <div *ngIf="email.errors?.['required']">Veuillez entrer votre adresse email!</div>
+        <div *ngIf="email.errors?.['email']">Veuillez entrer une adresse email valide!</div>
+        <div *ngIf="email.errors?.['pattern']">L'adresse email doit être sous la forme nom@domaine.com!</div>
+      </div>
+    </div>
+  </div>
+
+
+   <div class="col-md-3">
+     <label for="validationCustom01" class="form-label">Nom</label>
+     <input type="text" class="form-control" id="validationCustom01" [(ngModel)]="owner.firstname"   name="firstname" #firstname="ngModel" ngModel   required minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}" [ngClass]="{'is-invalid': firstname.invalid && firstname.touched, 'is-valid': firstname.valid && firstname.touched}">
+     <div class="invalid-feedback" *ngIf="firstname.touched && firstname.errors">
+       <div *ngIf="firstname.errors?.['required']">Votre nom est requis!</div>
+       <div *ngIf="firstname.errors?.['minlength']">Votre nom doit compter au moins 2 caractères !</div>
+       <div *ngIf="firstname.errors?.['maxlength']">Votre nom ne doit pas dépasser 15 caractères !</div>
+       <div *ngIf="firstname.errors?.['pattern']">Votre nom ne doit contenir que des caractères alphabétiques !</div>
+   </div>
+   </div>
+   <div class="col-md-3">
+     <label for="validationCustom01" class="form-label">Prenom</label>
+     <input type="text" class="form-control" id="validationCustom01" [(ngModel)]="owner.lastname"  required minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}"  [ngClass]="{'is-invalid': lastname.invalid && lastname.touched, 'is-valid': lastname.valid && lastname.touched}" name="lastname" #lastname="ngModel" ngModel>
+     <div class="invalid-feedback" *ngIf="lastname.touched && lastname.errors">
+       <div *ngIf="lastname.errors?.['required']">Votre prenom est requis!</div>
+       <div *ngIf="lastname.errors?.['minlength']">Votre prenom doit compter au moins 2 caractères !</div>
+       <div *ngIf="lastname.errors?.['maxlength']">Votre prenom ne doit pas dépasser 15 caractères !</div>
+       <div *ngIf="lastname.errors?.['pattern']">Votre prenom ne doit contenir que des caractères alphabétiques !</div>
+
+   </div>
+   </div>
+
+   <div class="col-md-3">
+     <label for="validationCustom02" class="form-label">Téléphone</label>
+     <input type="tel" class="form-control" id="validationCustom02" [(ngModel)]="owner.phoneNumber"  minlength="8" maxlength="13"  [ngClass]="{'is-invalid': phoneNumber.invalid && phoneNumber.touched, 'is-valid': phoneNumber.valid && phoneNumber.touched}"  required name="phoneNumber" #phoneNumber="ngModel" ngModel>
+     <div class="invalid-feedback" *ngIf="phoneNumber.touched &&phoneNumber.errors">
+       <div *ngIf="phoneNumber.errors?.['required']">Veuillez entrer votre numéro de téléphone!</div>
+       <div *ngIf="phoneNumber.errors?.['integer']">Veuillez entrer un nombre entier valide!</div>
+       <div *ngIf="phoneNumber.errors?.['minlength']">le Téléphone doit compter au moins 8 chiffres !</div>
+     </div>
+   </div>
+
+   <div class="col-md-2">
+    <label for="nbOfHotels" class="form-label">Nb° d’hôtels</label>
+    <input type="number" name="nbOfHotels" #nbOfHotels="ngModel" ngModel class="form-control" [(ngModel)]="owner.nbOfHotels"
+           id="nbOfHotels"
+           [ngClass]="{'is-invalid': nbOfHotels.invalid && nbOfHotels.touched, 'is-valid': nbOfHotels.valid && nbOfHotels.touched}"
+           required
+           min="0" max="10">
+    <div class="invalid-feedback" *ngIf="nbOfHotels.touched && nbOfHotels.errors">
+      <div *ngIf="nbOfHotels.errors?.['required']">Veuillez entrer le nombre d'hôtels!</div>
+      <div *ngIf="nbOfHotels.errors?.['min']">Le nombre d'hôtels doit être au moins de 0!</div>
+      <div *ngIf="nbOfHotels.errors?.['max']">Le nombre d'hôtels ne peut pas dépasser 10!</div>
+    </div>
+  </div>
+
+
+  <div class="col-md-2">
+    <label for="nbOfRestaurant" class="form-label">Nb° des Restaurants</label>
+    <input type="number" name="nbOfRestaurant" #nbOfRestaurant="ngModel" ngModel class="form-control" [(ngModel)]="owner.nbOfRestaurant"
+           id="nbOfRestaurant"
+           [ngClass]="{'is-invalid': nbOfRestaurant.invalid && nbOfRestaurant.touched, 'is-valid': nbOfRestaurant.valid && nbOfRestaurant.touched}"
+           required
+           min="0" max="10">
+    <div class="invalid-feedback" *ngIf="nbOfRestaurant.touched && nbOfRestaurant.errors">
+      <div *ngIf="nbOfRestaurant.errors?.['required']">Veuillez entrer le nombre de restaurants!</div>
+      <div *ngIf="nbOfRestaurant.errors?.['min']">Le nombre de restaurants doit être au moins de 0!</div>
+      <div *ngIf="nbOfRestaurant.errors?.['max']">Le nombre de restaurants ne peut pas dépasser 10!</div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <label for="nbOfGuesthouses" class="form-label">Nb° des M.d'hôtes</label>
+    <input type="number" name="nbOfGuesthouses" #nbOfGuesthouses="ngModel" ngModel class="form-control"  [(ngModel)]="owner.nbOfGuesthouses"
+           id="nbOfGuesthouses"
+           [ngClass]="{'is-invalid': nbOfGuesthouses.invalid && nbOfGuesthouses.touched, 'is-valid': nbOfGuesthouses.valid && nbOfGuesthouses.touched}"
+           required
+           min="0" max="10">
+    <div class="invalid-feedback" *ngIf="nbOfGuesthouses.touched && nbOfGuesthouses.errors">
+      <div *ngIf="nbOfGuesthouses.errors?.['required']">Veuillez entrer le nombre de maisons d'hôtes!</div>
+      <div *ngIf="nbOfGuesthouses.errors?.['min']">Le nombre de maisons d'hôtes doit être au moins de 0!</div>
+      <div *ngIf="nbOfGuesthouses.errors?.['max']">Le nombre de maisons d'hôtes ne peut pas dépasser 10!</div>
+    </div>
+  </div>
+
+
+   <div class="row mt-3">
+   <div class="col-12">
+    <button class="btn btn-primary" [disabled]="f.invalid" type="submit">Mise à jour</button>
+  </div>
+  </div>
+   <div class="row mt-3">
+     <div class="alert alert-danger" *ngIf="errmessage">{{errmessage}}</div>
+    </div>
+
+
+ </form>
+</section>
+
+
