@@ -66,7 +66,15 @@ export class OwnerDetailsComponent implements OnInit{
     this.router.navigate(['/admin/owners/update'],{queryParams:{ownerId:this.ownerId}})
   }
 
-
+  changeAccountStauts() {
+    this.ownerService.changeOwnerStatus(this.ownerId).subscribe({
+      next:() =>{
+        this.loadOwner();
+      },
+      error:(err:HttpErrorResponse) =>
+        console.log("Error while changing owner account state")
+  })
+  }
 
 
   sendid2() {
