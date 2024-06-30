@@ -80,7 +80,7 @@ export class ActiveOwnersComponent implements OnInit {
     this.ownerService.changeOwnerStatus(id).subscribe({
       next:() =>{
         // this.loadOwners();
-        console.log("Error while changing owner account state")
+        this.router.navigate(['/admin/owners/active'])
       },
       error:(err:HttpErrorResponse) =>
         console.log("Error while changing owner account state")
