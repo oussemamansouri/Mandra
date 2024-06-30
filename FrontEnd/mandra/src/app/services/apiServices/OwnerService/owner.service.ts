@@ -44,4 +44,21 @@ export class OwnerService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
+  getDisabledOwners(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/owners/disabled?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  changeOwnerStatus(ownerId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/change-account-state`, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  deleteOwner(ownerId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/owners/${ownerId}/delete`, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
 }
