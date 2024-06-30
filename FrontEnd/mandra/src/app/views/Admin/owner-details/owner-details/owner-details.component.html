@@ -83,9 +83,9 @@
               <div class="row">
                 <div class="col-lg-2 col-md-4 label"><button (click)="sendOwnerToUpdate()"
                     class="btn btn-primary">Modifier</button></div>
-                    <div *ngIf="owner.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button  (click)="sendOwnerToUpdate()"
+                    <div *ngIf="owner.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button
                       class="btn btn-warning " (click)="changeAccountStauts()" >Désactiver le compte</button></div>
-                      <div  *ngIf="owner.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button (click)="sendOwnerToUpdate()"
+                      <div  *ngIf="owner.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button 
                         class="btn btn-primary" (click)="changeAccountStauts()">Activer le compte</button></div>
                 <div class="col-lg-3 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
                     class="btn btn-danger">Supprimer</button></div>
