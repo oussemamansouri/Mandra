@@ -20,7 +20,7 @@ export class AppComponent {
   // Initialization logic
   ngOnInit(): void {
     // Attempt to auto-login the user
-    this.authService.autoLogin();
+    // this.authService.autoLogin();
 
 }
 

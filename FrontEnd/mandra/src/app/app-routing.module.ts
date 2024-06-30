@@ -14,6 +14,8 @@ const routes: Routes = [
     {path:'owners/add',loadChildren:()=> import('./views/Admin/add-owner/add-owner.module').then(m=>m.AddOwnerModule)},
     {path:'owners/active',loadChildren:()=> import('./views/Admin/active-owners/active-owners.module').then(m=>m.ActiveOwnersModule)},
     {path:'owners/disabled',loadChildren:()=> import('./views/Admin/disabled-owners/disabled-owners.module').then(m=>m.DisabledOwnersModule)},
+    {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
+
   ]},
 
   {path:'client',component:ClientLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Client']},children:[
