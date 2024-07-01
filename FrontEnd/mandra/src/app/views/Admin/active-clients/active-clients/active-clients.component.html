@@ -19,8 +19,9 @@
                   <input type="text"  style="width: 300px;" class="form-control" placeholder="Recherche par nom ou prenom" [(ngModel)]="searchTerm">
                 </div> -->
             <br>
-            <div class="alert alert-primary" *ngIf="!clients"> Aucun Clients ne s'est inscrit !</div>
-            <table class="table table-hover" *ngIf="clients">
+            <div class="alert alert-primary" *ngIf="!clients || clients.length === 0"> Aucun Clients ne s'est inscrit !</div>
+            <div *ngIf="clients && clients.length > 0">
+            <table class="table table-hover" >
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -70,6 +71,7 @@
               <span class="btn ">Page {{ page + 1 }} of {{ totalPages }}</span>
               <button class="btn btn-primary" (click)="onPageChange(page + 1)" [disabled]="page === totalPages - 1">Next</button>
             </div>
+          </div>
 
           </div>
 
