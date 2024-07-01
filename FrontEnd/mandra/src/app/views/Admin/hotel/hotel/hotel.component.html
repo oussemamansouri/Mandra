@@ -14,10 +14,10 @@
       <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
         <div class="card h-100 shadow-lg">
           <div class="zoom">
-            <img [src]="'../../../../../assets/img/' + item.img" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
+            <img [src]="baseURL + item.hotelImage[0].imagePath" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
           </div>
           <div class="card-body">
-            <h5 class="card-title">{{ item.title }}</h5>
+            <h5 class="card-title">{{ item.name | titlecase }}</h5>
           </div>
         </div>
       </button>
@@ -29,7 +29,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ hotel.title }}</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ hotel.name | titlecase }}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -39,8 +39,8 @@
               <button type="button" *ngFor="let img of hotel.images; let i = index" [attr.data-bs-slide-to]="i" [ngClass]="{ 'active': i === 0 }" aria-current="true" [attr.aria-label]="'Slide ' + (i + 1)"></button>
             </div>
             <div class="carousel-inner">
-              <div class="carousel-item" *ngFor="let img of hotel.images; let i = index" [ngClass]="{ 'active': i === 0 }" >
-                <img [src]="'../../../../../assets/img/' + img" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;" >
+              <div class="carousel-item" *ngFor="let img of hotel.hotelImage; let i = index" [ngClass]="{ 'active': i === 0 }" >
+                <img [src]="baseURL + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;" >
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -54,47 +54,75 @@
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.region }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.city | titlecase }}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.description }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.description | titlecase}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Catégorie :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.category }}</div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.address | titlecase }}</div>
           </div>
+
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;"> Nombre de chambres :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.rooms }}</div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Email :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.email }}</div>
           </div>
+
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Views :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.views }}</div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">N° téléphone  :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.phoneNumber }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;"> Nb° de chambres :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.numberOfRooms | number }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">étoile :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.nbOfStars | number}}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Wifi :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.Wifi }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasWifi | booleanToText}}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Parking :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.Parking }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasParking | booleanToText}}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Restaurant :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.Restaurant }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasRestaurant | booleanToText }}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Gym :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.Gym }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasGym | booleanToText }}</div>
           </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Accepte les animaux :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.allowsPets | booleanToText}}</div>
+          </div>
+
+          <div class="row" *ngIf="hotel.website || hotel.facebook || hotel.instagram">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Réseaux Sociaux :</div>
+            <div class="col-lg-8 col-md-8">
+              <a *ngIf="hotel.website" [href]="hotel.website"><i class="bi bi-globe me-2 " style="color: black;"></i></a>
+              <a *ngIf="hotel.facebook" [href]="hotel.facebook"><i class="bi bi-facebook me-2 " style="color: rgb(56, 69, 241);"></i></a>
+              <a *ngIf="hotel.instagram" [href]="hotel.instagram"><i class="bi bi-instagram me-2" style="color: rgb(180, 77, 232);"></i></a>
+            </div>
+          </div>
+
+
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.created_at }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.createDate | date }}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
-            <div class="col-lg-8 col-md-8">{{ hotel.updated_at }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.updateDate | date }}</div>
           </div>
         </div>
         <div class="modal-footer">
@@ -105,7 +133,7 @@
       </div>
     </div>
   </div>
- 
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
