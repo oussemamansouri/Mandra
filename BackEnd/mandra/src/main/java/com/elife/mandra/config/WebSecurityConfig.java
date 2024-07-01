@@ -40,8 +40,9 @@ public class WebSecurityConfig {
                 // Allows access without authentication to /auth/** and /webjars/** endpoints
                 .requestMatchers("admin/**",
                 "/auth/**",
-                "/clients/register",
                 "/contacts/add",
+                "/clients/register",
+                "/clients/{client}/change-account-state",
                 "/owners/register","/owners/{id}/upload-proof", "/owners/{id}/upload-cin-image",
                 "/owners/{ownerId}/change-account-state",
                 "/specialtywomens/*","/specialtywomens/{specialtyWomenId}",
