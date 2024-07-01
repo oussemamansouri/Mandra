@@ -13,6 +13,10 @@
               <li>
                  <hr class="dropdown-divider">
               </li>
+              <li *ngIf="isAdmin" > <button class="dropdown-item d-flex align-items-center"> <a class="dropdown-item d-flex align-items-center" routerLink="/admin" > <i class="bi bi-grid"></i> <span>tableau de bord</span> </a> </button></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li> <button class="dropdown-item d-flex align-items-center"> <a class="dropdown-item d-flex align-items-center" (click)="navigateprofile()"> <i class="bi bi-person"></i> <span>Mon profil</span> </a> </button></li>
               <li>
                  <hr class="dropdown-divider">

@@ -18,6 +18,7 @@ export class FrontLayouteComponent {
   user: any = null
   baseURL!: string
   errmessage!: string;
+  isAdmin:boolean = false
   AuthUserSub!: Subscription; // Subscription to the authenticated user observable
 
   constructor(private router: Router, private authService: AuthServiceService,
@@ -34,7 +35,8 @@ export class FrontLayouteComponent {
         switch (data?.role.name) {
           case 'ROLE_Admin':
             this.adminService.getAdmin(data.id).subscribe(
-              info => this.user = info
+              info =>{ this.user = info
+              this.isAdmin = true}
             )
             break;
           case 'ROLE_Owner':

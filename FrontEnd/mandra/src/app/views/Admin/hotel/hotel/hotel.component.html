@@ -1,287 +1,166 @@
-  <div class="pagetitle">
-     <h1>Formations</h1>
-     <nav>
-        <ol class="breadcrumb">
-           <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
-           <li class="breadcrumb-item active">Formations</li>
-        </ol>
-
-     </nav>
-     <div class="form-group">
-      <input type="text"  style="width: 300px;" class="form-control" placeholder="Recherche par titre" [(ngModel)]="searchTerm">
-    </div>
-
-
-  </div>
-
-  <section class="section profile">
-
-    <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="filter()==''">
-      Il n’y a pas de formations
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-4 g-4">
-      <!-- <div class="col" *ngFor="let item of filter()"> -->
-        <div class="col">
-        <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-          <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-          <div class="card h-100 shadow-lg">
-            <div class="zoom">
-              <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-              <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">Hotel titre</h5>
-              <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-              <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-            </div>
-          </div>
-        </button>
-      </div>
-
-           <!-- <div class="col" *ngFor="let item of filter()"> -->
-            <div class="col">
-              <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-                <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-                <div class="card h-100 shadow-lg">
-                  <div class="zoom">
-                    <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-                    <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-                  </div>
-                  <div class="card-body">
-                    <h5 class="card-title">Hotel titre</h5>
-                    <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-                    <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-                  </div>
-                </div>
-              </button>
-            </div>
-
-                 <!-- <div class="col" *ngFor="let item of filter()"> -->
-        <div class="col">
-          <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-            <div class="card h-100 shadow-lg">
-              <div class="zoom">
-                <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-                <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Hotel titre</h5>
-                <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-                <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-              </div>
-            </div>
-          </button>
-        </div>
-
-             <!-- <div class="col" *ngFor="let item of filter()"> -->
-              <div class="col">
-                <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-                  <div class="card h-100 shadow-lg">
-                    <div class="zoom">
-                      <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-                      <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Hotel titre</h5>
-                      <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-                      <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-                    </div>
-                  </div>
-                </button>
-              </div>
-
-                   <!-- <div class="col" *ngFor="let item of filter()"> -->
-        <div class="col">
-          <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-            <div class="card h-100 shadow-lg">
-              <div class="zoom">
-                <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-                <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Hotel titre</h5>
-                <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-                <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-              </div>
-            </div>
-          </button>
-        </div>
-
-
-             <!-- <div class="col" *ngFor="let item of filter()"> -->
-              <div class="col">
-                <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-                  <div class="card h-100 shadow-lg">
-                    <div class="zoom">
-                      <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-                      <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-                    </div>
-                    <div class="card-body">
-                      <h5 class="card-title">Hotel titre</h5>
-                      <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-                      <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-                    </div>
-                  </div>
-                </button>
-              </div>
-
-
-                   <!-- <div class="col" *ngFor="let item of filter()"> -->
-        <div class="col">
-          <!-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="getformationid(item.id)"> -->
-            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" >
-            <div class="card h-100 shadow-lg">
-              <div class="zoom">
-                <!-- <img src="{{imagepath}}{{item.img}}" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;"> -->
-                <img src="../../../../../assets/img/product-1.jpg" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
-
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Hotel titre</h5>
-                <!-- <h5 class="card-title">{{item.titre}}</h5> -->
-                <!-- <p class="card-text" style="color: black;"> {{item.discription}}</p> -->
-              </div>
-            </div>
-          </button>
-        </div>
-
-
-
-
-      </div>
-
-     <!-- Modal -->
-     <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">hotel.titre </h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body ">
-
-            <div class="col-md-2 col-lg-2" class="row mb-3">
-              <img src="../../../../../assets/img/product-2.jpg" alt="Profile">
-           </div>
-
-           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;" >participation : </div>
-            <div class="col-lg-8 col-md-8">participation.count
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
-         </div>
-           <div class="row">
-              <div class="col-lg-4 col-md-4 label" style="color:#012970;" >Description :</div>
-              <div class="col-lg-8 col-md-8" style="word-wrap: break-word">formation.discription</div>
-           </div>
-           <div class="row" *ngIf="formation.date_debut ">
-            <div class="col-lg-4 col-md-4 label"style="color:#012970; " >Date de la debut :</div>
-            <div class="col-lg-8 col-md-8">formation.date_debut </div>
-         </div>
-           <div class="row" *ngIf="formation.date_fin ">
-            <div class="col-lg-4 col-md-4 label"style="color:#012970; " >Date de la fin :</div>
-            <div class="col-lg-8 col-md-8">formation.date_fin </div>
-         </div>
-         <div class="row">
-          <div class="col-lg-4 col-md-4 label"style="color:#012970; ">Prix :</div>
-          <div class="col-lg-8 col-md-8">formation.prix  DT</div>
-       </div>
-       <div class="row">
-        <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  > Heures :</div>
-        <div class="col-lg-8 col-md-8">formation.heures h</div>
-     </div>
-     <div class="row" *ngIf="formation.promotion">
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Promotion :</div>
-      <div class="col-lg-8 col-md-8">formation.promotion  %</div>
-    </div>
-
-    <div class="row" *ngIf="formation.categorie!='Autre'">
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Domaine :</div>
-      <div class="col-lg-8 col-md-8">formation.categorie </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Etat :</div>
-      <div class="col-lg-8 col-md-8">formation.etat </div>
-    </div>
-
-    <div class="row" *ngIf="formation.diplome">
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Diplome :</div>
-      <div class="col-lg-8 col-md-8">formation.diplom </div>
-    </div>
-
-    <div class="row" *ngIf="formation.certifiee">
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Certifiee :</div>
-      <div class="col-lg-8 col-md-8">formation.certifiee  </div>
-    </div>
-
-    <div class="row" >
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Centre :</div>
-      <div class="col-lg-8 col-md-8">formation.Centre.name </div>
-    </div>
-
-    <div class="row" >
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Localisation :</div>
-      <div class="col-lg-8 col-md-8">formation.Cen  </div>
-    </div>
-
-    <div class="row" >
-      <div class="col-lg-4 col-md-4 label"style="color:#012970;  "  >Télephone :</div>
-      <div class="col-lg-8 col-md-8">formation. </div>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-md-4 label" style="color:#012970;  " >Créé à :</div>
-      <div class="col-lg-8 col-md-8">formation.createdAt  </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-4 col-md-4 label" style="color:#012970;  " >Mis à jour à :</div>
-      <div class="col-lg-8 col-md-8">formation.updatedAt</div>
-    </div>
-
-          </div>
-          <div class="modal-footer">
-            <button *ngIf="participation.count!=0" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal" (click)="sendformationid()">Participants</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendid()">Mettre à jour</button>
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#exampleModal4">Supprimer</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- Modal -->
-<div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body ">
-        Êtes-vous sûr de vouloir supprimer ce formation ? <br>
-        il supprimera également toutes les données qui y sont liées !!
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteformation()">Supprimer</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-      </div>
-    </div>
-  </div>
+<div class="pagetitle">
+  <h1>Hotels</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
+      <li class="breadcrumb-item active">Hotels</li>
+    </ol>
+  </nav>
 </div>
 
+<section class="section profile">
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col" *ngFor="let item of hotels">
+      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
+        <div class="card h-100 shadow-lg">
+          <div class="zoom">
+            <img [src]="baseURL + item.hotelImage[0].imagePath" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name | titlecase }}</h5>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
 
-  </section>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ hotel.name | titlecase }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
 
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" *ngFor="let img of hotel.hotelImage; let i = index"
+                      [attr.data-bs-target]="'#carouselExampleIndicators'"
+                      [attr.data-bs-slide-to]="i"
+                      [ngClass]="{ 'active': i === 0 }"
+                      aria-current="true"
+                      [attr.aria-label]="'Slide ' + (i + 1)">
+              </button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let img of hotel.hotelImage; let i = index"
+                                       [ngClass]="{ 'active': i === 0 }">
+                <img [src]="baseURL + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.city | titlecase }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.description | titlecase}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.address | titlecase }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Email :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.email }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">N° téléphone  :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.phoneNumber }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;"> Nb° de chambres :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.numberOfRooms | number }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">étoile :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.nbOfStars | number}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Wifi :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasWifi | booleanToText}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Parking :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasParking | booleanToText}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Restaurant :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasRestaurant | booleanToText }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Gym :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasGym | booleanToText }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Accepte les animaux :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.allowsPets | booleanToText}}</div>
+          </div>
+
+          <div class="row" *ngIf="hotel.website || hotel.facebook || hotel.instagram">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Réseaux Sociaux :</div>
+            <div class="col-lg-8 col-md-8">
+              <a *ngIf="hotel.website" [href]="hotel.website"><i class="bi bi-globe me-2 " style="color: black;"></i></a>
+              <a *ngIf="hotel.facebook" [href]="hotel.facebook"><i class="bi bi-facebook me-2 " style="color: rgb(56, 69, 241);"></i></a>
+              <a *ngIf="hotel.instagram" [href]="hotel.instagram"><i class="bi bi-instagram me-2" style="color: rgb(180, 77, 232);"></i></a>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.createDate | date }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.updateDate | date }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendId()">Mettre à jour</button>
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#exampleModal4">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer cet hôtel ? <br>
+          Cela supprimera également toutes les données qui y sont liées !!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteHotel()">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

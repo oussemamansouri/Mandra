@@ -7,7 +7,7 @@ import { ClientLayouteComponent } from './layoutes/client-layoute/client-layoute
 import { OwnerLayouteComponent } from './layoutes/owner-layoute/owner-layoute.component';
 
 const routes: Routes = [
-    {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Admin']},children:[
+    {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Admin']}, children:[
     {path:'',redirectTo:'dashboard',pathMatch:'full'},
     {path:'dashboard',loadChildren:()=> import('./views/Admin/dashboard/dashboard.module').then(m=>m.DashboardModule)},
     {path:'profile',loadChildren:()=> import('./views/Admin/profile/profile.module').then(m=>m.ProfileModule)},
@@ -22,6 +22,9 @@ const routes: Routes = [
     {path:'clients/details',loadChildren:()=> import('./views/Admin/client-details/client-details.module').then(m=>m.ClientDetailsModule)},
     {path:'clients/update',loadChildren:()=> import('./views/Admin/update-client/update-client.module').then(m=>m.UpdateClientModule)},
     {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
+    {path:'restaurants',loadChildren:()=> import('./views/Admin/restaurants/restaurants.module').then(m=>m.RestaurantsModule)},
+    {path:'guast-house',loadChildren:()=> import('./views/Admin/guast-house/guast-house.module').then(m=>m.GuastHouseModule)},
+
 
   ]},
 
