@@ -33,14 +33,21 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+
           <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" *ngFor="let img of hotel.images; let i = index" [attr.data-bs-slide-to]="i" [ngClass]="{ 'active': i === 0 }" aria-current="true" [attr.aria-label]="'Slide ' + (i + 1)"></button>
+              <button type="button" *ngFor="let img of hotel.hotelImage; let i = index"
+                      [attr.data-bs-target]="'#carouselExampleIndicators'"
+                      [attr.data-bs-slide-to]="i"
+                      [ngClass]="{ 'active': i === 0 }"
+                      aria-current="true"
+                      [attr.aria-label]="'Slide ' + (i + 1)">
+              </button>
             </div>
             <div class="carousel-inner">
-              <div class="carousel-item" *ngFor="let img of hotel.hotelImage; let i = index" [ngClass]="{ 'active': i === 0 }" >
-                <img [src]="baseURL + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;" >
+              <div class="carousel-item" *ngFor="let img of hotel.hotelImage; let i = index"
+                                       [ngClass]="{ 'active': i === 0 }">
+                <img [src]="baseURL + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;">
               </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -52,6 +59,9 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
+
+
+
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
             <div class="col-lg-8 col-md-8">{{ hotel.city | titlecase }}</div>
