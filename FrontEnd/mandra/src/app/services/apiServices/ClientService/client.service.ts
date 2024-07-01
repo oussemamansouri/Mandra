@@ -27,4 +27,39 @@ export class ClientService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
+
+  getDisabledClients(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/clients/disabled?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  getActiveClients(page: number, size: number): Observable<any> {
+    const url = `${this.baseUrl}/clients/active?page=${page}&size=${size}`;
+    return this.http.get<any>(url, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  changeClientStatus(clientId: number): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/clients/${clientId}/change-account-state`, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+
+  deleteClient(clientId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/clients/${clientId}/delete`, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateClientImage(clientId: number, formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/clients/${clientId}/edit-image`, formData, {  withCredentials: true})
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
+  updateClient(clientId: number, body: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/clients/${clientId}/edit`, body,this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
 }
