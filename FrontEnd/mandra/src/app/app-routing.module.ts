@@ -26,8 +26,6 @@ const routes: Routes = [
     {path:'guast-house',loadChildren:()=> import('./views/Admin/guast-house/guast-house.module').then(m=>m.GuastHouseModule)},
     {path:'gastronomic-specialties',loadChildren:()=> import('./views/Admin/gastronomic-specialties/gastronomic-specialties.module').then(m=>m.GastronomicSpecialtiesModule)},
     {path:'specialty-women',loadChildren:()=> import('./views/Admin/specialty-women/specialty-women.module').then(m=>m.SpecialtyWomenModule)},
-
-
   ]},
 
   {path:'client',component:ClientLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Client']},children:[

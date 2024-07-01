@@ -30,7 +30,10 @@ export class HotelService {
     }
 
 
-
+    deleteHotel(hotelId: number): Observable<any> {
+      return this.http.delete<any>(`${this.baseUrl}/hotels/${hotelId}/delete`, {  withCredentials: true})
+        .pipe(catchError(this.processHTTPMsgService.handleError));
+    }
 
 
 
