@@ -111,7 +111,7 @@ public class HotelController {
     // ----------------------------------      get Hotels endpoint     -----------------------------------
 
  @GetMapping("")
-    public ResponseEntity<Object> getHotels(@PageableDefault(size = 10) Pageable pageable) {
+    public ResponseEntity<Object> getHotels(@PageableDefault(size = 12) Pageable pageable) {
         try{
        Page<Hotel> hotelPage = hotelService.getHotels(pageable);
        return ResponseEntity.status(HttpStatus.OK).body(hotelPage);
