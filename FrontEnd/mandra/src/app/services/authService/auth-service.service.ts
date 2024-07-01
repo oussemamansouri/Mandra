@@ -30,8 +30,8 @@ export class AuthServiceService {
 
     return this.http.post<AuthResponseData>(this.baseURL + '/auth/signin', null, httpOptions).pipe(
       catchError(err => {
-        let errorMessage = 'An unknown error occurred!';
-        errorMessage = 'The email or password you entered is incorrect.';
+        let errorMessage = 'Une erreur inconnue est survenue !';
+        errorMessage = 'L’email ou le mot de passe que vous avez entré est incorrect.';
         return throwError(() => new Error(errorMessage));
       }),
       tap(user => {
