@@ -17,6 +17,8 @@ const routes: Routes = [
     {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
     {path:'restaurants',loadChildren:()=> import('./views/Admin/restaurants/restaurants.module').then(m=>m.RestaurantsModule)},
     {path:'guast-house',loadChildren:()=> import('./views/Admin/guast-house/guast-house.module').then(m=>m.GuastHouseModule)},
+    {path:'gastronomic-specialties',loadChildren:()=> import('./views/Admin/gastronomic-specialties/gastronomic-specialties.module').then(m=>m.GastronomicSpecialtiesModule)},
+    {path:'specialty-women',loadChildren:()=> import('./views/Admin/specialty-women/specialty-women.module').then(m=>m.SpecialtyWomenModule)},
 
 
   ]},
