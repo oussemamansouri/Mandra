@@ -34,7 +34,7 @@ export class ActiveClientsComponent implements OnInit {
   loadClients(): void {
     this.clientService.getActiveClients(this.page, this.size).subscribe({
       next: (info:any) => {
-        this.clients = info.content || [];
+        this.clients = info.content;
         this.totalPages = info.totalPages || 0;
       },
       error:(err: HttpErrorResponse) => {
@@ -87,11 +87,11 @@ export class ActiveClientsComponent implements OnInit {
   }
 
   ViewDetails(id: any) {
-    this.router.navigate(['/admin/clients/details'], { queryParams: { ownerId: id } })
+    this.router.navigate(['/admin/clients/details'], { queryParams: { clientId: id } })
 
   }
   Update(id: any) {
-    this.router.navigate(['/admin/clients/update'], { queryParams: { ownerId: id } })
+    this.router.navigate(['/admin/clients/update'], { queryParams: { clientId: id } })
   }
 
 
