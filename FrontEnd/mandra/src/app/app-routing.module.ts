@@ -7,7 +7,7 @@ import { ClientLayouteComponent } from './layoutes/client-layoute/client-layoute
 import { OwnerLayouteComponent } from './layoutes/owner-layoute/owner-layoute.component';
 
 const routes: Routes = [
-    {path:'admin',component:AdminLayouteComponent,children:[
+    {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Admin']}, children:[
     {path:'',redirectTo:'dashboard',pathMatch:'full'},
     {path:'dashboard',loadChildren:()=> import('./views/Admin/dashboard/dashboard.module').then(m=>m.DashboardModule)},
     {path:'profile',loadChildren:()=> import('./views/Admin/profile/profile.module').then(m=>m.ProfileModule)},
