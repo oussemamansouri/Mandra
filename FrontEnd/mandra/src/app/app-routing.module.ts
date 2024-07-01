@@ -16,6 +16,11 @@ const routes: Routes = [
     {path:'owners/disabled',loadChildren:()=> import('./views/Admin/disabled-owners/disabled-owners.module').then(m=>m.DisabledOwnersModule)},
     {path:'owners/details',loadChildren:()=> import('./views/Admin/owner-details/owner-details.module').then(m=>m.OwnerDetailsModule)},
     {path:'owners/update',loadChildren:()=> import('./views/Admin/update-owner/update-owner.module').then(m=>m.UpdateOwnerModule)},
+    {path:'clients/add',loadChildren:()=> import('./views/Admin/add-client/add-client.module').then(m=>m.AddClientModule)},
+    {path:'clients/active',loadChildren:()=> import('./views/Admin/active-clients/active-clients.module').then(m=>m.ActiveClientsModule)},
+    {path:'clients/disabled',loadChildren:()=> import('./views/Admin/disabled-clients/disabled-clients.module').then(m=>m.DisabledClientsModule)},
+    {path:'clients/details',loadChildren:()=> import('./views/Admin/client-details/client-details.module').then(m=>m.ClientDetailsModule)},
+    {path:'clients/update',loadChildren:()=> import('./views/Admin/update-client/update-client.module').then(m=>m.UpdateClientModule)},
     {path:'hotels',loadChildren:()=> import('./views/Admin/hotel/hotel.module').then(m=>m.HotelModule)},
 
   ]},

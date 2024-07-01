@@ -1,10 +1,10 @@
 <div class="pagetitle">
-  <h1>Propriétaires</h1>
+  <h1>Clients</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
-      <li class="breadcrumb-item"><a>Propriétaires</a></li>
-      <li class="breadcrumb-item active"><a>Consulter la liste désactivé</a></li>
+      <li class="breadcrumb-item"><a>Clients</a></li>
+      <li class="breadcrumb-item active"><a>Consulter la liste active</a></li>
     </ol>
   </nav>
 </div>
@@ -14,13 +14,13 @@
       <div class="card">
         <div class="card-body">
           <div class="table-responsive text-nowrap">
-            <h5 class="card-title">Tous les propriétaires désactivé</h5>
+            <h5 class="card-title">Tous les Clients active</h5>
             <!-- <div class="form-group">
                   <input type="text"  style="width: 300px;" class="form-control" placeholder="Recherche par nom ou prenom" [(ngModel)]="searchTerm">
                 </div> -->
             <br>
-            <div class="alert alert-primary" *ngIf="!owners || owners.length === 0"> Aucun owners ne s'est inscrit !</div>
-            <div *ngIf="owners && owners.length > 0">
+            <div class="alert alert-primary" *ngIf="!clients || clients.length === 0"> Aucun Clients ne s'est inscrit !</div>
+            <div *ngIf="clients && clients.length > 0">
             <table class="table table-hover" >
               <thead>
                 <tr>
@@ -33,7 +33,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of owners;index as i">
+                <tr *ngFor="let item of clients;index as i">
                   <th scope="row">{{i + (page * size) + 1}}</th>
                   <td>{{item.firstname | titlecase}}</td>
                   <td>{{item.lastname | titlecase}}</td>
@@ -51,12 +51,12 @@
                         Action
                       </button>
                       <ul class="dropdown-menu">
-                        <li> <button class="dropdown-item" (click)="sendId(item.id)">Afficher détails</button></li>
-                        <li> <button class="dropdown-item" (click)="sendOwnerId(item.id)">Mettre à jour </button></li>
+                        <li> <button class="dropdown-item" (click)="ViewDetails(item.id)">Afficher détails</button></li>
+                        <li> <button class="dropdown-item" (click)="Update(item.id)">Mettre à jour </button></li>
                         <li> <button class="dropdown-item" style="color: rgb(35, 116, 247);"
                            (click)="changeToActive(item.id)">Passer à actif </button></li>
                         <li> <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                            (click)="getOwnerid(item.id)"><span style="color: red;">Supprimer</span></button>
+                            (click)="getClientid(item.id)"><span style="color: red;">Supprimer</span></button>
                         </li>
                       </ul>
                     </div>
@@ -71,7 +71,7 @@
               <span class="btn ">Page {{ page + 1 }} of {{ totalPages }}</span>
               <button class="btn btn-primary" (click)="onPageChange(page + 1)" [disabled]="page === totalPages - 1">Next</button>
             </div>
-            </div>
+          </div>
 
           </div>
 
@@ -90,11 +90,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Êtes-vous sûr de vouloir supprimer ce propriétaire ? <br>
+        Êtes-vous sûr de vouloir supprimer ce client ? <br>
         il supprimera également toutes les données qui y sont liées !!
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteOwner()">Supprimer</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteClient()">Supprimer</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
 
       </div>

@@ -1,10 +1,10 @@
 <div class="pagetitle">
-  <h1>Profil Propriétaire</h1>
+  <h1>Profil Client</h1>
   <nav>
     <ol class="breadcrumb">
       <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
-      <li class="breadcrumb-item"><a>Propriétaires</a></li>
-      <li class="breadcrumb-item"><a routerLink="/admin/owners/active">Consulet la liste</a></li>
+      <li class="breadcrumb-item"><a>Clients</a></li>
+      <li class="breadcrumb-item"><a routerLink="/admin/clients/active">Consulet la liste</a></li>
       <li class="breadcrumb-item active">Profil</li>
     </ol>
   </nav>
@@ -16,8 +16,8 @@
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
           <div class="zoom">
             <label for="image" class="upload-image">
-              <img *ngIf="owner.image" src="{{imagepath}}{{owner.image}}" alt="Profile" class="rounded-circle">
-              <img *ngIf="!owner.image" src="../../../../../assets/img/default-image.jpg" alt="Profile" class="rounded-circle">
+              <img *ngIf="client.image" src="{{imagepath}}{{client.image}}" alt="Profile" class="rounded-circle">
+              <img *ngIf="!client.image" src="../../../../../assets/img/default-image.jpg" alt="Profile" class="rounded-circle">
               <span class="fa-stack fa-lg upload-icon">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"></i>
@@ -25,8 +25,8 @@
 
             </label>
           </div>
-          <h2>{{owner.firstname | titlecase}}</h2>
-          <h3>Propriétaire </h3>
+          <h2>{{client.firstname | titlecase}}</h2>
+          <h3>Client </h3>
           <input type="file" id="image" class="visually-hidden" required accept="public/images/*"
             (change)="updateimage($event)">
         </div>
@@ -51,41 +51,28 @@
               <h5 class="card-title">Détails</h5>
               <div class="row">
                 <div class="col-lg-3 col-md-4 label ">Nom</div>
-                <div class="col-lg-9 col-md-8">{{owner.firstname | titlecase}}</div>
+                <div class="col-lg-9 col-md-8">{{client.firstname | titlecase}}</div>
               </div>
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Prenom</div>
-                <div class="col-lg-9 col-md-8">{{owner.lastname | titlecase}}</div>
+                <div class="col-lg-9 col-md-8">{{client.lastname | titlecase}}</div>
               </div>
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                <div class="col-lg-9 col-md-8">{{owner.phoneNumber }}</div>
+                <div class="col-lg-9 col-md-8">{{client.phoneNumber }}</div>
               </div>
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Email</div>
-                <div class="col-lg-9 col-md-8">{{owner.email}}</div>
+                <div class="col-lg-9 col-md-8">{{client.email}}</div>
               </div>
 
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label"> Afficher le CIN</div>
-                <div class="col-lg-9 col-md-8"> <button  style="border-color:white ; padding: 0;"
-                    class="btn btn-outline-light btn-lg "> <a style="color: black; padding: 15px;" href={{imagepath}}{{owner.cinImage}}
-                      target="_blank"><i class="bi bi-credit-card-2-front-fill " ></i></a></button></div>
-              </div>
 
               <div class="row">
-                <div class="col-lg-3 col-md-4 label"> Afficher le preuve</div>
-                <div class="col-lg-9 col-md-8"> <button style="border-color:white ;padding: 0;"
-                    class="btn btn-outline-light btn-lg "> <a style="color: black;padding: 15px;;" href={{imagepath}}{{owner.proof}}
-                      target="_blank"><i class="bi bi-credit-card-2-front-fill "></i></a></button></div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-2 col-md-4 label"><button (click)="sendOwnerToUpdate()"
+                <div class="col-lg-2 col-md-4 label"><button (click)="sendClientToUpdate()"
                     class="btn btn-primary">Modifier</button></div>
-                    <div *ngIf="owner.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button
+                    <div *ngIf="client.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button
                       class="btn btn-warning " (click)="changeAccountStauts()" >Désactiver le compte</button></div>
-                      <div  *ngIf="owner.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button
+                      <div  *ngIf="client.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button
                         class="btn btn-primary" (click)="changeAccountStauts()">Activer le compte</button></div>
                 <div class="col-lg-3 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
                     class="btn btn-danger">Supprimer</button></div>
@@ -191,7 +178,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-            (click)="deleteOwner()">Supprimer</button>
+            (click)="deleteClient()">Supprimer</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
 
         </div>
