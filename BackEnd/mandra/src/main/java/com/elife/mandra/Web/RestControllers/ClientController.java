@@ -212,7 +212,7 @@ public class ClientController {
     // ---------------------------------- change Client Account State endpoint -----------------------------------
 
     @PutMapping("/{clientId}/change-account-state")
-    @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
+    // @PreAuthorize("hasAnyRole('Admin') and hasAuthority('UPDATE_PRIVILEGE')")
     public ResponseEntity<Object> changeOwnerAccountState(@PathVariable(value = "clientId") Long clientId ) {
         try{
     Client updatedClient = clientService.changeClientAccountState(clientId);
