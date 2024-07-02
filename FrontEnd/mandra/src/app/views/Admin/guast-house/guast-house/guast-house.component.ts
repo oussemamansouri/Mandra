@@ -2,7 +2,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { GuastHouseService } from 'src/app/services/apiServices/guastHouseService/guast-house.service';
-import { HotelService } from 'src/app/services/apiServices/hotelService/hotel.service';
 
 @Component({
   selector: 'app-guast-house',
@@ -11,20 +10,19 @@ import { HotelService } from 'src/app/services/apiServices/hotelService/hotel.se
 })
 export class GuastHouseComponent implements OnInit {
 
-
-  guastHouses!:any[]
-  guastHouse:any = {}
+  guastHouses: any[] = [];
+  guastHouse: any = {};
   page: number = 0;
   size: number = 12;
   totalPages: number = 0; // Initialize as 0
   baseURL!: string;
+  loading: boolean = false; // Add loading state
 
-
-  constructor( private guastHouseService:GuastHouseService, private router:Router, @Inject("BaseURL") private BaseURL: string) {
+  constructor(private guastHouseService: GuastHouseService, private router: Router, @Inject("BaseURL") private BaseURL: string) {
     this.baseURL = BaseURL;
-   }
+  }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.loadGuastHouses();
   }
 
@@ -35,17 +33,19 @@ export class GuastHouseComponent implements OnInit {
     }
   }
 
-
-  loadGuastHouses(){
+  loadGuastHouses(): void {
+    this.loading = true; // Set loading to true before fetching data
     this.guastHouseService.getGuastHouses(this.page, this.size).subscribe({
-      next: (info:any) => {
+      next: (info: any) => {
         this.guastHouses = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.loading = false; // Set loading to false after data is fetched
       },
-      error:(err: HttpErrorResponse) => {
-        console.error('Error loading guast Houses:', err.message);
+      error: (err: HttpErrorResponse) => {
+        console.error('Error loading guest houses:', err.message);
+        this.loading = false; // Set loading to false in case of error
       }
-  });
+    });
   }
 
   openModal(guastHouse: any): void {
@@ -58,10 +58,8 @@ export class GuastHouseComponent implements OnInit {
 
   deleteGuastHouse(): void {
     this.guastHouseService.deleteGuastHouse(this.guastHouse.id).subscribe(
-      (res) =>
-        this.loadGuastHouses()
-    ),(err:HttpErrorResponse)=>
-      this.router.navigate(['/admin'])
-       console.log("error while deletting maisons d'hôtes")
+      (res) => this.loadGuastHouses(),
+      (err: HttpErrorResponse) => console.error("Error while deleting guest house:", err.message)
+    );
   }
 }
