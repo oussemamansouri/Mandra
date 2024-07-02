@@ -1,8 +1,11 @@
+import { GuastHouseService } from './../../../../services/apiServices/guastHouseService/guast-house.service';
 import { BaseURL } from 'src/app/Shared/base-url';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwnerService } from 'src/app/services/apiServices/OwnerService/owner.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HotelService } from 'src/app/services/apiServices/hotelService/hotel.service';
+import { RestaurantService } from 'src/app/services/apiServices/restaurantService/restaurant.service';
 
 @Component({
   selector: 'app-owner-details',
@@ -14,6 +17,14 @@ export class OwnerDetailsComponent implements OnInit{
   ownerId: any
   owner: any
   imagepath!: string
+  ownerHotels:any[] = []
+  ownerGuastHouses:any[] = []
+  ownerRestaurants:any[] = []
+  hotel:any = {}
+  restaurant:any = {}
+  guastHouse:any = {}
+
+  /////////// later
   participation: any
   participants: any = []
   achat: any
@@ -22,9 +33,11 @@ export class OwnerDetailsComponent implements OnInit{
   buys: any = []
   ebookid: any
   ebook: any = { id: '', titre: '', discription: '', auteur: '', format: '', nb_pages: '', img: '', prix: '', promotion: '', book: '', createdAt: '', updatedAt: '', CentreId: '' }
+////////////
 
   constructor(private route: ActivatedRoute, private ownerService: OwnerService, private router: Router,
-    @Inject('BaseURL') private BaseURL: string
+    @Inject('BaseURL') private BaseURL: string, private hotelService:HotelService, private guastHouseService:GuastHouseService,
+    private restaurantService:RestaurantService
   ) { this.imagepath = this.BaseURL }
 
   ngOnInit(): void {
@@ -34,9 +47,12 @@ export class OwnerDetailsComponent implements OnInit{
   loadOwner() {
     this.ownerId = this.route.snapshot.queryParams['ownerId']
     this.ownerService.getOwnerById(this.ownerId).subscribe({
-      next: (data) =>
-        this.owner = data,
-      error: (err: HttpErrorResponse) =>
+      next: (data) =>{
+        this.owner = data
+        this.ownerHotels = data.hotels
+        this.ownerGuastHouses = data.guesthouses
+        this.ownerRestaurants = data.restaurants
+      },error: (err: HttpErrorResponse) =>
         console.log('error when traying to load owner' + err.message)
     })
   }
@@ -77,61 +93,48 @@ export class OwnerDetailsComponent implements OnInit{
   }
 
 
-  sendid2() {
-    // this.router.navigate(['/admin/ebook/buys'],{queryParams:{ebookId:this.ebookid}})
+  openHotelModal(hotel: any): void {
+    this.hotel = hotel;
   }
 
-  getformationid(id: any) {
-    this.formationid = id
-    // this.api.getformation(id).subscribe(data=>{this.formation=data
-    //   if (this.formation.certifiee=='true'){
-    //     this.formation.certifiee='Oui'
-    //   }else if (this.formation.certifiee=='false'){
-    //     this.formation.certifiee='Non'
-    //   }
-    // })
-    // this.api.getparticipant(id).subscribe(info=>this.participants=info)
+
+  deleteHotel(): void {
+    this.hotelService.deleteHotel(this.hotel.id).subscribe(
+      (res) =>
+        this.loadOwner()
+    ),(err:HttpErrorResponse)=>
+       console.log("error while deletting hotel")
   }
 
-  deleteformation() {
-    // this.api.deleteparticipation(this.clientId,this.formationid).subscribe(info=>this.ngOnInit())
+
+
+  openRestaurantModal(restaurant: any): void {
+    this.restaurant = restaurant;
   }
 
-  getbookId(id: any) {
-    //     this.ebookid=id
-    // this.api.getebookbyid(id).subscribe(info=>{this.ebook=info})
-    // this.api.getbuyersebook(id).subscribe(data=>this.buys=data)
+  openGuastHouseModal(guastHouse: any): void {
+    this.guastHouse = guastHouse;
   }
 
-  deleteebook() {
-    // this.api.deleteachatclient(this.clientId,this.ebookid).subscribe(info=>this.ngOnInit())
+
+  deleteRestaurant(): void {
+    this.restaurantService.deleteRestaurant(this.restaurant.id).subscribe(
+      (res) =>
+        this.loadOwner()
+    ),(err:HttpErrorResponse)=>
+       console.log("error while deletting restaurant")
   }
 
-  downloadebook() {
-    // this.api.downloadebook(this.ebookid).subscribe((blob) => {
-    //   const fileName = `Ebook.${this.ebook.format}`;
-    //   const url = window.URL.createObjectURL(blob);
-    //   const a = document.createElement('a');
-    //   document.body.appendChild(a);
-    //   a.setAttribute('style', 'display: none');
-    //   a.href = url;
-    //   a.download = fileName;
-    //   a.click();
-    //   window.URL.revokeObjectURL(url);
-    //   a.remove(); // remove the element
-    // });
-  }
 
-  sendformationid() {
-    // this.router.navigate(['/admin/formation/update'],{queryParams:{formationId:this.formationid}})
-  }
-  sendebookid() {
-    // this.router.navigate(['/admin/ebook/update'],{queryParams:{ebookId:this.ebookid}})
-  }
-  sendid() {
-    // this.router.navigate(['/admin/formation/participants'],{queryParams:{formationId:this.formationid}})
-  }
 
+  deleteGuastHouse(): void {
+    this.guastHouseService.deleteGuastHouse(this.guastHouse.id).subscribe(
+      (res) =>
+        this.loadOwner()
+    ),(err:HttpErrorResponse)=>
+      this.router.navigate(['/admin'])
+       console.log("error while deletting maisons d'hôtes")
+  }
 
 
 

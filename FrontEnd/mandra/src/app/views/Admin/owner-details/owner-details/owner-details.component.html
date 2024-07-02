@@ -39,7 +39,7 @@
             <li class="nav-item"> <button class="nav-link active" style="color: black;" data-bs-toggle="tab"
                 data-bs-target="#profile-overview">Aperçu</button></li>
             <li class="nav-item"> <button class="nav-link" style="color: black;" data-bs-toggle="tab"
-                data-bs-target="#profile-hôtels">hôtels</button></li>
+                data-bs-target="#profile-hôtels">Hôtels</button></li>
             <li class="nav-item"> <button class="nav-link" style="color: black;" data-bs-toggle="tab"
                 data-bs-target="#profile-Restaurants">Restaurants</button></li>
             <li class="nav-item"> <button class="nav-link" style="color: black;" data-bs-toggle="tab"
@@ -77,38 +77,46 @@
                 <div class="col-lg-3 col-md-4 label"> Afficher le preuve</div>
                 <div class="col-lg-9 col-md-8"> <button style="border-color:white ;padding: 0;"
                     class="btn btn-outline-light btn-lg "> <a style="color: black;padding: 15px;;" href={{imagepath}}{{owner.proof}}
-                      target="_blank"><i class="bi bi-credit-card-2-front-fill "></i></a></button></div>
+                      target="_blank"><i class="bi bi-file-earmark-pdf-fill "></i></a></button></div>
               </div>
 
-              <div class="row">
-                <div class="col-lg-2 col-md-4 label"><button (click)="sendOwnerToUpdate()"
-                    class="btn btn-primary">Modifier</button></div>
-                    <div *ngIf="owner.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button
-                      class="btn btn-warning " (click)="changeAccountStauts()" >Désactiver le compte</button></div>
-                      <div  *ngIf="owner.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button
-                        class="btn btn-primary" (click)="changeAccountStauts()">Activer le compte</button></div>
-                <div class="col-lg-3 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
-                    class="btn btn-danger">Supprimer</button></div>
+
+              <div class="flex-bottons-container">
+                <div class="bottun">
+                  <button (click)="sendOwnerToUpdate()" class="btn btn-primary">Modifier</button>
+                </div>
+                <div class="bottun" *ngIf="owner.accountState == 'Active' "><button class="btn btn-warning "
+                    (click)="changeAccountStauts()">Désactiver le compte</button>
+                </div>
+                <div class="bottun" *ngIf="owner.accountState == 'Disabled' "><button class="btn btn-primary"
+                    (click)="changeAccountStauts()">Activer le compte</button>
+                </div>
+
+                <div class="bottun">
+                  <button data-bs-toggle="modal" data-bs-target="#exampleModal5"
+                    class="btn btn-danger">Supprimer</button>
+                </div>
+
               </div>
             </div>
 
 
             <div class="tab-pane fade pt-3" id="profile-hôtels">
-              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="participation==0">
-                Ce client ne participe à aucune formation
+              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="ownerHotels.length < 1">
+                Ce propriétaire n’a pas d’hôtel
               </div>
               <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col" *ngFor="let item of participation">
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3"
-                    class="btn btn-outline-light" (click)="getformationid(item.Formation.id)">
+                <div class="col" *ngFor="let item of ownerHotels">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#hotelModule"
+                    class="btn btn-outline-light" (click)="openHotelModal(item)">
                     <div class="card h-100">
                       <div class="zoomcard">
-                        <img src="{{imagepath}}{{item.Formation.img}}" class="card-img-top" alt="..."
+                        <img src="{{imagepath}}{{item.hotelImage[0].imagePath}}" class="card-img-top" alt="..."
                           style="height: 200px; width: 200px; object-fit: cover;">
 
                       </div>
                       <div class="card-body">
-                        <h5 class="card-title">{{item.Formation.titre}}</h5>
+                        <h5 class="card-title">{{item.name}}</h5>
                       </div>
                     </div>
                   </button>
@@ -119,20 +127,20 @@
 
 
             <div class="tab-pane fade pt-3" id="profile-Restaurants">
-              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="achat==0">
-                Ce client n’a pas d’ebooks
+              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="ownerRestaurants.length < 1">
+                Ce propriétaire n’a pas un restaurant
               </div>
               <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col" *ngFor="let item of achat">
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    class="btn btn-outline-light" (click)="getbookId(item.Ebook.id)">
+                <div class="col" *ngFor="let item of ownerRestaurants">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#restaurantModule"
+                    class="btn btn-outline-light" (click)="openRestaurantModal(item)">
                     <div class="card h-100">
                       <div class="zoomcard">
-                        <img src="{{imagepath}}{{item.Ebook.img}}" class="card-img-top" alt="..."
+                        <img src="{{imagepath}}{{item.restaurantImage[0].imagePath}}" class="card-img-top" alt="..."
                           style="height: 200px; width: 200px; object-fit: cover;">
                       </div>
                       <div class="card-body">
-                        <h5 class="card-title">{{item.Ebook.titre}}</h5>
+                        <h5 class="card-title">{{item.name}}</h5>
                       </div>
                     </div>
                   </button>
@@ -142,30 +150,27 @@
 
 
             <div class="tab-pane fade pt-3" id="profile-hôtes">
-              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="achat==0">
-                Ce client n’a pas d’ebooks
+              <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="ownerGuastHouses.length < 1">
+                Ce propriétaire n'a pas une maison d'hôte
               </div>
               <div class="row row-cols-1 row-cols-md-3 g-4">
-                <div class="col" *ngFor="let item of achat">
-                  <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                    class="btn btn-outline-light" (click)="getbookId(item.Ebook.id)">
+                <div class="col" *ngFor="let item of ownerGuastHouses">
+                  <button type="button" data-bs-toggle="modal" data-bs-target="#guastHouseModal"
+                    class="btn btn-outline-light" (click)="openGuastHouseModal(item)">
                     <div class="card h-100">
                       <div class="zoomcard">
-                        <img src="{{imagepath}}{{item.Ebook.img}}" class="card-img-top" alt="..."
+                        <img src="{{imagepath}}{{item.guestHouseImage[0].imagePath}}" class="card-img-top" alt="..."
                           style="height: 200px; width: 200px; object-fit: cover;">
 
                       </div>
                       <div class="card-body">
-                        <h5 class="card-title">{{item.Ebook.titre}}</h5>
-                        <!-- <p class="card-text"  style="color: black;"> {{item.Ebook.discription}}</p> -->
+                        <h5 class="card-title">{{item.name}}</h5>
                       </div>
                     </div>
                   </button>
                 </div>
               </div>
             </div>
-
-
 
           </div>
         </div>
@@ -201,217 +206,128 @@
 
 
 
+            <!-- ------------------------------------------------------------------------ -->
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <!-- Modal -->
+  <div class="modal fade" id="hotelModule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ebook.titre | titlecase}}</h1>
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ hotel.name | titlecase }}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body ">
+        <div class="modal-body">
 
-          <div class="col-md-2 col-lg-2" class="row mb-3">
-            <img src="{{imagepath}}{{ebook.img}}" alt="Profile">
-          </div>
-
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;">Acheteurs : </div>
-            <div class="col-lg-9 col-md-8">{{buys.count | number}}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="feather feather-user">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" *ngFor="let img of hotel.hotelImage; let i = index"
+                      [attr.data-bs-target]="'#carouselExampleIndicators'"
+                      [attr.data-bs-slide-to]="i"
+                      [ngClass]="{ 'active': i === 0 }"
+                      aria-current="true"
+                      [attr.aria-label]="'Slide ' + (i + 1)">
+              </button>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;">Description :</div>
-            <div class="col-lg-9 col-md-8" style="word-wrap: break-word">{{ebook.discription | titlecase}}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970; ">Auteur :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.auteur | titlecase }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Format :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.format }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  "> Pages :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.nb_pages | number}}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Prix :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.prix | number}} DT</div>
-          </div>
-          <div class="row" *ngIf="ebook.promotion">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Promotion :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.promotion | number }} %</div>
-          </div>
-          <div class="row" *ngIf="ebook.categorie!='Autre'">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Domaine :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.categorie | titlecase }} </div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Créé à :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.createdAt | date }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 label" style="color:#012970;  ">Mis à jour à :</div>
-            <div class="col-lg-9 col-md-8">{{ebook.updatedAt | date }} </div>
-          </div>
-
-
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="downloadebook()" class="btn btn-outline-dark btn-sm " title="Download Ebook">
-            <span class="material-symbols-outlined">
-              download
-            </span></button>
-          <button *ngIf="buys.count!=0" type="button" (click)="sendid2()" data-bs-dismiss="modal"
-            class="btn btn-outline-dark btn-sm " title="Voir les acheteurs"> <span class="material-symbols-outlined">
-              group
-            </span></button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendebookid()">Mettre à
-            jour</button>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal"
-            data-bs-target="#exampleModal2">Supprimer</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body ">
-
-          Êtes-vous sûr de vouloir supprimer ce ebook ? <br>
-          il supprimera également toutes les données qui y sont liées !!
-        </div>
-        <div class="modal-footer">
-
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-            (click)="deleteebook()">Supprimer</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">{{formation.titre | titlecase}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body ">
-
-          <div class="col-md-2 col-lg-2" class="row mb-3">
-            <img src="{{imagepath}}{{formation.img}}" alt="Profile">
-          </div>
-
-
-
-          <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;">participation : </div>
-            <div class="col-lg-8 col-md-8">{{participants.count | number}}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="feather feather-user">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let img of hotel.hotelImage; let i = index"
+                                       [ngClass]="{ 'active': i === 0 }">
+                <img [src]="imagepath + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;">
+              </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.city | titlecase }}</div>
           </div>
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
-            <div class="col-lg-8 col-md-8" style="word-wrap: break-word">{{formation.discription | titlecase}}</div>
-          </div>
-          <div class="row" *ngIf="formation.date_debut ">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970; ">Date de la debut :</div>
-            <div class="col-lg-8 col-md-8">{{formation.date_debut | date }}</div>
-          </div>
-          <div class="row" *ngIf="formation.date_fin ">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970; ">Date de la fin :</div>
-            <div class="col-lg-8 col-md-8">{{formation.date_fin | date }}</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.description | titlecase}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Prix :</div>
-            <div class="col-lg-8 col-md-8">{{formation.prix }} DT</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  "> Heures :</div>
-            <div class="col-lg-8 col-md-8">{{formation.heures | number}} h</div>
-          </div>
-          <div class="row" *ngIf="formation.promotion">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Promotion :</div>
-            <div class="col-lg-8 col-md-8">{{formation.promotion | number}} %</div>
-          </div>
-          <div class="row" *ngIf="formation.categorie!='Autre'">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Domaine :</div>
-            <div class="col-lg-8 col-md-8">{{formation.categorie | titlecase}} </div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.address | titlecase }}</div>
           </div>
 
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Etat :</div>
-            <div class="col-lg-8 col-md-8">{{formation.etat | titlecase}} </div>
-          </div>
-
-          <div class="row" *ngIf="formation.diplome">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Diplome :</div>
-            <div class="col-lg-8 col-md-8">{{formation.diplome | titlecase}} </div>
-          </div>
-
-          <div class="row" *ngIf="formation.certifiee">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Certifiee :</div>
-            <div class="col-lg-8 col-md-8">{{formation.certifiee | titlecase}} </div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Email :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.email }}</div>
           </div>
 
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Centre :</div>
-            <div class="col-lg-8 col-md-8">{{formation.Centre.name | titlecase}} </div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">N° téléphone  :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.phoneNumber }}</div>
           </div>
 
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Localisation :</div>
-            <div class="col-lg-8 col-md-8">{{formation.Centre.localisation | titlecase}} </div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;"> Nb° de chambres :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.numberOfRooms | number }}</div>
           </div>
 
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Télephone :</div>
-            <div class="col-lg-8 col-md-8">{{formation.Centre.tel }} </div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">étoile :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.nbOfStars | number}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Créé à :</div>
-            <div class="col-lg-8 col-md-8">{{formation.createdAt | date }} </div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Wifi :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasWifi ? 'Oui' : 'Non'}}</div>
           </div>
           <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;  ">Mis a jour à :</div>
-            <div class="col-lg-8 col-md-8">{{formation.updatedAt | date }}</div>
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Parking :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasParking ? 'Oui' : 'Non'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Restaurant :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasRestaurant ? 'Oui' : 'Non' }}</div>
           </div>
 
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Piscine :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasPool ? 'Oui' : 'Non'}}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Gym :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasGym ? 'Oui' : 'Non' }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Accepte les animaux :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.allowsPets ? 'Oui' : 'Non'}}</div>
+          </div>
+
+          <div class="row" *ngIf="hotel.website || hotel.facebook || hotel.instagram">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Réseaux Sociaux :</div>
+            <div class="col-lg-8 col-md-8">
+              <a *ngIf="hotel.website" [href]="hotel.website"><i class="bi bi-globe me-2 " style="color: black;"></i></a>
+              <a *ngIf="hotel.facebook" [href]="hotel.facebook"><i class="bi bi-facebook me-2 " style="color: rgb(56, 69, 241);"></i></a>
+              <a *ngIf="hotel.instagram" [href]="hotel.instagram"><i class="bi bi-instagram me-2" style="color: rgb(180, 77, 232);"></i></a>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.createDate | date }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.updateDate | date }}</div>
+          </div>
         </div>
         <div class="modal-footer">
-          <button *ngIf="participants.count!=0" type="button" class="btn btn-outline-dark" data-bs-dismiss="modal"
-            (click)="sendid()">Participants</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendformationid()">Mettre à
-            jour</button>
-          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal"
-            data-bs-target="#exampleModal4">Supprimer</button>
+          <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendIdToUpdate()">Mettre à jour</button> -->
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#exampleModal4">Supprimer</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
         </div>
       </div>
@@ -426,18 +342,279 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body ">
-          Êtes-vous sûr de vouloir supprimer ce formation ? <br>
-          il supprimera également toutes les données qui y sont liées !!
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer cet hôtel ? <br>
+          Cela supprimera également toutes les données qui y sont liées !!
         </div>
         <div class="modal-footer">
-
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
-            (click)="deleteformation()">Supprimer</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteHotel()">Supprimer</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
         </div>
       </div>
     </div>
   </div>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="restaurantModule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">{{ restaurant.name | titlecase }}</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <div id="carouselExampleIndicators2" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-indicators">
+                <button type="button" *ngFor="let img of restaurant.restaurantImage; let i = index"
+                        [attr.data-bs-target]="'#carouselExampleIndicators2'"
+                        [attr.data-bs-slide-to]="i"
+                        [ngClass]="{ 'active': i === 0 }"
+                        aria-current="true"
+                        [attr.aria-label]="'Slide ' + (i + 1)">
+                </button>
+              </div>
+              <div class="carousel-inner">
+                <div class="carousel-item" *ngFor="let img of restaurant.restaurantImage; let i = index"
+                                         [ngClass]="{ 'active': i === 0 }">
+                  <img [src]="imagepath + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;">
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators2" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+
+
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.city | titlecase }}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.description | titlecase}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.address | titlecase }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Email :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.email }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">N° téléphone  :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.phoneNumber }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Wifi :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.hasWifi ? 'Oui' : 'Non'}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Parking :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.hasParking ? 'Oui' : 'Non'}}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Avec terrasse :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.withTerrace? 'Oui' : 'Non'}}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Accepte la réservation :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.acceptsReservation ? 'Oui' : 'Non'}}</div>
+            </div>
+
+            <div class="row" *ngIf="restaurant.website || restaurant.facebook || restaurant.instagram">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Réseaux Sociaux :</div>
+              <div class="col-lg-8 col-md-8">
+                <a *ngIf="restaurant.website" [href]="restaurant.website"><i class="bi bi-globe me-2 " style="color: black;"></i></a>
+                <a *ngIf="restaurant.facebook" [href]="restaurant.facebook"><i class="bi bi-facebook me-2 " style="color: rgb(56, 69, 241);"></i></a>
+                <a *ngIf="restaurant.instagram" [href]="restaurant.instagram"><i class="bi bi-instagram me-2" style="color: rgb(180, 77, 232);"></i></a>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.createDate | date }}</div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
+              <div class="col-lg-8 col-md-8">{{ restaurant.updateDate | date }}</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendIdToUpdate()">Mettre à jour</button> -->
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deleterestaurantModule">Supprimer</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deleterestaurantModule" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Êtes-vous sûr de vouloir supprimer cet restaurant ? <br>
+            Cela supprimera également toutes les données qui y sont liées !!
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteRestaurant()">Supprimer</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+ <!-- Modal -->
+ <div class="modal fade" id="guastHouseModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ guastHouse.name | titlecase }}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div id="carouselExampleIndicators3" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" *ngFor="let img of guastHouse.guestHouseImage; let i = index"
+                    [attr.data-bs-target]="'#carouselExampleIndicators3'"
+                    [attr.data-bs-slide-to]="i"
+                    [ngClass]="{ 'active': i === 0 }"
+                    aria-current="true"
+                    [attr.aria-label]="'Slide ' + (i + 1)">
+            </button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item" *ngFor="let img of guastHouse.guestHouseImage; let i = index"
+                                     [ngClass]="{ 'active': i === 0 }">
+              <img [src]="imagepath + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators3" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.city | titlecase }}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.description | titlecase}}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.address | titlecase }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Email :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.email }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">N° téléphone  :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.phoneNumber }}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Piscine :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.hasPool ? 'Oui' : 'Non'}}</div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Wifi :</div>
+          <div class="col-lg-8 col-md-8">  {{ guastHouse.hasWifi ? 'Oui' : 'Non' }}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Parking :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.hasParking ? 'Oui' : 'Non' }}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Restaurant :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.hasRestaurant ? 'Oui' : 'Non'  }}</div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Accepte les animaux :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.allowsPets ? 'Oui' : 'Non'}}</div>
+        </div>
+
+        <div class="row" *ngIf="guastHouse.website || guastHouse.facebook || guastHouse.instagram">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Réseaux Sociaux :</div>
+          <div class="col-lg-8 col-md-8">
+            <a *ngIf="guastHouse.website" [href]="guastHouse.website"><i class="bi bi-globe me-2 " style="color: black;"></i></a>
+            <a *ngIf="guastHouse.facebook" [href]="guastHouse.facebook"><i class="bi bi-facebook me-2 " style="color: rgb(56, 69, 241);"></i></a>
+            <a *ngIf="guastHouse.instagram" [href]="guastHouse.instagram"><i class="bi bi-instagram me-2" style="color: rgb(180, 77, 232);"></i></a>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.createDate | date }}</div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
+          <div class="col-lg-8 col-md-8">{{ guastHouse.updateDate | date }}</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendIdToUpdate()">Mettre à jour</button> -->
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#deleteGuastHouse">Supprimer</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteGuastHouse" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer cet maisons d'hôtes ? <br>
+        Cela supprimera également toutes les données qui y sont liées !!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteGuastHouse()">Supprimer</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </section>
