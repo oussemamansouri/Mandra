@@ -16,8 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
-
 import java.util.Date;
 
 @AllArgsConstructor
@@ -34,11 +32,11 @@ public class Reservation {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hotel_id")
-    private Hotel hotel;
+    private String hotel;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
-    private Client client;
+    private String client;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "check_in")
@@ -52,19 +50,17 @@ public class Reservation {
     private int numOfAdults;
 
     @Column(name = "children")
-    private int numOfChildrens;
+    private int numOfChildren;
 
     @Column(name = "num_of_rooms")
     private int numOfRooms;
-
-    // Getters and Setters
-    public int getNumOfRooms() {
-        return numOfRooms;
-    }
-
-    public void setNumOfRooms(int numOfRooms) {
+    public Reservation(String string, String string2, Date checkInDate, Date checkOutDate, int numOfAdults, int numOfChildren, int numOfRooms) {
+        this.hotel = string;
+        this.client = string2;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.numOfAdults = numOfAdults;
+        this.numOfChildren = numOfChildren;
         this.numOfRooms = numOfRooms;
     }
-
-   
 }
