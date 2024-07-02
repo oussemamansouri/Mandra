@@ -16,7 +16,6 @@ import com.elife.mandra.DAO.Entities.OptionControl.RoleOption;
 import com.elife.mandra.DAO.Repositories.AdminRepository;
 import com.elife.mandra.DAO.Repositories.ClientRepository;
 import com.elife.mandra.DAO.Repositories.OwnerRepository;
-import com.elife.mandra.Web.Requests.UserForms.AddUserForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdatePasswordForm;
 import com.elife.mandra.Web.Requests.UserForms.UpdateUserForm;
 
@@ -54,36 +53,28 @@ public class AdminServiceImp implements AdminService{
 
 
 
- // ----------------------------------     add Admin      -----------------------------------
+ // ---------------------------------- Create Admin -----------------------------------
 
-public Admin addAdmin(AddUserForm adminForm) {
-
-    String email = adminForm.getEmail();
+public void createDefaultAdmin() {
     
     // Check if the email is already used by any user type
-    boolean emailExists = clientRepository.existsByEmail(email) ||
-                          ownerRepository.existsByEmail(email) ||
-                          adminRepository.existsByEmail(email);
+    boolean emailExists =  adminRepository.existsByEmail("admin@gmail.com");
 
-    if (emailExists) {
-        throw new RuntimeException("This email is already in use!");
-    }
+    if (!emailExists) {
         try {
-                adminForm.setPassword(bCryptPasswordEncoder.encode(adminForm.getPassword()));
-                Admin newAdmin = new Admin(
-                    adminForm.getFirstname(),
-                    adminForm.getLastname(),
-                    adminForm.getEmail(),
-                    adminForm.getPassword(),
-                    adminForm.getPhoneNumber(),
-                    RoleOption.Admin,
-                    null
-                );
-                return adminRepository.save(newAdmin);
+               Admin admin = new Admin("Oussama",
+                "Mansouri",
+                "admin@gmail.com" ,
+                bCryptPasswordEncoder.encode("12345AZERT@") ,
+                "98650478" ,
+                RoleOption.Admin,
+                 null );
+                 adminRepository.save(admin);
         } catch (Exception e) {
             LOGGER.error("Error while adding admin", e);
             throw new RuntimeException("Error while adding admin: " + e.getMessage(), e);
         }
+    }
     }
 
 
