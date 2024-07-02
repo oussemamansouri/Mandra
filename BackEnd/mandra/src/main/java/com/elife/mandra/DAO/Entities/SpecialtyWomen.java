@@ -52,12 +52,6 @@ public class SpecialtyWomen {
         @Column(name = "image",nullable = true)
         private String image ;
 
-        @Column(name = "nbOfRaters", nullable = true)
-        private long nbOfRaters;
-      
-        @Column(name = "rateScore", nullable = true)
-        private long rateScore;
-
         @Column(name = "createDate",nullable = false,updatable = false)
         @Temporal(TemporalType.TIMESTAMP)
         private Date createDate ;
