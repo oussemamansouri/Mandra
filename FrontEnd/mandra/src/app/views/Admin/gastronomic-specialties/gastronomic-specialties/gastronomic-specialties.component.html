@@ -9,10 +9,18 @@
 </div>
 
 <section class="section profile">
-  <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="gastronomicSpecialties.length < 1">
+  <!-- Spinner -->
+  <div class="text-center" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="!loading && gastronomicSpecialties.length < 1">
     IL n'y a pas encore des spécialités gastronomiques !
   </div>
-  <div class="row row-cols-1 row-cols-md-4 g-4">
+
+  <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="!loading && gastronomicSpecialties.length > 0">
     <div class="col" *ngFor="let item of gastronomicSpecialties">
       <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
         <div class="card h-100 shadow-lg ">
@@ -42,12 +50,9 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-
-          <div class="col-md-2 col-lg-2" class="row mb-3">
-            <img src="{{baseURL}}{{gastronomicSpecialtie.image}}" alt="Profile">
-         </div>
-
-
+          <div class="col-md-2 col-lg-2 row mb-3">
+            <img [src]="baseURL + gastronomicSpecialtie.image" alt="Profile">
+          </div>
 
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
@@ -61,7 +66,6 @@
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
             <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.address | titlecase }}</div>
           </div>
-
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
             <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.createDate | date }}</div>
@@ -72,7 +76,6 @@
           </div>
         </div>
         <div class="modal-footer">
-          <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendIdToUpdate()">Mettre à jour</button> -->
           <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#exampleModal4">Supprimer</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
         </div>
@@ -89,7 +92,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          Êtes-vous sûr de vouloir supprimer cet gastronomiques specialties ? <br>
+          Êtes-vous sûr de vouloir supprimer cette spécialité gastronomique ? <br>
           Cela supprimera également toutes les données qui y sont liées !!
         </div>
         <div class="modal-footer">

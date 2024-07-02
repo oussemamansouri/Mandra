@@ -10,19 +10,23 @@ import { GastronomicSpecialtiesService } from 'src/app/services/apiServices/gast
 })
 export class GastronomicSpecialtiesComponent implements OnInit {
 
-  gastronomicSpecialties!:any[]
-  gastronomicSpecialtie:any = {}
+  gastronomicSpecialties!: any[];
+  gastronomicSpecialtie: any = {};
   page: number = 0;
   size: number = 12;
   totalPages: number = 0; // Initialize as 0
   baseURL!: string;
+  loading: boolean = false; // Add loading state
 
-
-  constructor( private gastronomicSpecialtiesService:GastronomicSpecialtiesService, private router:Router, @Inject("BaseURL") private BaseURL: string) {
+  constructor(
+    private gastronomicSpecialtiesService: GastronomicSpecialtiesService,
+    private router: Router,
+    @Inject("BaseURL") private BaseURL: string
+  ) {
     this.baseURL = BaseURL;
-   }
+  }
 
-   ngOnInit(): void {
+  ngOnInit(): void {
     this.loadGastronomicSpecialties();
   }
 
@@ -33,17 +37,19 @@ export class GastronomicSpecialtiesComponent implements OnInit {
     }
   }
 
-
-  loadGastronomicSpecialties(){
+  loadGastronomicSpecialties(): void {
+    this.loading = true; // Set loading to true
     this.gastronomicSpecialtiesService.getGastronomicSpecialties(this.page, this.size).subscribe({
-      next: (info:any) => {
+      next: (info: any) => {
         this.gastronomicSpecialties = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.loading = false; // Set loading to false when done
       },
-      error:(err: HttpErrorResponse) => {
-        console.error('Error loading gastronomic Specialtie :', err.message);
+      error: (err: HttpErrorResponse) => {
+        console.error('Error loading gastronomic specialties:', err.message);
+        this.loading = false; // Set loading to false on error
       }
-  });
+    });
   }
 
   openModal(gastronomicSpecialtie: any): void {
@@ -55,10 +61,13 @@ export class GastronomicSpecialtiesComponent implements OnInit {
   }
 
   deleteGastronomicSpecialties(): void {
-    this.gastronomicSpecialtiesService.deleteGastronomicSpecialtie(this.gastronomicSpecialtie.id).subscribe(
-      (res) =>
-        this.loadGastronomicSpecialties()
-    ),(err:HttpErrorResponse)=>
-       console.log("error while deletting gastronomicS pecialtie")
+    this.gastronomicSpecialtiesService.deleteGastronomicSpecialtie(this.gastronomicSpecialtie.id).subscribe({
+      next: (res) => {
+        this.loadGastronomicSpecialties();
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error while deleting gastronomic specialty:', err.message);
+      }
+    });
   }
 }
