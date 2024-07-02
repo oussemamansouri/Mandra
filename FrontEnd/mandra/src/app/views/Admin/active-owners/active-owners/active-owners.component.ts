@@ -11,39 +11,41 @@ import { OwnerService } from 'src/app/services/apiServices/OwnerService/owner.se
 export class ActiveOwnersComponent implements OnInit {
   searchTerm: any;
   baseURL!: string;
-  owners: any[] = []; // Initialize as an empty array
+  owners: any[] = [];
   ownerid: any;
   page: number = 0;
   size: number = 10;
-  totalPages: number = 0; // Initialize as 0
+  totalPages: number = 0;
+  isLoading: boolean = true;
 
-  constructor(@Inject("BaseURL") private BaseURL: string, private ownerService: OwnerService,
-  private changeDetectorRef: ChangeDetectorRef,
-   private router: Router) {
+  constructor(
+    @Inject("BaseURL") private BaseURL: string,
+    private ownerService: OwnerService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router
+  ) {
     this.baseURL = BaseURL;
   }
 
-
-
-
   ngOnInit(): void {
     this.loadOwners();
-    //  this.changeDetectorRef.detectChanges();
   }
 
   loadOwners(): void {
+    this.isLoading = true;
     this.ownerService.getActiveOwners(this.page, this.size).subscribe({
-      next: (info:any) => {
+      next: (info: any) => {
         this.owners = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.isLoading = false;
         this.changeDetectorRef.detectChanges();
       },
-      error:(err: HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         console.error('Error loading owners:', err.message);
+        this.isLoading = false; 
       }
-  });
+    });
   }
-
 
   onPageChange(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
@@ -52,67 +54,42 @@ export class ActiveOwnersComponent implements OnInit {
     }
   }
 
-
   getOwnerid(id: any) {
-    this.ownerid = id
+    this.ownerid = id;
   }
 
   deleteOwner(): void {
     if (this.ownerid) {
       this.ownerService.deleteOwner(this.ownerid).subscribe({
-        next:(res:any) => {
+        next: (res: any) => {
           console.log('Owner deleted successfully');
           this.loadOwners();
-          // this.changeDetectorRef.detectChanges();
         },
-        error:(err: HttpErrorResponse) => {
-          this.router.navigate(['/admin'])
+        error: (err: HttpErrorResponse) => {
+          this.router.navigate(['/admin']);
           console.error('Error while deleting owner:', err.message);
         }
-    });
+      });
     } else {
       console.error('No owner ID provided for deletion');
     }
   }
 
-
-
   changeToActive(id: number) {
     this.ownerService.changeOwnerStatus(id).subscribe({
-      next:() =>{
-        // this.loadOwners();
-        this.router.navigate(['/admin/owners/disabled'])
+      next: () => {
+        this.router.navigate(['/admin/owners/disabled']);
       },
-      error:(err:HttpErrorResponse) =>
+      error: (err: HttpErrorResponse) =>
         console.log("Error while changing owner account state")
-  })
+    });
   }
 
   sendId(id: any) {
-    this.router.navigate(['/admin/owners/details'], { queryParams: { ownerId: id } })
-
+    this.router.navigate(['/admin/owners/details'], { queryParams: { ownerId: id } });
   }
+
   sendOwnerId(id: any) {
-    this.router.navigate(['/admin/owners/update'], { queryParams: { ownerId: id } })
+    this.router.navigate(['/admin/owners/update'], { queryParams: { ownerId: id } });
   }
-
-
-
-
-  // filter() {
-  //   if (!this.searchTerm) {
-  //     return this.owners;
-  //   }
-
-  //   const filteredClients = this.owners.filter((client: any) => {
-  //     const firstNameMatch = client.firstname.toLowerCase().includes(this.searchTerm.toLowerCase());
-  //     const lastNameMatch = client.lastname.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-  //     return firstNameMatch || lastNameMatch;
-  //   });
-
-  //   return filteredClients;
-  // }
-
-
 }
