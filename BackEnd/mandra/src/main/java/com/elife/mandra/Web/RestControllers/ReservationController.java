@@ -98,4 +98,19 @@ public class ReservationController {
           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
       }
   }
+
+   // ---------------------------------- Get Reservations By Client endpoint -----------------------------------
+
+   @GetMapping("/client/{clientName}")
+   public ResponseEntity<Object> getReservationsByClient(
+           @PathVariable(value = "clientName") String clientName,
+           @PageableDefault(size = 10) Pageable pageable) {
+       try {
+           Page<Reservation> reservationPage = reservationService.getReservationsByClient(clientName, pageable);
+           return ResponseEntity.status(HttpStatus.OK).body(reservationPage);
+       } catch (Exception e) {
+           ErrorResponse errorResponse = new ErrorResponse("Error while getting reservations for client: " + clientName, e.getMessage());
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+       }
+   }
 }
