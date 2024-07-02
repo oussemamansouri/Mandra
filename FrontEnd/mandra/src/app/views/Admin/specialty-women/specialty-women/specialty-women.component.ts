@@ -16,6 +16,7 @@ export class SpecialtyWomenComponent implements OnInit {
   size: number = 12;
   totalPages: number = 0; // Initialize as 0
   baseURL!: string;
+  loading: boolean = false;
 
 
   constructor( private specialtyWomenService:SpecialtyWomenService, private router:Router, @Inject("BaseURL") private BaseURL: string) {
@@ -35,13 +36,16 @@ export class SpecialtyWomenComponent implements OnInit {
 
 
   loadSpecialtyWomens(){
+    this.loading = true;
     this.specialtyWomenService.getSpecialtyWomens(this.page, this.size).subscribe({
       next: (info:any) => {
         this.specialtyWomens = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.loading = false;
       },
       error:(err: HttpErrorResponse) => {
         console.error('Error loading Specialty Womens :', err.message);
+        this.loading = false;
       }
   });
   }
