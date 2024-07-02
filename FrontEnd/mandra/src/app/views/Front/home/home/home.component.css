@@ -96,14 +96,13 @@
 }
 
 .width {
-  max-width: 90vw;
-  background-color: rgb(90, 171, 219);
+  max-width: 100vw;
+  background-color: rgb(27, 51, 100);
   color: #FFF;
 }
 .lien{
-  color: rgb(27, 51, 100);
+  color: #1dbbff;
 }
-
 .lien:hover{
   color: #aae5ff;
 }
@@ -142,7 +141,7 @@
   position: relative;
   cursor: pointer;
   margin: 20px;
-  border: none; 
+  border: none;
 
 }
 
@@ -153,8 +152,8 @@
   transition: 0.5s;
   background: transparent;
   border: solid;
-  
-  
+
+
 }
 
 .container2 .card .face.face1{
@@ -195,7 +194,7 @@
   color: #444444;
   text-align: center;
   font-size: 1.5em;
-  
+
 }
 
 .container2 .card .face.face2{
@@ -287,9 +286,10 @@ a{
 }
 
 
+
+
 .contact-us, .send-message {
   padding: 40px 0;
-  background-color: #fff;
   text-align: center;
 }
 

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { ProcessHttpmsgService } from 'src/app/Shared/process-httpmsg-service';
@@ -6,7 +6,7 @@ import { ProcessHttpmsgService } from 'src/app/Shared/process-httpmsg-service';
 @Injectable({
   providedIn: 'root'
 })
-export class HotelService {
+export class SpecialtyWomenService {
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,24 +17,22 @@ export class HotelService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getHotels(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/hotels?page=${page}&size=${size}`;
+    getSpecialtyWomens(page: number, size: number): Observable<any> {
+      const url = `${this.baseUrl}/specialtywomens?page=${page}&size=${size}`;
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
 
-    getHotelById(hotelId: number): Observable<any> {
-      return this.http.get<any>(this.baseUrl + `/hotels/${hotelId}`, this.httpOptions)
+    getSpecialtyWomenById(specialtyWomenId: number): Observable<any> {
+      return this.http.get<any>(this.baseUrl + `/specialtywomens/${specialtyWomenId}`, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
 
-    deleteHotel(hotelId: number): Observable<any> {
-      return this.http.delete<any>(`${this.baseUrl}/hotels/${hotelId}/delete`, {  withCredentials: true})
+    deleteSpecialtyWomen(specialtyWomenId: number): Observable<any> {
+      return this.http.delete<any>(`${this.baseUrl}/specialtywomens/${specialtyWomenId}/delete`, {  withCredentials: true})
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
-
-
 
 }

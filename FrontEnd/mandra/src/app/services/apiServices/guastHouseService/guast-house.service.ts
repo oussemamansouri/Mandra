@@ -6,7 +6,7 @@ import { ProcessHttpmsgService } from 'src/app/Shared/process-httpmsg-service';
 @Injectable({
   providedIn: 'root'
 })
-export class HotelService {
+export class GuastHouseService {
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -17,24 +17,23 @@ export class HotelService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getHotels(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/hotels?page=${page}&size=${size}`;
+    getGuastHouses(page: number, size: number): Observable<any> {
+      const url = `${this.baseUrl}/guesthouses?page=${page}&size=${size}`;
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
 
-    getHotelById(hotelId: number): Observable<any> {
-      return this.http.get<any>(this.baseUrl + `/hotels/${hotelId}`, this.httpOptions)
+    getGuastHouseById(guastHousId: number): Observable<any> {
+      return this.http.get<any>(this.baseUrl + `/guesthouses/${guastHousId}`, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
 
-    deleteHotel(hotelId: number): Observable<any> {
-      return this.http.delete<any>(`${this.baseUrl}/hotels/${hotelId}/delete`, {  withCredentials: true})
+    deleteGuastHouse(guastHousId: number): Observable<any> {
+      return this.http.delete<any>(`${this.baseUrl}/guesthouses/${guastHousId}/delete`, {  withCredentials: true})
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
-
 
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { ProcessHttpmsgService } from 'src/app/Shared/process-httpmsg-service';
@@ -6,8 +6,7 @@ import { ProcessHttpmsgService } from 'src/app/Shared/process-httpmsg-service';
 @Injectable({
   providedIn: 'root'
 })
-export class HotelService {
-
+export class GastronomicSpecialtiesService {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true
@@ -17,24 +16,22 @@ export class HotelService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getHotels(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/hotels?page=${page}&size=${size}`;
+    getGastronomicSpecialties(page: number, size: number): Observable<any> {
+      const url = `${this.baseUrl}/gastronomicspecialties?page=${page}&size=${size}`;
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
 
-    getHotelById(hotelId: number): Observable<any> {
-      return this.http.get<any>(this.baseUrl + `/hotels/${hotelId}`, this.httpOptions)
+    getGastronomicSpecialtieById(gastronomicspecialtieId: number): Observable<any> {
+      return this.http.get<any>(this.baseUrl + `/gastronomicspecialties/${gastronomicspecialtieId}`, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
 
 
-    deleteHotel(hotelId: number): Observable<any> {
-      return this.http.delete<any>(`${this.baseUrl}/hotels/${hotelId}/delete`, {  withCredentials: true})
+    deleteGastronomicSpecialtie(gastronomicspecialtieId: number): Observable<any> {
+      return this.http.delete<any>(`${this.baseUrl}/gastronomicspecialties/${gastronomicspecialtieId}/delete`, {  withCredentials: true})
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
-
-
 
 }

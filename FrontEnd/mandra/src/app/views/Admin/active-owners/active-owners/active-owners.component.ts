@@ -66,6 +66,7 @@ export class ActiveOwnersComponent implements OnInit {
           // this.changeDetectorRef.detectChanges();
         },
         error:(err: HttpErrorResponse) => {
+          this.router.navigate(['/admin'])
           console.error('Error while deleting owner:', err.message);
         }
     });
@@ -80,7 +81,7 @@ export class ActiveOwnersComponent implements OnInit {
     this.ownerService.changeOwnerStatus(id).subscribe({
       next:() =>{
         // this.loadOwners();
-        this.router.navigate(['/admin/owners/active'])
+        this.router.navigate(['/admin/owners/disabled'])
       },
       error:(err:HttpErrorResponse) =>
         console.log("Error while changing owner account state")

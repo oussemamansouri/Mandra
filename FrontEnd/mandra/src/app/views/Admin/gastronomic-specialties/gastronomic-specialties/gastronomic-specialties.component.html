@@ -1,0 +1,99 @@
+<div class="pagetitle">
+  <h1>Gastronomiques specialties</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/admin">Admin</a></li>
+      <li class="breadcrumb-item active">Gastronomiques specialties</li>
+    </ol>
+  </nav>
+</div>
+
+<section class="section profile">
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="col" *ngFor="let item of gastronomicSpecialties">
+      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
+        <div class="card h-100 shadow-lg ">
+          <div class="zoomcard">
+            <img [src]="baseURL + item.image" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name | titlecase }}</h5>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="btn btn-primary" (click)="onPageChange(page - 1)" [disabled]="page === 0">Previous</button>
+    <span class="btn ">Page {{ page + 1 }} of {{ totalPages }}</span>
+    <button class="btn btn-primary" (click)="onPageChange(page + 1)" [disabled]="page === totalPages - 1">Next</button>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ gastronomicSpecialtie.name | titlecase }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="col-md-2 col-lg-2" class="row mb-3">
+            <img src="{{baseURL}}{{gastronomicSpecialtie.image}}" alt="Profile">
+         </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
+            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.city | titlecase }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
+            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.description | titlecase}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.address | titlecase }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
+            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.createDate | date }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
+            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.updateDate | date }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="sendIdToUpdate()">Mettre à jour</button> -->
+          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#exampleModal4">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Attention</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Êtes-vous sûr de vouloir supprimer cet gastronomiques specialties ? <br>
+          Cela supprimera également toutes les données qui y sont liées !!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="deleteGastronomicSpecialties()">Supprimer</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -68,6 +68,7 @@ export class DisabledOwnersComponent implements OnInit{
         },
         error:(err: HttpErrorResponse) => {
           console.error('Error while deleting owner:', err.message);
+          this.router.navigate(['/admin'])
         }
     });
     } else {
