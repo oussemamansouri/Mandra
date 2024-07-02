@@ -30,13 +30,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hotel_id")
-    private String hotel;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "client_id")
-    private String client;
+  
 
     @Temporal(TemporalType.DATE)
     @Column(name = "check_in")
@@ -54,9 +48,19 @@ public class Reservation {
 
     @Column(name = "num_of_rooms")
     private int numOfRooms;
-    public Reservation(String string, String string2, Date checkInDate, Date checkOutDate, int numOfAdults, int numOfChildren, int numOfRooms) {
-        this.hotel = string;
-        this.client = string2;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "client_id")
+    private Client client;
+
+
+
+    public Reservation( Date checkInDate, Date checkOutDate, int numOfAdults, int numOfChildren, int numOfRooms) {
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.numOfAdults = numOfAdults;

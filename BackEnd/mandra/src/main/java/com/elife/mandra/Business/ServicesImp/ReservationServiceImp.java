@@ -29,8 +29,6 @@ public class ReservationServiceImp implements ReservationService {
         try {
             // Construct your Reservation entity here
             Reservation newReservation = new Reservation(
-                reservationForm.getHotelName(),
-                reservationForm.getClientName(),
                 reservationForm.getCheckInDate(),
                 reservationForm.getCheckOutDate(),
                 reservationForm.getNumOfAdults(),
