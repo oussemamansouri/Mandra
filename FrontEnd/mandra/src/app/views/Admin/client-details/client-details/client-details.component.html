@@ -17,7 +17,8 @@
           <div class="zoom">
             <label for="image" class="upload-image">
               <img *ngIf="client.image" src="{{imagepath}}{{client.image}}" alt="Profile" class="rounded-circle">
-              <img *ngIf="!client.image" src="../../../../../assets/img/default-image.jpg" alt="Profile" class="rounded-circle">
+              <img *ngIf="!client.image" src="../../../../../assets/img/default-image.jpg" alt="Profile"
+                class="rounded-circle">
               <span class="fa-stack fa-lg upload-icon">
                 <i class="fas fa-circle fa-stack-2x"></i>
                 <i class="fas fa-cloud-upload-alt fa-stack-1x fa-inverse"></i>
@@ -67,15 +68,22 @@
               </div>
 
 
-              <div class="row">
-                <div class="col-lg-2 col-md-4 label"><button (click)="sendClientToUpdate()"
-                    class="btn btn-primary">Modifier</button></div>
-                    <div *ngIf="client.accountState == 'Active' " class="col-lg-3 col-md-4 label"><button
-                      class="btn btn-warning " (click)="changeAccountStauts()" >Désactiver le compte</button></div>
-                      <div  *ngIf="client.accountState == 'Disabled' " class="col-lg-3 col-md-4 label"><button
-                        class="btn btn-primary" (click)="changeAccountStauts()">Activer le compte</button></div>
-                <div class="col-lg-3 col-md-4"><button data-bs-toggle="modal" data-bs-target="#exampleModal5"
-                    class="btn btn-danger">Supprimer</button></div>
+              <div class="flex-bottons-container">
+                <div class="bottun">
+                  <button (click)="sendClientToUpdate()" class="btn btn-primary">Modifier</button>
+                </div>
+                <div class="bottun" *ngIf="client.accountState == 'Active' "><button class="btn btn-warning "
+                    (click)="changeAccountStauts()">Désactiver le compte</button>
+                </div>
+                <div class="bottun" *ngIf="client.accountState == 'Disabled' "><button class="btn btn-primary"
+                    (click)="changeAccountStauts()">Activer le compte</button>
+                </div>
+
+                <div class="bottun">
+                  <button data-bs-toggle="modal" data-bs-target="#exampleModal5"
+                    class="btn btn-danger">Supprimer</button>
+                </div>
+
               </div>
             </div>
 

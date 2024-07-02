@@ -55,3 +55,15 @@
 .upload-image:hover .upload-icon {
   opacity: 1;
 }
+
+
+.flex-bottons-container{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flex-bottons-container .bottun{
+  margin: 15px;
+}
