@@ -12,8 +12,8 @@
   <div class="row row-cols-1 row-cols-md-4 g-4">
     <div class="col" *ngFor="let item of hotels">
       <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
-        <div class="card h-100 shadow-lg">
-          <div class="zoom">
+        <div class="card h-100 shadow-lg ">
+          <div class="zoomcard">
             <img [src]="baseURL + item.hotelImage[0].imagePath" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
           </div>
           <div class="card-body">
@@ -22,6 +22,12 @@
         </div>
       </button>
     </div>
+  </div>
+
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button class="btn btn-primary" (click)="onPageChange(page - 1)" [disabled]="page === 0">Previous</button>
+    <span class="btn ">Page {{ page + 1 }} of {{ totalPages }}</span>
+    <button class="btn btn-primary" (click)="onPageChange(page + 1)" [disabled]="page === totalPages - 1">Next</button>
   </div>
 
   <!-- Modal -->
@@ -106,6 +112,12 @@
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Restaurant :</div>
             <div class="col-lg-8 col-md-8">{{ hotel.hasRestaurant | booleanToText }}</div>
           </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Piscine :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasPool | booleanToText}}</div>
+          </div>
+
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Gym :</div>
             <div class="col-lg-8 col-md-8">{{ hotel.hasGym | booleanToText }}</div>

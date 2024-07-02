@@ -27,6 +27,13 @@ export class HotelComponent implements OnInit {
     this.loadHotels();
   }
 
+  onPageChange(newPage: number): void {
+    if (newPage >= 0 && newPage < this.totalPages) {
+      this.page = newPage;
+      this.loadHotels();
+    }
+  }
+
 
   loadHotels(){
     this.hotelService.getHotels(this.page, this.size).subscribe({
@@ -55,4 +62,10 @@ export class HotelComponent implements OnInit {
     ),(err:HttpErrorResponse)=>
        console.log("error while deletting hotel")
   }
+
+
+  
+
+
+
 }
