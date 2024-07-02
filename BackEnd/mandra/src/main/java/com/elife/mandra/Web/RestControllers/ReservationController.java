@@ -99,7 +99,7 @@ public class ReservationController {
       }
   }
 
- 
+   // ---------------------------------- Get Reservations By Client endpoint -----------------------------------
 
    @GetMapping("/client/{clientName}")
    public ResponseEntity<Object> getReservationsByClient(
