@@ -70,4 +70,17 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+
+ // ---------------------------------- Delete Reservation endpoint -----------------------------------
+
+ @DeleteMapping("/{reservationId}/delete")
+ public ResponseEntity<Object> deleteReservation(@PathVariable(value = "reservationId") Long reservationId) {
+     try {
+         String message = reservationService.deleteReservation(reservationId);
+         return ResponseEntity.status(HttpStatus.ACCEPTED).body(message);
+     } catch (Exception e) {
+         ErrorResponse errorResponse = new ErrorResponse("Error while deleting reservation with id: " + reservationId, e.getMessage());
+         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+     }
+ }
 }
