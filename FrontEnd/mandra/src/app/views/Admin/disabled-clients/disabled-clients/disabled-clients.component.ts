@@ -65,6 +65,7 @@ export class DisabledClientsComponent implements OnInit {
           // this.changeDetectorRef.detectChanges();
         },
         error:(err: HttpErrorResponse) => {
+          this.router.navigate(['/admin'])
           console.error('Error while deleting client:', err.message);
         }
     });
@@ -79,7 +80,7 @@ export class DisabledClientsComponent implements OnInit {
     this.clientService.changeClientStatus(id).subscribe({
       next:() =>{
         // this.loadOwners();
-        this.router.navigate(['/admin/clients/disabled'])
+        this.router.navigate(['/admin/clients/active'])
       },
       error:(err:HttpErrorResponse) =>
         console.log("Error while changing client account state")
