@@ -16,6 +16,6 @@ public interface ReservationService {
     Page<Reservation> getReservationsByHotel(String hotelName, Pageable pageable);
     Page<Reservation> getReservationsByClient(String clientName, Pageable pageable);
 
-    
+    // Delete Operation
     String deleteReservation(Long reservationId);
 }
