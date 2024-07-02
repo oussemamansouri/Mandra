@@ -1,20 +1,32 @@
-import { Component, ElementRef } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { StatisticService } from './../../../services/apiServices/statisticService/statistic.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  constructor(private elementRef: ElementRef) { }
+  entitiesCounts:any = {}
+
+  constructor( private statisticService:StatisticService) { }
 
   ngOnInit(): void {
 
-    var s = document.createElement("script");
-    s.type = "text/javascript";
-    s.src = "../assets/js/main.js";
-    this.elementRef.nativeElement.appendChild(s);
+   this.loadEntitienCounts()
+  }
+
+
+  loadEntitienCounts(){
+    this.statisticService.getEntitiesCounts().subscribe(
+      counts =>
+        this.entitiesCounts = counts
+      ,(err:HttpErrorResponse) =>
+        console.log("Error while getting the content of all entities")
+    )
+
   }
 
 }
