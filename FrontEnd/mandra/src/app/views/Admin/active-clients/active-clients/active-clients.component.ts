@@ -65,6 +65,7 @@ export class ActiveClientsComponent implements OnInit {
           // this.changeDetectorRef.detectChanges();
         },
         error:(err: HttpErrorResponse) => {
+          this.router.navigate(['/admin'])
           console.error('Error while deleting client:', err.message);
         }
     });
