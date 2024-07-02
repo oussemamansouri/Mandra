@@ -59,6 +59,8 @@ public class Hotel extends Property {
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
+
+    
     public Hotel(String name, String description, String email, String address, String city,
                  String phoneNumber, String website, boolean hasParking, boolean hasWifi, boolean allowsPets,
                  String facebook, String instagram, int numberOfRooms, boolean hasGym, boolean hasPool,

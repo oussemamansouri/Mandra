@@ -38,8 +38,11 @@ public class Client extends User implements UserDetails{
     @Column(name = "accountState", nullable = false)
     private AccountStateOption accountState;
 
-    @OneToMany(mappedBy = "Client", cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations;
+
+
     public Client(String firstname, String lastname, String email, String password,
             String phoneNumber, RoleOption role, String image, AccountStateOption accountState) {
         this.setFirstname(firstname);
