@@ -9,6 +9,9 @@
 </div>
 
 <section class="section profile">
+  <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="restaurants.length < 1">
+    Il n’y a pas encore des restaurants !
+  </div>
   <div class="row row-cols-1 row-cols-md-4 g-4">
     <div class="col" *ngFor="let item of restaurants">
       <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
