@@ -11,38 +11,41 @@ import { ClientService } from 'src/app/services/apiServices/ClientService/client
 export class ActiveClientsComponent implements OnInit {
   searchTerm: any;
   baseURL!: string;
-  clients: any[] = []; // Initialize as an empty array
+  clients: any[] = [];
   clientId: any;
   page: number = 0;
   size: number = 10;
-  totalPages: number = 0; // Initialize as 0
+  totalPages: number = 0;
+  isLoading: boolean = true; 
 
-  constructor(@Inject("BaseURL") private BaseURL: string, private clientService: ClientService,
-  private changeDetectorRef: ChangeDetectorRef,
-   private router: Router) {
+  constructor(
+    @Inject("BaseURL") private BaseURL: string,
+    private clientService: ClientService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private router: Router
+  ) {
     this.baseURL = BaseURL;
   }
 
-
-
-
   ngOnInit(): void {
     this.loadClients();
-    //  this.changeDetectorRef.detectChanges();
   }
 
   loadClients(): void {
+    this.isLoading = true;
     this.clientService.getActiveClients(this.page, this.size).subscribe({
-      next: (info:any) => {
-        this.clients = info.content;
+      next: (info: any) => {
+        this.clients = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.isLoading = false;
+        this.changeDetectorRef.detectChanges();
       },
-      error:(err: HttpErrorResponse) => {
+      error: (err: HttpErrorResponse) => {
         console.error('Error loading clients:', err.message);
+        this.isLoading = false;
       }
-  });
+    });
   }
-
 
   onPageChange(newPage: number): void {
     if (newPage >= 0 && newPage < this.totalPages) {
@@ -51,66 +54,42 @@ export class ActiveClientsComponent implements OnInit {
     }
   }
 
-
   getClientid(id: number) {
-    this.clientId = id
+    this.clientId = id;
   }
 
   deleteClient(): void {
     if (this.clientId) {
       this.clientService.deleteClient(this.clientId).subscribe({
-        next:(res) => {
-          console.log('Owner deleted successfully');
+        next: (res) => {
+          console.log('Client deleted successfully');
           this.loadClients();
-          // this.changeDetectorRef.detectChanges();
         },
-        error:(err: HttpErrorResponse) => {
-          this.router.navigate(['/admin'])
+        error: (err: HttpErrorResponse) => {
+          this.router.navigate(['/admin']);
           console.error('Error while deleting client:', err.message);
         }
-    });
+      });
     } else {
       console.error('No client ID provided for deletion');
     }
   }
 
-
-
   changeToActive(id: number) {
     this.clientService.changeClientStatus(id).subscribe({
-      next:() =>{
-        // this.loadOwners();
-        this.router.navigate(['/admin/clients/disabled'])
+      next: () => {
+        this.router.navigate(['/admin/clients/disabled']);
       },
-      error:(err:HttpErrorResponse) =>
+      error: (err: HttpErrorResponse) =>
         console.log("Error while changing client account state")
-  })
+    });
   }
 
   ViewDetails(id: any) {
-    this.router.navigate(['/admin/clients/details'], { queryParams: { clientId: id } })
-
+    this.router.navigate(['/admin/clients/details'], { queryParams: { clientId: id } });
   }
+
   Update(id: any) {
-    this.router.navigate(['/admin/clients/update'], { queryParams: { clientId: id } })
+    this.router.navigate(['/admin/clients/update'], { queryParams: { clientId: id } });
   }
-
-
-
-
-  // filter() {
-  //   if (!this.searchTerm) {
-  //     return this.owners;
-  //   }
-
-  //   const filteredClients = this.owners.filter((client: any) => {
-  //     const firstNameMatch = client.firstname.toLowerCase().includes(this.searchTerm.toLowerCase());
-  //     const lastNameMatch = client.lastname.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-  //     return firstNameMatch || lastNameMatch;
-  //   });
-
-  //   return filteredClients;
-  // }
-
 }
