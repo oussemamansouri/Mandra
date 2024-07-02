@@ -58,4 +58,16 @@ public class ReservationController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }
+    // ---------------------------------- Get Reservation By Id endpoint -----------------------------------
+
+    @GetMapping("/{reservationId}")
+    public ResponseEntity<Object> getReservationById(@PathVariable(value = "reservationId") Long reservationId) {
+        try {
+            Reservation reservation = reservationService.getReservationById(reservationId);
+            return ResponseEntity.status(HttpStatus.OK).body(reservation);
+        } catch (Exception e) {
+            ErrorResponse errorResponse = new ErrorResponse("Error while getting reservation with id: " + reservationId, e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+        }
+    }
 }
