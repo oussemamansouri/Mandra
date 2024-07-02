@@ -18,6 +18,7 @@ export class RestaurantComponent implements OnInit {
   size: number = 12;
   totalPages: number = 0; // Initialize as 0
   baseURL!: string;
+  loading: boolean = false;
 
 
   constructor( private restaurantService:RestaurantService, private router:Router, @Inject("BaseURL") private BaseURL: string) {
@@ -37,13 +38,16 @@ export class RestaurantComponent implements OnInit {
 
 
   loadRestaurants(){
+    this.loading = true;
     this.restaurantService.getRestaurants(this.page, this.size).subscribe({
       next: (info:any) => {
         this.restaurants = info.content || [];
         this.totalPages = info.totalPages || 0;
+        this.loading = false; // Set loading to false after data is fetched
       },
       error:(err: HttpErrorResponse) => {
         console.error('Error loading restaurants :', err.message);
+        this.loading = false; // Set loading to false after data is fetched
       }
   });
   }
