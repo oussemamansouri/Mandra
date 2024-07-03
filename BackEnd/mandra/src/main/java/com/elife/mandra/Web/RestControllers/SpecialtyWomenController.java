@@ -115,12 +115,12 @@ public class SpecialtyWomenController {
 
     // ---------------------------------- get Specialty Women endpoint -----------------------------------
 
- @GetMapping("")
-    public ResponseEntity<Object> getSpecialtyWomens(@PageableDefault(size = 10) Pageable pageable) {
-        try{
-       Page<SpecialtyWomen> specialtyWomenPage = specialtyWomenService.getSpecialtyWomens(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(specialtyWomenPage);
-        }catch(Exception e){
+    @GetMapping("")
+    public ResponseEntity<Object> getSpecialtyWomens(@RequestParam(required = false) String searchTerm, @PageableDefault(size = 10) Pageable pageable) {
+        try {
+            Page<SpecialtyWomen> specialtyWomenPage = specialtyWomenService.getSpecialtyWomens(searchTerm, pageable);
+            return ResponseEntity.status(HttpStatus.OK).body(specialtyWomenPage);
+        } catch (Exception e) {
             ErrorResponse errorResponse = new ErrorResponse("Error while getting specialty womens ", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
