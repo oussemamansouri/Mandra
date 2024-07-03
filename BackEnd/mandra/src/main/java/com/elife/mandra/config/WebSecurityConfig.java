@@ -45,9 +45,9 @@ public class WebSecurityConfig {
                 "/clients/{client}/change-account-state",
                 "/owners/register","/owners/{id}/upload-proof", "/owners/{id}/upload-cin-image",
                 "/owners/{ownerId}/change-account-state",
-                "/specialtywomens/*","/specialtywomens/{specialtyWomenId}",
-                "/gastronomicspecialties/*","/gastronomicspecialties/{gastronomicspecialtieId}",
-                "/guesthouses/*","/guesthouses/{guesthouseId}",
+                "/specialtywomens","/specialtywomens/{specialtyWomenId}",
+                "/gastronomicspecialties","/gastronomicspecialties/{gastronomicspecialtieId}",
+                "/guesthouses","/guesthouses/{guesthouseId}",
                 "/restaurants","/restaurants/{restaurantId}",
                 "/hotels","/hotels/{hotelId}")
                 .permitAll()
