@@ -21,7 +21,7 @@ public interface SpecialtyWomenService {
             MultipartFile image);
 
     // Read operatoin
-    public Page<SpecialtyWomen> getSpecialtyWomens(Pageable pageable);
+    public Page<SpecialtyWomen> getSpecialtyWomens(String searchTerm, Pageable pageable);
     public SpecialtyWomen getSpecialtyWomenById(Long specialtyWomenId);
 
     // delete operation
