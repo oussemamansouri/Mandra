@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { GastronomicSpecialtiesRoutingModule } from './gastronomic-specialties-routing.module';
 import { GastronomicSpecialtiesComponent } from './gastronomic-specialties/gastronomic-specialties.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { GastronomicSpecialtiesComponent } from './gastronomic-specialties/gastr
   ],
   imports: [
     CommonModule,
-    GastronomicSpecialtiesRoutingModule
+    GastronomicSpecialtiesRoutingModule,
+    FormsModule
   ]
 })
 export class GastronomicSpecialtiesModule { }

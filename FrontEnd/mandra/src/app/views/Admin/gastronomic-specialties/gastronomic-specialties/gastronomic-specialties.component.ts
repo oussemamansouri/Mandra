@@ -14,9 +14,10 @@ export class GastronomicSpecialtiesComponent implements OnInit {
   gastronomicSpecialtie: any = {};
   page: number = 0;
   size: number = 12;
-  totalPages: number = 0; // Initialize as 0
+  totalPages: number = 0; 
   baseURL!: string;
-  loading: boolean = false; // Add loading state
+  loading: boolean = false;
+  searchTerm: string = '';
 
   constructor(
     private gastronomicSpecialtiesService: GastronomicSpecialtiesService,
@@ -37,17 +38,21 @@ export class GastronomicSpecialtiesComponent implements OnInit {
     }
   }
 
+  onSearchTermChange(): void {
+    this.loadGastronomicSpecialties();
+  }
+
   loadGastronomicSpecialties(): void {
-    this.loading = true; // Set loading to true
-    this.gastronomicSpecialtiesService.getGastronomicSpecialties(this.page, this.size).subscribe({
+    this.loading = true;
+    this.gastronomicSpecialtiesService.getGastronomicSpecialties(this.page, this.size, this.searchTerm).subscribe({
       next: (info: any) => {
         this.gastronomicSpecialties = info.content || [];
         this.totalPages = info.totalPages || 0;
-        this.loading = false; // Set loading to false when done
+        this.loading = false;
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error loading gastronomic specialties:', err.message);
-        this.loading = false; // Set loading to false on error
+        this.loading = false;
       }
     });
   }
