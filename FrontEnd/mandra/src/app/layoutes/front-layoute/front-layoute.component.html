@@ -37,16 +37,16 @@
   </nav>
 </header>
 
-
-  <br><br>
-<router-outlet></router-outlet>
+  <main class="serch-main">
+    <router-outlet></router-outlet>
+  </main>
 
 <aside class="side" [ngClass]="{ 'show': isSidebarOpen }">
   <ul class="sidebar-nav" >
     <li class="nav-item"> <a class="nav-link collapsed" routerLink="/"> <i class="bi bi-house-door"></i>  <span>Accueil</span> </a></li>
     <li class="nav-item" style="cursor: pointer;" *ngIf="user" (click)="navigateprofile()"> <a class="nav-link collapsed "  > <i class="bi bi-person"></i> <span>Profil</span> </a></li>
     <li class="nav-item" *ngIf="!user"> <a class="nav-link collapsed" routerLink="/signin"> <i class="bi bi-person"></i> <span>Connexion</span> </a></li>
-    <li class="nav-item"> <a class="nav-link collapsed " routerLink="/search"> <i class="bi bi-search"></i><span>Recherche</span> </a></li>
+    <li class="nav-item"> <a class="nav-link collapsed " routerLink="/hotels"> <i class="bi bi-search"></i><span>Recherche</span> </a></li>
     <li class="nav-item"> <a class="nav-link collapsed" routerLink="/about"> <i class="bi bi-card-text"></i><span>à propos de nous</span> </a></li>
   </ul>
 </aside>
