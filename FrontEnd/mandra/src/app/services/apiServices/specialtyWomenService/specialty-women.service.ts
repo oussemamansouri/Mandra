@@ -17,8 +17,11 @@ export class SpecialtyWomenService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getSpecialtyWomens(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/specialtywomens?page=${page}&size=${size}`;
+    getSpecialtyWomens(page: number, size: number, searchTerm?: string): Observable<any> {
+      let url = `${this.baseUrl}/specialtywomens?page=${page}&size=${size}`;
+      if (searchTerm) {
+        url += `&searchTerm=${searchTerm}`;
+      }
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
