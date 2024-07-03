@@ -21,7 +21,7 @@ public interface GastronomicSpecialtiesService {
     public GastronomicSpecialties updateGastronomicSpecialtieImage(Long GastronomicSpecialtieId, MultipartFile image);
 
     // Read operatoin
-    public Page<GastronomicSpecialties> getGastronomicSpecialties(Pageable pageable);
+    public Page<GastronomicSpecialties> getGastronomicSpecialties(String searchTerm, Pageable pageable);
     public GastronomicSpecialties getGastronomicSpecialtieById(Long GastronomicSpecialtieId);
 
     //delete operation
