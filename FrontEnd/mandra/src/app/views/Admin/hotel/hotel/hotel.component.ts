@@ -17,6 +17,7 @@ export class HotelComponent implements OnInit {
   totalPages: number = 0; // Initialize as 0
   baseURL!: string;
   loading: boolean = false;
+  searchTerm: string = '';
 
   constructor(private hotelService: HotelService, private router: Router, @Inject("BaseURL") private BaseURL: string) {
     this.baseURL = BaseURL;
@@ -35,7 +36,7 @@ export class HotelComponent implements OnInit {
 
   loadHotels(): void {
     this.loading = true;
-    this.hotelService.getHotels(this.page, this.size).subscribe({
+    this.hotelService.getHotels(this.page, this.size, this.searchTerm).subscribe({
       next: (info: any) => {
         this.hotels = info.content || [];
         this.totalPages = info.totalPages || 0;
@@ -43,9 +44,14 @@ export class HotelComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error loading hotels:', err.message);
-        this.loading = false; 
+        this.loading = false;
       }
     });
+  }
+
+
+  onSearchTermChange(): void {
+    this.loadHotels();
   }
 
   openModal(hotel: any): void {
