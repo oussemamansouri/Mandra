@@ -19,7 +19,7 @@ public interface GuesthouseService {
     public Guesthouse updateGuestHouseImage(Long guestHouseId, List<MultipartFile> images);
 
     // Read operation
-    public Page<Guesthouse> getGuestHouses(Pageable pageable);
+    public Page<Guesthouse> getGuestHouses(String searchTerm, Pageable pageable);
     public Guesthouse getGuestHousesById(Long guestHouseId);
 
     // Delete operation
