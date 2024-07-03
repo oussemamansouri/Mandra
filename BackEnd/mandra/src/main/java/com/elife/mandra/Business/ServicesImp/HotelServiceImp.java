@@ -229,11 +229,14 @@ public class HotelServiceImp implements HotelService {
     // ---------------------------------- get hotels -----------------------------------
 
     @Override
-    public Page<Hotel> getHotels(Pageable pageable) {
+    public Page<Hotel> getHotels(String searchTerm, Pageable pageable) {
         try {
-            return hotelRepository.findAll(pageable);
+            if (searchTerm == null || searchTerm.isEmpty()) {
+                return hotelRepository.findAll(pageable);
+            } else {
+                return hotelRepository.searchHotels(searchTerm, pageable);
+            }
         } catch (Exception e) {
-            LOGGER.error("Error while finding hotels", e);
             throw new RuntimeException("Failed to find hotels: " + e.getMessage(), e);
         }
     }
