@@ -113,12 +113,12 @@ public class GastronomicSpecialtiesController {
 
     // ---------------------------------- get Gastronomic Specialties endpoint -----------------------------------
 
- @GetMapping("")
-    public ResponseEntity<Object> getGastronomicSpecialties(@PageableDefault(size = 10) Pageable pageable) {
-        try{
-       Page<GastronomicSpecialties> gastronomicSpecialtiesPage = gastronomicSpecialtiesService.getGastronomicSpecialties(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(gastronomicSpecialtiesPage);
-        }catch(Exception e){
+    @GetMapping("")
+    public ResponseEntity<Object> getGastronomicSpecialties(@RequestParam(required = false) String searchTerm, @PageableDefault(size = 10) Pageable pageable) {
+        try {
+            Page<GastronomicSpecialties> gastronomicSpecialtiesPage = gastronomicSpecialtiesService.getGastronomicSpecialties(searchTerm, pageable);
+            return ResponseEntity.status(HttpStatus.OK).body(gastronomicSpecialtiesPage);
+        } catch (Exception e) {
             ErrorResponse errorResponse = new ErrorResponse("Error while getting gastronomic specialties ", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
