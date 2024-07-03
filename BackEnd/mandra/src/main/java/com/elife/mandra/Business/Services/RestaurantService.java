@@ -19,7 +19,7 @@ public interface RestaurantService {
     public Restaurant updateRestaurantImage(Long restaurantId, List<MultipartFile> images);
 
     //Read operation
-    public Page<Restaurant> getRestaurants(Pageable pageable);
+    public Page<Restaurant> getRestaurants(String searchTerm, Pageable pageable);
     public Restaurant getRestaurantById(Long restaurantId);
 
     //Delete operation
