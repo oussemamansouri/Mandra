@@ -1,10 +1,18 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
-  <div class="d-flex align-items-center justify-content-between"> <a routerLink="/" class="logo d-flex align-items-center"> <img src="../../../assets/img/logooo.png" alt="">   </a>  <i (click)="sidebarToggle()" class="bi bi-list toggle-sidebar-btn"></i> </div>
+  <div class="d-flex align-items-center justify-content-between">
+    <a routerLink="/" class="logo d-flex align-items-center" >
+      <span class="d-none d-lg-block" style="color: white; font-size: 2em; font-family: cursive;" > Mandra</span>
+    </a>
+     <i (click)="sidebarToggle()" class="bi bi-list toggle-sidebar-btn"></i>
+    </div>
 
   <nav class="header-nav ms-auto">
      <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3" *ngIf="user">
-           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img  src="{{baseURL}}{{user.image}}" alt="Profile" class="rounded-image"> <span class="d-none d-md-block dropdown-toggle ps-2">{{user.firstname| titlecase}}</span> </a>
+           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img *ngIf="user.image"  src="{{baseURL}}{{user.image}}" alt="Profile" class="rounded-image">
+            <img  *ngIf="!user.image" src="../../../assets/img/default-image.jpg" alt="Profile" class="rounded-image">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.firstname| titlecase}}</span> </a>
            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
                  <h6>{{user.firstname | titlecase}}</h6>
@@ -34,16 +42,16 @@
   </nav>
 </header>
 
-
-  <br><br>
-<router-outlet></router-outlet>
+  <main class="serch-main">
+    <router-outlet></router-outlet>
+  </main>
 
 <aside class="side" [ngClass]="{ 'show': isSidebarOpen }">
   <ul class="sidebar-nav" >
     <li class="nav-item"> <a class="nav-link collapsed" routerLink="/"> <i class="bi bi-house-door"></i>  <span>Accueil</span> </a></li>
     <li class="nav-item" style="cursor: pointer;" *ngIf="user" (click)="navigateprofile()"> <a class="nav-link collapsed "  > <i class="bi bi-person"></i> <span>Profil</span> </a></li>
     <li class="nav-item" *ngIf="!user"> <a class="nav-link collapsed" routerLink="/signin"> <i class="bi bi-person"></i> <span>Connexion</span> </a></li>
-    <li class="nav-item"> <a class="nav-link collapsed " routerLink="/search"> <i class="bi bi-search"></i><span>Recherche</span> </a></li>
+    <li class="nav-item"> <a class="nav-link collapsed " routerLink="/hotels"> <i class="bi bi-search"></i><span>Recherche</span> </a></li>
     <li class="nav-item"> <a class="nav-link collapsed" routerLink="/about"> <i class="bi bi-card-text"></i><span>à propos de nous</span> </a></li>
   </ul>
 </aside>

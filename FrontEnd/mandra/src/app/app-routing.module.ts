@@ -5,6 +5,7 @@ import { authenticationGuard } from './guards/authentication.guard';
 import { FrontLayouteComponent } from './layoutes/front-layoute/front-layoute.component';
 import { ClientLayouteComponent } from './layoutes/client-layoute/client-layoute.component';
 import { OwnerLayouteComponent } from './layoutes/owner-layoute/owner-layoute.component';
+import { PageNotFoundComponent } from './views/Front/page-not-found/page-not-found.component';
 
 const routes: Routes = [
     {path:'admin',component:AdminLayouteComponent,canActivate:[authenticationGuard],data: {roles: ['ROLE_Admin']}, children:[
@@ -45,7 +46,13 @@ const routes: Routes = [
     {path:'signup',loadChildren:()=>import('./views/Front/registre/registre.module').then(m=>m.RegistreModule)},
     {path:'signup/client',loadChildren:()=>import('./views/Front/registre-client/registre-client.module').then(m=>m.RegistreClientModule)},
     {path:'signup/owner',loadChildren:()=>import('./views/Front/registre-owner/registre-owner.module').then(m=>m.RegistreOwnerModule)},
-  ]}
+    {path:'hotels',loadChildren:()=>import('./views/Front/hotels/hotels.module').then(m=>m.HotelsModule)},
+    {path:'restaurants',loadChildren:()=>import('./views/Front/restaurants/restaurants.module').then(m=>m.RestaurantsModule)},
+    {path:'guast-house',loadChildren:()=>import('./views/Front/guest-houses/guest-houses.module').then(m=>m.GuestHousesModule)},
+    {path:'gastronomic-specialties',loadChildren:()=>import('./views/Front/gastronomic-specialties/gastronomic-specialties.module').then(m=>m.GastronomicSpecialtiesModule)},
+    {path:'specialty-women',loadChildren:()=>import('./views/Front/specialty-womens/specialty-womens.module').then(m=>m.SpecialtyWomensModule)},
+  ]},
+  {path:'**',component:PageNotFoundComponent}
 ];
 
 @NgModule({

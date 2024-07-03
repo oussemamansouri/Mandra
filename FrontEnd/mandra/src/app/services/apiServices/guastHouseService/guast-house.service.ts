@@ -17,11 +17,15 @@ export class GuastHouseService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getGuastHouses(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/guesthouses?page=${page}&size=${size}`;
+    getGuastHouses(page: number, size: number, searchTerm?: string): Observable<any> {
+      let url = `${this.baseUrl}/guesthouses?page=${page}&size=${size}`;
+      if (searchTerm) {
+        url += `&searchTerm=${searchTerm}`;
+      }
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
+
 
 
     getGuastHouseById(guastHousId: number): Observable<any> {

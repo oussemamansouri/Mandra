@@ -70,7 +70,7 @@ export class FrontLayouteComponent {
   navigateprofile() {
     switch (this.user.role) {
       case 'Admin':
-        this.router.navigate(['/admin'])
+        this.router.navigate(['/admin/profile'])
         break;
       case 'Owner':
         this.router.navigate(['/owner'])

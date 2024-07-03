@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SpecialtyWomenRoutingModule } from './specialty-women-routing.module';
 import { SpecialtyWomenComponent } from './specialty-women/specialty-women.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { SpecialtyWomenComponent } from './specialty-women/specialty-women.compo
   ],
   imports: [
     CommonModule,
-    SpecialtyWomenRoutingModule
+    SpecialtyWomenRoutingModule,
+    FormsModule
   ]
 })
 export class SpecialtyWomenModule { }

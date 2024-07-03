@@ -1,0 +1,200 @@
+<div class="pagetitle">
+  <h1> Accueil</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a routerLink="/">Accueil</a></li>
+      <li class="breadcrumb-item active">Recherche</li>
+    </ol>
+  </nav>
+</div>
+
+
+<div class="input-group mb-3 input-group-append" >
+  <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Nom, Région, Adresse ...." aria-label="Text input with dropdown button" >
+  <button class="btn btn-outline-primary hov" (click)="onSearchTermChange()"  type="button"><i class="bi bi-search"></i></button>
+</div>
+
+
+<div class="container d-flex justify-content-center mt-4">
+  <div class="btn-group"role="group" aria-label="Basic radio toggle button group">
+    <input type="radio" class="btn-check"  name="btnradio" id="btnradio1" autocomplete="off" checked >
+    <label class="btn btn-outline-primary" for="btnradio1" (click)="goToHotels()">Hôtels</label>
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" >
+    <label class="btn btn-outline-primary" for="btnradio2" (click)="goToRestaurants()" >Restaurants</label>
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off" >
+    <label class="btn btn-outline-primary" for="btnradio3"(click)="goToGuestHouses()">Maison D'hotes</label>
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off" >
+    <label class="btn btn-outline-primary" for="btnradio4"(click)="goToGastros()">Gastronomiques specialties</label>
+    <input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off" >
+    <label class="btn btn-outline-primary" for="btnradio5"(click)="goToSpecialty()">Femmes de spécialité </label>
+  </div>
+</div>
+
+
+<section class="section profile mt-5">
+
+  <!-- Spinner -->
+  <div class="text-center" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <div class="alert alert-primary d-flex align-items-center" role="alert" *ngIf="!loading && hotels.length < 1">
+    IL n’y a pas encore des hôtels !
+  </div>
+
+  <!-- Hotels List -->
+  <div class="row row-cols-1 row-cols-md-4 g-4" *ngIf="!loading">
+    <div class="col" *ngFor="let item of hotels">
+      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal3" class="btn btn-outline-light" (click)="openModal(item)">
+        <div class="card h-100 shadow-lg ">
+          <div class="zoomcard">
+            <img [src]="baseURL + item.hotelImage[0].imagePath" class="card-img-top" alt="..." style="height: 250px; width: 250px; object-fit: cover;">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name | titlecase }}</h5>
+          </div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1 && !loading">
+    <button class="btn btn-primary" (click)="onPageChange(page - 1)" [disabled]="page === 0">Previous</button>
+    <span class="btn ">Page {{ page + 1 }} of {{ totalPages }}</span>
+    <button class="btn btn-primary" (click)="onPageChange(page + 1)" [disabled]="page === totalPages - 1">Next</button>
+  </div>
+
+  <!-- Modal Content -->
+  <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ hotel.name | titlecase }}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" *ngFor="let img of hotel.hotelImage; let i = index"
+                      [attr.data-bs-target]="'#carouselExampleIndicators'"
+                      [attr.data-bs-slide-to]="i"
+                      [ngClass]="{ 'active': i === 0 }"
+                      aria-current="true"
+                      [attr.aria-label]="'Slide ' + (i + 1)">
+              </button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item" *ngFor="let img of hotel.hotelImage; let i = index"
+                                       [ngClass]="{ 'active': i === 0 }">
+                <img [src]="baseURL + img.imagePath" class="d-block w-100" alt="Image {{ i + 1 }}" style="height: 280px; width: 250px;">
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.city | titlecase }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Description :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.description | titlecase}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.address | titlecase }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Email :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.email }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">N° téléphone  :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.phoneNumber }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;"> Nb° de chambres :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.numberOfRooms | number }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">étoile :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.nbOfStars? 'Oui':'Non'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Wifi :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasWifi ? 'Oui':'Non'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Parking :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasParking ? 'Oui':'Non'}}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Restaurant :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasRestaurant ? 'Oui':'Non' }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Piscine :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasPool ? 'Oui':'Non'}}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Gym :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.hasGym ? 'Oui':'Non' }}</div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Accepte les animaux :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.allowsPets ? 'Oui':'Non'}}</div>
+          </div>
+
+          <div class="row" *ngIf="hotel.website || hotel.facebook || hotel.instagram">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Réseaux Sociaux :</div>
+            <div class="col-lg-8 col-md-8">
+              <a *ngIf="hotel.website" [href]="hotel.website"><i class="bi bi-globe me-2 " style="color: black;"></i></a>
+              <a *ngIf="hotel.facebook" [href]="hotel.facebook"><i class="bi bi-facebook me-2 " style="color: rgb(56, 69, 241);"></i></a>
+              <a *ngIf="hotel.instagram" [href]="hotel.instagram"><i class="bi bi-instagram me-2" style="color: rgb(180, 77, 232);"></i></a>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.createDate | date }}</div>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
+            <div class="col-lg-8 col-md-8">{{ hotel.updateDate | date }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</section>
+
+
+
+

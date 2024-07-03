@@ -7,11 +7,13 @@ import { LayoutesModule } from './layoutes/layoutes.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BaseURL } from './Shared/base-url';
 import { HttpInterceptor } from './Shared/http-interceptor';
+import { PageNotFoundComponent } from './views/Front/page-not-found/page-not-found.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent
 
   ],
   imports: [
