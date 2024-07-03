@@ -225,11 +225,14 @@ public class RestaurantServiceImp implements RestaurantService{
     // ---------------------------------- get restaurants -----------------------------------
 
     @Override
-    public Page<Restaurant> getRestaurants(Pageable pageable) {
+    public Page<Restaurant> getRestaurants(String searchTerm, Pageable pageable) {
         try {
-            return restaurantRepository.findAll(pageable);
+            if (searchTerm == null || searchTerm.isEmpty()) {
+                return restaurantRepository.findAll(pageable);
+            } else {
+                return restaurantRepository.searchRestaurants(searchTerm, pageable);
+            }
         } catch (Exception e) {
-            LOGGER.error("Error while finding restaurants", e);
             throw new RuntimeException("Failed to find restaurants: " + e.getMessage(), e);
         }
     }
