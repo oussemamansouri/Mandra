@@ -20,7 +20,7 @@ public interface HotelService {
     public Hotel updateHotelImages(Long hotelId, List<MultipartFile> images);
 
     //Read operation
-    public Page<Hotel> getHotels(Pageable pageable);
+    public Page<Hotel> getHotels(String searchTerm, Pageable pageable);
     public Hotel getHotelById(Long hotelId);
 
     //Delete operation
