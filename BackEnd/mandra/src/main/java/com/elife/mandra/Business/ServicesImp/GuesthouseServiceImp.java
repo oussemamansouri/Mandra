@@ -225,12 +225,15 @@ public class GuesthouseServiceImp implements GuesthouseService{
     // ---------------------------------- get guest houses -----------------------------------
 
     @Override
-    public Page<Guesthouse> getGuestHouses(Pageable pageable) {
+    public Page<Guesthouse> getGuestHouses(String searchTerm, Pageable pageable) {
         try {
-            return guestHouseRepository.findAll(pageable);
+            if (searchTerm == null || searchTerm.isEmpty()) {
+                return guestHouseRepository.findAll(pageable);
+            } else {
+                return guestHouseRepository.searchGuestHouses(searchTerm, pageable);
+            }
         } catch (Exception e) {
-            LOGGER.error("Error while finding guest houses :", e);
-            throw new RuntimeException("Failed to find guest house: " + e.getMessage(), e);
+            throw new RuntimeException("Failed to find guest houses: " + e.getMessage(), e);
         }
     }
 
