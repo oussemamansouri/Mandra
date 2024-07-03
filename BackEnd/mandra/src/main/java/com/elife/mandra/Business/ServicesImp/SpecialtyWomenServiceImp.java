@@ -140,11 +140,14 @@ public class SpecialtyWomenServiceImp implements SpecialtyWomenService{
     // ---------------------------------- get Specialty Womens  -----------------------------------
 
     @Override
-    public Page<SpecialtyWomen> getSpecialtyWomens(Pageable pageable) {
+    public Page<SpecialtyWomen> getSpecialtyWomens(String searchTerm, Pageable pageable) {
         try {
-            return specialtyWomenRepository.findAll(pageable);
+            if (searchTerm == null || searchTerm.isEmpty()) {
+                return specialtyWomenRepository.findAll(pageable);
+            } else {
+                return specialtyWomenRepository.searchSpecialtyWomens(searchTerm, pageable);
+            }
         } catch (Exception e) {
-            LOGGER.error("Error while finding specialty womens", e);
             throw new RuntimeException("Failed to find specialty womens: " + e.getMessage(), e);
         }
     }
