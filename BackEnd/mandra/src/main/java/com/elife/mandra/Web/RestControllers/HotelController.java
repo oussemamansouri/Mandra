@@ -110,12 +110,12 @@ public class HotelController {
 
     // ----------------------------------      get Hotels endpoint     -----------------------------------
 
- @GetMapping("")
-    public ResponseEntity<Object> getHotels(@PageableDefault(size = 12) Pageable pageable) {
-        try{
-       Page<Hotel> hotelPage = hotelService.getHotels(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(hotelPage);
-        }catch(Exception e){
+    @GetMapping("")
+    public ResponseEntity<Object> getHotels(@RequestParam(required = false) String searchTerm, @PageableDefault(size = 12) Pageable pageable) {
+        try {
+            Page<Hotel> hotelPage = hotelService.getHotels(searchTerm, pageable);
+            return ResponseEntity.status(HttpStatus.OK).body(hotelPage);
+        } catch (Exception e) {
             ErrorResponse errorResponse = new ErrorResponse("Error while getting hotels ", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
