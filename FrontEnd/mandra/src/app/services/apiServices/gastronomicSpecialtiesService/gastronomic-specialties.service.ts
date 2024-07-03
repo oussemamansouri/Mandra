@@ -16,8 +16,11 @@ export class GastronomicSpecialtiesService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getGastronomicSpecialties(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/gastronomicspecialties?page=${page}&size=${size}`;
+    getGastronomicSpecialties(page: number, size: number, searchTerm?: string): Observable<any> {
+      let url = `${this.baseUrl}/gastronomicspecialties?page=${page}&size=${size}`;
+      if (searchTerm) {
+        url += `&searchTerm=${searchTerm}`;
+      }
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }

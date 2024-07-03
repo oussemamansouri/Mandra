@@ -18,8 +18,11 @@ export class RestaurantService {
     private processHTTPMsgService: ProcessHttpmsgService) { }
 
 
-    getRestaurants(page: number, size: number): Observable<any> {
-      const url = `${this.baseUrl}/restaurants?page=${page}&size=${size}`;
+    getRestaurants(page: number, size: number, searchTerm?: string): Observable<any> {
+      let url = `${this.baseUrl}/restaurants?page=${page}&size=${size}`;
+      if (searchTerm) {
+        url += `&searchTerm=${searchTerm}`;
+      }
       return this.http.get<any>(url, this.httpOptions)
         .pipe(catchError(this.processHTTPMsgService.handleError));
     }
