@@ -4,7 +4,10 @@
   <nav class="header-nav ms-auto">
      <ul class="d-flex align-items-center">
         <li class="nav-item dropdown pe-3" *ngIf="user">
-           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img  src="{{baseURL}}{{user.image}}" alt="Profile" class="rounded-image"> <span class="d-none d-md-block dropdown-toggle ps-2">{{user.firstname| titlecase}}</span> </a>
+           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img *ngIf="user.image"  src="{{baseURL}}{{user.image}}" alt="Profile" class="rounded-image">
+            <img  *ngIf="!user.image" src="../../../assets/img/default-image.jpg" alt="Profile" class="rounded-image">
+            <span class="d-none d-md-block dropdown-toggle ps-2">{{user.firstname| titlecase}}</span> </a>
            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
               <li class="dropdown-header">
                  <h6>{{user.firstname | titlecase}}</h6>
