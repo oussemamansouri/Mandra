@@ -138,11 +138,14 @@ public class GastronomicSpecialtiesServiceImp implements GastronomicSpecialtiesS
     // ---------------------------------- get Gastronomic Specialtie -----------------------------------
 
     @Override
-    public Page<GastronomicSpecialties> getGastronomicSpecialties(Pageable pageable) {
+    public Page<GastronomicSpecialties> getGastronomicSpecialties(String searchTerm, Pageable pageable) {
         try {
-            return gastronomicRepository.findAll(pageable);
+            if (searchTerm == null || searchTerm.isEmpty()) {
+                return gastronomicRepository.findAll(pageable);
+            } else {
+                return gastronomicRepository.searchGastronomicSpecialties(searchTerm, pageable);
+            }
         } catch (Exception e) {
-            LOGGER.error("Error while finding gastronomic specialties", e);
             throw new RuntimeException("Failed to find gastronomic specialties: " + e.getMessage(), e);
         }
     }
