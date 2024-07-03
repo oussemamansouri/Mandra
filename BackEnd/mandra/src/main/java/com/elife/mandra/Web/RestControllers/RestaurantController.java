@@ -106,16 +106,16 @@ public class RestaurantController {
 
      // ----------------------------------      get Restaurants endpoint     -----------------------------------
 
- @GetMapping("")
-    public ResponseEntity<Object> getRestaurants(@PageableDefault(size = 10) Pageable pageable) {
-        try{
-       Page<Restaurant> restaurantPage = restaurantService.getRestaurants(pageable);
-       return ResponseEntity.status(HttpStatus.OK).body(restaurantPage);
-        }catch(Exception e){
-            ErrorResponse errorResponse = new ErrorResponse("Error while getting restaurants ", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-        }
-    }
+     @GetMapping("")
+     public ResponseEntity<Object> getRestaurants(@RequestParam(required = false) String searchTerm, @PageableDefault(size = 10) Pageable pageable) {
+         try {
+             Page<Restaurant> restaurantPage = restaurantService.getRestaurants(searchTerm, pageable);
+             return ResponseEntity.status(HttpStatus.OK).body(restaurantPage);
+         } catch (Exception e) {
+             ErrorResponse errorResponse = new ErrorResponse("Error while getting restaurants ", e.getMessage());
+             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+         }
+     }
 
 
 
