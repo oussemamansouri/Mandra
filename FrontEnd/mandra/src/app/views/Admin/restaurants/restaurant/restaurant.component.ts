@@ -10,13 +10,11 @@ import { RestaurantService } from 'src/app/services/apiServices/restaurantServic
 })
 export class RestaurantComponent implements OnInit {
 
-
-
   restaurants!:any[]
   restaurant:any = {}
   page: number = 0;
   size: number = 12;
-  totalPages: number = 0; 
+  totalPages: number = 0;
   baseURL!: string;
   loading: boolean = false;
   searchTerm: string = '';
