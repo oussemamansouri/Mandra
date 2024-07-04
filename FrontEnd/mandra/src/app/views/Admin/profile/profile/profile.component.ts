@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit, OnDestroy {
+  
   profile: any;
   AuthUserSub!: Subscription;
   baseURL!: string;
