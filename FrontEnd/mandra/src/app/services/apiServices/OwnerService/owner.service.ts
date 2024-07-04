@@ -75,4 +75,9 @@ export class OwnerService {
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
+  updateOwnerPassword(ownerId: number, updatedOwnerPassword: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/owners/${ownerId}/edit-password`, updatedOwnerPassword, this.httpOptions)
+      .pipe(catchError(this.processHTTPMsgService.handleError));
+  }
+
 }
