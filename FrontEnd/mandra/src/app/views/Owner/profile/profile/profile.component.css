@@ -1,0 +1,54 @@
+.upload-image {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+.upload-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.upload-image:hover .upload-icon {
+  opacity: 1;
+}
+
+.zoom {
+  position: relative;
+  display: inline-block;
+}
+
+.zoom img {
+  transition: transform .2s;
+  display: block;
+  height: auto;
+  border-radius: 50%;
+}
+
+.zoom:hover img {
+  transform: scale(1.1);
+}
+
+.icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.zoom:hover .icon {
+  opacity: 1;
+}
+
+
+.invalid-feedback {
+  display: block;
+  margin-top: .25rem;
+  font-size: 80%;
+  color: #dc3545;
+}
+
