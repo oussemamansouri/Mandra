@@ -1,2 +1,75 @@
-<p>owner-layoute works!</p>
-<router-outlet></router-outlet>
+<header id="header" class="header fixed-top d-flex align-items-center">
+  <div class="d-flex align-items-center justify-content-between">
+    <a routerLink="/" class="logo d-flex align-items-center">
+      <span class="d-none d-lg-block" style="color: white; font-size: 2em; font-family: cursive;" > Mandra</span>
+    </a>
+    <i (click)="sidebarToggle()" class="bi bi-list toggle-sidebar-btn"></i>
+  </div>
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item dropdown pe-3">
+        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+          <img *ngIf="user.image" src="{{baseURL}}{{user?.image}}" alt="Profile" class="rounded-image">
+          <img *ngIf="!user.image" src="../../../assets/img/default-image.jpg" alt="Profile" class="rounded-image">
+          <span class="d-none d-md-block dropdown-toggle ps-2">{{user?.firstname | titlecase}}</span>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <li class="dropdown-header">
+            <h6>{{user?.firstname | titlecase}}</h6>
+            <span>{{user?.role | titlecase}}</span>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <button class="dropdown-item d-flex align-items-center">
+              <a class="dropdown-item d-flex align-items-center" routerLink="/owner/profile">
+                <i class="bi bi-person"></i>
+                <span>Mon profil</span>
+              </a>
+            </button>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <button class="dropdown-item d-flex align-items-center">
+              <a class="dropdown-item d-flex align-items-center" (click)="logout()">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Se Déconnecter</span>
+              </a>
+            </button>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main" class="main">
+  <router-outlet></router-outlet>
+</main>
+
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item"> <a class="nav-link collapsed" routerLink="/"> <i class="bi bi-house-door"></i>
+        <span>Accueil</span> </a></li>
+    <li class="nav-item"> <a class="nav-link collapsed" routerLink="/owner/profile"> <i class="bi bi-person"></i>
+        <span>Profil</span> </a></li>
+
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse"
+        routerLink="/owner/hotels"> <i class="bi bi-building"></i><span>Hôtels</span> </a>
+    </li>
+        <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" routerLink="/owner/restaurants"> <i
+          class="bi bi-building"></i><span>Restaurants</span> </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" routerLink="/owner/guast-house"> <i
+          class="bi bi-building"></i><span>Maisons d'hôtes</span> </a>
+    </li>
+  </ul>
+</aside>
+
