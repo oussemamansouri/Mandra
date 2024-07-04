@@ -1,3 +1,4 @@
+<main class="serch-main">
 <div class="pagetitle">
   <h1> Accueil</h1>
   <nav>
@@ -73,9 +74,10 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="col-md-2 col-lg-2 row mb-3">
+
+          <div class="col-md-2 col-lg-2" class="row mb-3">
             <img [src]="baseURL + gastronomicSpecialtie.image" alt="Profile">
-          </div>
+         </div>
 
           <div class="row">
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Région :</div>
@@ -89,14 +91,7 @@
             <div class="col-lg-4 col-md-4 label" style="color:#012970;">Adresse :</div>
             <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.address | titlecase }}</div>
           </div>
-          <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Créé à :</div>
-            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.createDate | date }}</div>
-          </div>
-          <div class="row">
-            <div class="col-lg-4 col-md-4 label" style="color:#012970;">Mis à jour à :</div>
-            <div class="col-lg-8 col-md-8">{{ gastronomicSpecialtie.updateDate | date }}</div>
-          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -107,3 +102,4 @@
 
 
 </section>
+</main>
