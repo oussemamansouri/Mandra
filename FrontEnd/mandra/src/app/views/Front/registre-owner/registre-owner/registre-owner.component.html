@@ -1,6 +1,6 @@
 <br>
 <main>
-  <div class="container">
+  <div class="container mt-3">
     <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-8">
       <div class="container">
         <div class="row justify-content-center">
@@ -11,7 +11,7 @@
                 <div class="pt-4 pb-2">
 
                   <h5 class="card-title text-center pb-0 fs-4">Créer un compte propriétaire</h5>
-                  
+
                   <p class="text-center small">Entrez vos données personnelles pour créer un compte</p>
                 </div>
                 <form class="row g-3 needs-validation" #f="ngForm" (ngSubmit)="registre(f)">
@@ -23,12 +23,12 @@
                       maxlength="15" pattern="[a-zA-Z]{2,15}"
                       [ngClass]="{'is-invalid': firstname.invalid && firstname.touched, 'is-valid': firstname.valid && firstname.touched}">
                     <div class="invalid-feedback" *ngIf="firstname.touched && firstname.errors">
-                      <div *ngIf="firstname.errors?.['required']">le nom du manager est requis!</div>
-                      <div *ngIf="firstname.errors?.['minlength']">le nom du manager doit compter au moins 2
+                      <div *ngIf="firstname.errors?.['required']">le nom  est requis!</div>
+                      <div *ngIf="firstname.errors?.['minlength']">le nom  doit compter au moins 2
                         caractères !</div>
-                      <div *ngIf="firstname.errors?.['maxlength']">le nom du manager ne doit pas dépasser 20
+                      <div *ngIf="firstname.errors?.['maxlength']">le nom ne doit pas dépasser 20
                         caractères !</div>
-                      <div *ngIf="firstname.errors?.['pattern']">le nom du manager ne doit contenir que des caractères
+                      <div *ngIf="firstname.errors?.['pattern']">le nom ne doit contenir que des caractères
                         alphabétiques !</div>
 
                     </div>
@@ -41,12 +41,12 @@
                       minlength="2" maxlength="15" pattern="[a-zA-Z]{2,15}"
                       [ngClass]="{'is-invalid': lastname.invalid && lastname.touched, 'is-valid': lastname.valid && lastname.touched}">
                     <div class="invalid-feedback" *ngIf="lastname.touched && lastname.errors">
-                      <div *ngIf="lastname.errors?.['required']">le prenom du manager est requis!</div>
-                      <div *ngIf="lastname.errors?.['minlength']">le prenom du manager doit compter au moins 2
+                      <div *ngIf="lastname.errors?.['required']">le prenom est requis!</div>
+                      <div *ngIf="lastname.errors?.['minlength']">le prenom  doit compter au moins 2
                         caractères !</div>
-                      <div *ngIf="lastname.errors?.['maxlength']">le prenom du manager ne doit pas dépasser 20
+                      <div *ngIf="lastname.errors?.['maxlength']">le prenom ne doit pas dépasser 20
                         caractères !</div>
-                      <div *ngIf="lastname.errors?.['pattern']">le prenom du manager ne doit contenir que des
+                      <div *ngIf="lastname.errors?.['pattern']">le prenom  ne doit contenir que des
                         caractères alphabétiques !</div>
 
                     </div>
@@ -149,7 +149,7 @@
                   </div>
                   <div class="col-12">
 
-                    <p class="small mb-0">Vous avez déjà un compte ?<a routerLink="/login"> Se Connecter</a></p>
+                    <p class="small mb-0">Vous avez déjà un compte ?<a routerLink="/signin"> Se Connecter</a></p>
                   </div>
                 </form>
               </div>
