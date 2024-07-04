@@ -42,6 +42,12 @@
 /* ///////////
 ///
 /// */
+
+.serch-main{
+  margin: 120px 5% 60px 5%;
+}
+
+
 .dropdown-submenu {
   position: relative;
   cursor: pointer;
