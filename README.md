@@ -5,4 +5,5 @@ The project involves developing a web application dedicated to places to visit i
 - Angular 16.2.14
 - Node 18.17.1
 - Package Manager npm 9.4.1
+- Bootstrap 5.2.3
 ### This project is not finished 
