@@ -6,4 +6,7 @@ The project involves developing a web application dedicated to places to visit i
 - Node 18.17.1
 - Package Manager npm 9.4.1
 - Bootstrap 5.2.3
+## Default admin account
+- Email : `Admin@gmail.com`
+- Password : `12345AZERT@`
 ### This project is not finished 
