@@ -7,6 +7,6 @@ The project involves developing a web application dedicated to places to visit i
 - Package Manager npm 9.4.1
 - Bootstrap 5.2.3
 ## Default admin account
-- Email : `Admin@gmail.com`
+- Email : `admin@gmail.com`
 - Password : `12345AZERT@`
 ### This project is not finished 
